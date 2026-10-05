@@ -17,7 +17,8 @@ public class Watchlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
             nullable = false
@@ -43,6 +44,7 @@ public class Watchlist {
         return id;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public User getUser() {
         return user;
     }

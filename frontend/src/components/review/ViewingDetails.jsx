@@ -11,7 +11,7 @@ function ViewingDetails({
     return (
         <div className="bg-[#181c20] rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-5">
             <div className="flex items-center gap-2">
-                <Icon className="text-[#43fe6d] text-[20px]">
+                <Icon className="text-[#C9A86A] text-[20px]">
                     calendar_clock
                 </Icon>
 
@@ -66,7 +66,7 @@ function ViewingDetails({
                                 className="sr-only peer"
                             />
 
-                            <div className="p-2.5 rounded-lg bg-[#0B0D0F] peer-checked:bg-[#31353a] peer-checked:text-[#43fe6d] text-[#99AABB] text-center text-[13px] transition-all">
+                            <div className="p-2.5 rounded-lg bg-[#0B0D0F] peer-checked:bg-[#31353a] peer-checked:text-[#C9A86A] text-[#99AABB] text-center text-[13px] transition-all">
                                 {label}
                             </div>
                         </label>
@@ -96,7 +96,7 @@ function ViewingDetails({
                         type="checkbox"
                         checked={rewatch}
                         onChange={(e) => setRewatch(e.target.checked)}
-                        className="w-4 h-4 accent-[#43fe6d] rounded cursor-pointer"
+                        className="w-4 h-4 accent-[#C9A86A] rounded cursor-pointer"
                     />
                 </label>
             </div>

@@ -61,6 +61,14 @@ public class SecurityConfig {
                         )
                 )
 
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setContentType("application/json");
+                            response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("{\"message\":\"Unauthorized: Please log in to continue\"}");
+                        })
+                )
+
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
@@ -79,6 +87,16 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/prediction/**"
                         ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/reviews/movie/**",
+                                "/api/reviews/*"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/api/reviews/my"
+                        ).authenticated()
 
                         .requestMatchers(
                                 "/api/liked-movies/**"
@@ -115,7 +133,10 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(
                 List.of(
-                        "http://localhost:5173"
+                        "http://localhost:5173",
+                        "http://127.0.0.1:5173",
+                        "http://localhost:3000",
+                        "http://127.0.0.1:3000"
                 )
         );
 

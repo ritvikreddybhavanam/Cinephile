@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinephile - Architecture & ER Diagrams</title>
+  <!-- Mermaid.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+  <!-- Tailwind CSS CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .page-break { page-break-before: always; }
+    }
+    .mermaid {
+      background-color: #ffffff;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased p-4 md:p-8">
+
+  <!-- Header & Download / Action Toolbar -->
+  <header class="max-w-7xl mx-auto mb-8 pb-6 border-b border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400">
+        🎬 Cinephile System Architecture & ER Diagrams
+      </h1>
+      <p class="text-slate-400 mt-1">Full-stack movie discovery, tracking, and ML box office revenue prediction platform.</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-3 no-print">
+      <button onclick="window.print()" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 font-semibold rounded-lg text-white shadow-lg shadow-red-500/30 transition-all flex items-center gap-2 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        Download / Print PDF
+      </button>
+      <button onclick="downloadSvg('system-arch-mermaid', 'Cinephile_System_Architecture.svg')" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-lg border border-slate-700 transition flex items-center gap-2 cursor-pointer">
+        Export System Arch SVG
+      </button>
+      <button onclick="downloadSvg('er-mermaid', 'Cinephile_ER_Diagram.svg')" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-lg border border-slate-700 transition flex items-center gap-2 cursor-pointer">
+        Export ER Diagram SVG
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto space-y-12">
+
+    <!-- 1. System Overview Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-xl">
+        <span class="text-xs uppercase font-bold text-red-400 tracking-wider">Frontend Tier</span>
+        <h3 class="text-lg font-bold text-white mt-1">React + Tailwind / Vite</h3>
+        <p class="text-xs text-slate-400 mt-1">React Router, Axios, Custom Context API (AuthContext), Responsive letterboxd-style UI.</p>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-xl">
+        <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Backend API Tier</span>
+        <h3 class="text-lg font-bold text-white mt-1">Spring Boot (Java 17)</h3>
+        <p class="text-xs text-slate-400 mt-1">Spring Security, JWT Auth, Spring Data JPA, RESTful endpoints & TMDB caching.</p>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-xl">
+        <span class="text-xs uppercase font-bold text-green-400 tracking-wider">ML Microservice Tier</span>
+        <h3 class="text-lg font-bold text-white mt-1">FastAPI + ElasticNet</h3>
+        <p class="text-xs text-slate-400 mt-1">Python 3, Scikit-learn Pipeline (ElasticNet Model 4), Feature Transformation & Inference.</p>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-xl">
+        <span class="text-xs uppercase font-bold text-amber-400 tracking-wider">Storage & Cloud</span>
+        <h3 class="text-lg font-bold text-white mt-1">MySQL & TMDB & Firebase</h3>
+        <p class="text-xs text-slate-400 mt-1">Relational database (Users, Reviews, Watchlists, Likes, History), TMDB API & Firebase Admin.</p>
+      </div>
+    </section>
+
+    <!-- 2. System Architecture Diagram -->
+    <section class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span class="w-3 h-3 bg-red-500 rounded-full inline-block"></span>
+            1. End-to-End System Architecture
+          </h2>
+          <p class="text-slate-400 text-sm">Comprehensive multi-tier component architecture & request flows.</p>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded bg-slate-700 text-slate-300 font-mono">Architecture Flow</span>
+      </div>
+
+      <div class="mermaid overflow-x-auto" id="system-arch-mermaid">
+flowchart TB
+    subgraph ClientLayer["🖥️ Client Tier (Presentation)"]
+        UI["React SPA (Vite / Tailwind CSS)"]
+        subgraph FrontendModules["Frontend Modules & Pages"]
+            AuthMod["Auth & Profile (Login / Register / Verify)"]
+            MovieMod["Movie Browsing (Trending, Genres, Languages)"]
+            UserLib["User Library (Watchlist, Watched, Liked)"]
+            ReviewMod["Review Engine (Critic Reviews & Ratings)"]
+            PredictMod["Box Office Prediction UI"]
+        end
+        UI --> FrontendModules
+    end
+
+    subgraph GatewayAuth["🔐 Security & Verification"]
+        FirebaseAuth["Firebase Authentication Admin SDK"]
+        JWTFilter["Spring Security (JWT Filter)"]
+    end
+
+    subgraph BackendLayer["⚙️ Backend Tier (Spring Boot REST Server)"]
+        Controllers["Spring REST Controllers\n(/api/auth, /api/tmdb, /api/reviews, /api/watchlist, /api/liked-movies, /api/watched-movies, /api/predict)"]
+        
+        subgraph Services["Core Business Services"]
+            AuthSvc["AuthService"]
+            TmdbSvc["TmdbService (In-Memory LRU Cache)"]
+            ReviewSvc["ReviewService"]
+            WatchlistSvc["WatchlistService"]
+            LikedSvc["LikedMovieService"]
+            WatchedSvc["WatchedMovieService"]
+            PredictionSvc["PredictionService"]
+        end
+
+        RepoLayer["Spring Data JPA Repositories"]
+    end
+
+    subgraph MLService["🧠 Machine Learning Inference Tier (FastAPI)"]
+        FastAPIApp["FastAPI Server (:8000)"]
+        PredictEndpoint["POST /predict Endpoint"]
+        FeatureEngine["Feature Transformer (Budget Log1p, Country, Language, OHE Genres)"]
+        MLModel["ElasticNet Model 4 Pipeline (.pkl)"]
+        
+        FastAPIApp --> PredictEndpoint
+        PredictEndpoint --> FeatureEngine
+        FeatureEngine --> MLModel
+    end
+
+    subgraph ExternalServices["🌐 External APIs & Data Providers"]
+        TMDB["TMDB API (The Movie Database v3)"]
+    end
+
+    subgraph DataTier["🗄️ Persistence Tier (Database)"]
+        MySQL[("MySQL Database (film_buff)\n- users\n- reviews\n- watchlist\n- liked_movies\n- watched_movies")]
+    end
+
+    %% Client Interactions
+    UI -->|HTTP Requests with JWT Bearer| Controllers
+    AuthMod -.->|Token Verification| FirebaseAuth
+    Controllers --> JWTFilter
+    JWTFilter --> Services
+
+    %% Service connections
+    AuthSvc --> RepoLayer
+    ReviewSvc --> RepoLayer
+    WatchlistSvc --> RepoLayer
+    LikedSvc --> RepoLayer
+    WatchedSvc --> RepoLayer
+    
+    %% TMDB service
+    TmdbSvc -->|Cached REST Fetch| TMDB
+
+    %% Prediction Flow
+    PredictMod -->|Direct or Proxied Request| PredictionSvc
+    PredictionSvc -->|HTTP REST Forward| FastAPIApp
+    PredictMod -.->|Direct Fallback Option| FastAPIApp
+
+    %% Repository to DB
+    RepoLayer -->|Hibernate / JPA ORM| MySQL
+      </div>
+    </section>
+
+    <!-- Page Break for Printing -->
+    <div class="page-break"></div>
+
+    <!-- 3. Entity-Relationship (ER) Diagram -->
+    <section class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span class="w-3 h-3 bg-amber-500 rounded-full inline-block"></span>
+            2. Database Entity-Relationship (ER) Diagram
+          </h2>
+          <p class="text-slate-400 text-sm">Relational data model (MySQL / Spring Data JPA Schema) with constraints & foreign keys.</p>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded bg-slate-700 text-slate-300 font-mono">ER Schema</span>
+      </div>
+
+      <div class="mermaid overflow-x-auto" id="er-mermaid">
+erDiagram
+    USERS ||--o{ REVIEWS : "writes"
+    USERS ||--o{ WATCHLIST : "bookmarks"
+    USERS ||--o{ LIKED_MOVIES : "likes"
+    USERS ||--o{ WATCHED_MOVIES : "logs"
+
+    USERS {
+        BIGINT id PK "AUTO_INCREMENT"
+        VARCHAR firstname "NOT NULL"
+        VARCHAR lastname "NOT NULL"
+        VARCHAR emailaddress "NOT NULL, UNIQUE"
+        VARCHAR password "NOT NULL (Hashed)"
+    }
+
+    REVIEWS {
+        BIGINT id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL -> users.id"
+        BIGINT movie_id "NOT NULL (TMDB ID)"
+        DOUBLE rating "NOT NULL (0.5 to 5.0 / 10)"
+        VARCHAR title "NOT NULL, max 120"
+        TEXT content "NOT NULL, Review description"
+        DATE watched_date "Optional"
+        VARCHAR viewing_format "max 50 (e.g., IMAX, Digital)"
+        BOOLEAN rewatch "DEFAULT false"
+        BOOLEAN spoilers "DEFAULT false"
+        VARCHAR visibility "DEFAULT 'public'"
+        DATETIME created_at "NOT NULL"
+        DATETIME updated_at "NOT NULL"
+    }
+
+    WATCHLIST {
+        BIGINT id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL -> users.id"
+        BIGINT movie_id "NOT NULL (TMDB ID)"
+        VARCHAR title "Movie Title"
+        VARCHAR poster "Poster Path (max 1000)"
+    }
+
+    LIKED_MOVIES {
+        BIGINT id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL -> users.id"
+        BIGINT tmdb_movie_id "NOT NULL (TMDB ID)"
+        DATETIME liked_at "NOT NULL timestamp"
+    }
+
+    WATCHED_MOVIES {
+        BIGINT id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL -> users.id"
+        BIGINT movie_id "NOT NULL (TMDB ID)"
+        VARCHAR title "NOT NULL"
+        VARCHAR poster "Poster URL (max 1000)"
+        INTEGER year "Release Year"
+        VARCHAR genre "Genres string"
+        VARCHAR service "Streaming/Cinema Service"
+        DOUBLE rating "User Personal Rating"
+        VARCHAR language "Language code (max 20)"
+        DATETIME watched_at "NOT NULL timestamp"
+    }
+      </div>
+    </section>
+
+    <!-- 4. Detailed Data Dictionary / Table Specs -->
+    <section class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+      <h2 class="text-xl font-bold text-white mb-4">📋 Data Dictionary & Key Constraints</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300">
+        <div class="border border-slate-700 p-4 rounded-xl bg-slate-900/50">
+          <h4 class="font-bold text-red-400 mb-2">Unique Constraints & Business Rules:</h4>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li><strong class="text-slate-200">users:</strong> Unique index on <code class="text-red-300">emailaddress</code>.</li>
+            <li><strong class="text-slate-200">reviews:</strong> Unique composite index on <code class="text-red-300">(movie_id, user_id)</code> — one review per movie per user.</li>
+            <li><strong class="text-slate-200">watchlist:</strong> Unique composite index on <code class="text-red-300">(user_id, movie_id)</code> to prevent duplicate bookmarks.</li>
+            <li><strong class="text-slate-200">liked_movies:</strong> Unique composite index on <code class="text-red-300">(user_id, tmdb_movie_id)</code>.</li>
+            <li><strong class="text-slate-200">watched_movies:</strong> Unique composite index on <code class="text-red-300">(user_id, movie_id)</code>.</li>
+          </ul>
+        </div>
+        <div class="border border-slate-700 p-4 rounded-xl bg-slate-900/50">
+          <h4 class="font-bold text-blue-400 mb-2">Service Communication & Data Flow:</h4>
+          <ul class="list-disc list-inside space-y-1 text-slate-400">
+            <li><strong class="text-slate-200">TMDB Integration:</strong> Cached movie metadata fetched using TMDB API Bearer token.</li>
+            <li><strong class="text-slate-200">ML Predictions:</strong> Client supplies movie characteristics (budget, runtime, release date, country, genres); FastAPI transforms inputs and computes predicted revenue in USD & Millions.</li>
+            <li><strong class="text-slate-200">Security:</strong> Stateless JWT tokens with user claims and verification.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500 pb-8 no-print">
+    Generated for Cinephile Application • Diagrams rendered with Mermaid.js & vector SVG export support.
+  </footer>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      themeVariables: {
+        fontSize: '14px',
+        fontFamily: 'Inter, system-ui, sans-serif'
+      }
+    });
+
+    function downloadSvg(containerId, filename) {
+      const container = document.getElementById(containerId);
+      const svg = container.querySelector('svg');
+      if (!svg) {
+        alert('Diagram is still rendering, please wait a moment.');
+        return;
+      }
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

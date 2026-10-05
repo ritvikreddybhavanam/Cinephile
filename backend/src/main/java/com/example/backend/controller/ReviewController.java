@@ -67,7 +67,12 @@ public class ReviewController {
             List<Review> reviews =
                     reviewService.getMovieReviews(movieId);
 
-            return ResponseEntity.ok(reviews);
+            List<ReviewResponse> responses =
+                    reviews.stream()
+                            .map(this::reviewResponse)
+                            .toList();
+
+            return ResponseEntity.ok(responses);
 
         } catch (RuntimeException e) {
 
@@ -197,7 +202,7 @@ public class ReviewController {
         }
 
         String token =
-                authorizationHeader.substring(7);
+                authorizationHeader.substring(7).trim();
 
         if (!jwtService.isTokenValid(token)) {
 

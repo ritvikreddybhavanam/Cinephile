@@ -24,24 +24,34 @@ public class AuthController {
     }
 
     @PostMapping("/verify-email")
-    public ResponseEntity<String> verifyEmail(
+    public ResponseEntity<?> verifyEmail(
             @Valid @RequestBody VerifyEmailRequest request
     ) {
-
-        return ResponseEntity.ok(
-                authService.verifyEmailAndCreateAccount(
-                        request
-                )
-        );
+        try {
+            return ResponseEntity.ok(
+                    authService.verifyEmailAndCreateAccount(
+                            request
+                    )
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(java.util.Map.of("message", e.getMessage()));
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
+    public ResponseEntity<?> login(
             @Valid @RequestBody LoginRequest request
     ) {
-
-        return ResponseEntity.ok(
-                authService.login(request)
-        );
+        try {
+            return ResponseEntity.ok(
+                    authService.login(request)
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(org.springframework.http.HttpStatus.UNAUTHORIZED)
+                    .body(java.util.Map.of("message", e.getMessage()));
+        }
     }
 }

@@ -253,79 +253,65 @@ function People() {
     };
 
     return (
-        <>
+        <div className="min-h-screen bg-bg text-text font-sans antialiased">
             <Navbar />
 
-            <main className="w-full pt-16 bg-[#101418] min-h-screen text-white">
-                <section className="max-w-7xl mx-auto px-4 md:px-10 w-full pt-8 md:pt-14 pb-16">
+            <main className="w-full">
+                <section className="max-w-[1200px] mx-auto px-4 md:px-8 w-full pt-8 md:pt-12 pb-16">
 
                     {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-
-                        <div className="space-y-2">
-
-                            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-                                People
+                    <div className="section-header mb-8">
+                        <div>
+                            <p className="label-caps mb-1">Artists & Visionaries</p>
+                            <h1 className="section-title text-3xl sm:text-4xl">
+                                Film Personalities
                             </h1>
-
-                            <p className="text-base md:text-lg text-[#99AABB] max-w-xl">
-                                Explore the auteurs, visionaries, and performers shaping global cinema.
+                            <p className="text-sm text-text-3 mt-1 max-w-xl">
+                                Explore the auteurs, cinematographers, and performers shaping global cinema.
                             </p>
-
                         </div>
-
                     </div>
 
-                    {/* Search + Filters */}
-                    <div className="flex flex-col gap-5 mb-10">
+                    {/* Search */}
+                    <div className="relative w-full max-w-md mb-8">
+                        <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-text-3 text-[18px]">
+                            search
+                        </span>
 
-                        <div className="relative w-full group">
-
-                            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-[#99AABB] group-focus-within:text-[#43fe6d]">
-                                <span className="material-symbols-outlined text-[24px]">
-                                    search
-                                </span>
-                            </div>
-
-                            <input
-                                ref={searchInputRef}
-                                type="text"
-                                value={searchQuery}
-                                onChange={(event) =>
-                                    setSearchQuery(event.target.value)
-                                }
-                                placeholder="Search people"
-                                className="w-full bg-[#181c20] text-white pl-14 pr-20 py-4 rounded-xl placeholder:text-[#99AABB]/60 focus:outline-none focus:bg-[#1c2024] transition-all"
-                            />
-
-                        </div>
+                        <input
+                            ref={searchInputRef}
+                            type="text"
+                            value={searchQuery}
+                            onChange={(event) =>
+                                setSearchQuery(event.target.value)
+                            }
+                            placeholder="Search directors, actors, cinematographers…"
+                            className="mc-input pl-11 rounded-lg text-sm"
+                        />
                     </div>
 
                     {/* Error */}
                     {error && (
-                        <div className="mb-8 rounded-xl bg-[#93000a]/20 border border-[#ffb4ab]/30 p-5 text-[#ffb4ab]">
+                        <div className="mb-8 rounded-lg bg-error/10 border border-error/30 p-4 text-error text-sm">
                             {error}
                         </div>
                     )}
 
                     {/* Loading */}
                     {loading && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-
-                            {Array.from({ length: 12 }).map((_, index) => (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {Array.from({ length: 8 }).map((_, index) => (
                                 <div
                                     key={index}
-                                    className="aspect-[3/4] rounded-xl bg-[#181c20] animate-pulse"
+                                    className="aspect-[3/4] rounded-lg skeleton"
                                 />
                             ))}
-
                         </div>
                     )}
 
                     {/* People Grid */}
                     {!loading && filteredPeople.length > 0 && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                             {filteredPeople.map((person) => {
                                 const imageUrl = getImageUrl(
                                     person.profile_path
@@ -339,98 +325,78 @@ function People() {
                                         onClick={() =>
                                             handlePersonClick(person.id)
                                         }
-                                        className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-[#0b0f12] cursor-pointer shadow-md transform transition-all duration-300 hover:-translate-y-1"
+                                        className="group relative aspect-[3/4] rounded-lg overflow-hidden bg-surface border border-border cursor-pointer shadow-card transform transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover"
                                     >
-
                                         {/* Image */}
                                         {imageUrl ? (
                                             <img
                                                 src={imageUrl}
                                                 alt={person.name}
-                                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                                loading="lazy"
+                                                className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
                                                 onError={(event) => {
                                                     event.currentTarget.style.display =
                                                         "none";
                                                 }}
                                             />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#181c20] to-[#0b0f12]">
-                                                <span className="material-symbols-outlined text-6xl text-[#2C3440]">
+                                            <div className="w-full h-full flex items-center justify-center bg-surface-2 text-text-3">
+                                                <span className="material-symbols-outlined text-6xl opacity-30">
                                                     person
                                                 </span>
                                             </div>
                                         )}
 
                                         {/* Gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0F] via-[#0B0D0F]/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
 
-                                        {/* Hover border */}
-                                        <div className="absolute inset-0 rounded-xl pointer-events-none group-hover:ring-2 group-hover:ring-[#43fe6d] transition-all duration-300" />
-
-                                        {/* Role */}
-                                        <div className="absolute top-3.5 left-3.5">
-                                            <span className="text-xs px-2.5 py-1 rounded-full bg-[#2C3440]/90 text-[#43fe6d] font-semibold tracking-wider uppercase">
+                                        {/* Role badge */}
+                                        <div className="absolute top-3 left-3">
+                                            <span className="badge badge-accent text-[10px]">
                                                 {role}
                                             </span>
                                         </div>
 
-                                        {/* Bookmark */}
-                                        <div className="absolute top-3.5 right-3.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <div className="w-8 h-8 rounded-full bg-[#0B0D0F]/80 backdrop-blur-md flex items-center justify-center text-[#43fe6d]">
-                                                <span className="material-symbols-outlined text-[18px]">
-                                                    bookmark_add
-                                                </span>
-                                            </div>
-                                        </div>
-
                                         {/* Person information */}
-                                        <div className="absolute bottom-0 inset-x-0 p-4 flex flex-col gap-1">
-
-                                            <h3 className="text-lg font-semibold text-white group-hover:text-[#43fe6d] transition-colors tracking-tight line-clamp-1">
+                                        <div className="absolute bottom-0 inset-x-0 p-3.5 flex flex-col gap-0.5">
+                                            <h3 className="font-serif text-base font-semibold text-text group-hover:text-accent transition-colors tracking-tight line-clamp-1">
                                                 {person.name}
                                             </h3>
 
-                                            <p className="text-xs text-[#99AABB] uppercase tracking-wider line-clamp-1">
+                                            <p className="text-[11px] text-text-3 uppercase tracking-wider line-clamp-1">
                                                 {role}
                                             </p>
-
                                         </div>
-
                                     </div>
                                 );
                             })}
-
                         </div>
                     )}
 
                     {/* No Results */}
                     {!loading && filteredPeople.length === 0 && (
-                        <div className="py-20 flex flex-col items-center justify-center text-center gap-4 bg-[#181c20]/50 rounded-2xl">
-
-                            <span className="material-symbols-outlined text-[#99AABB] text-[48px]">
+                        <div className="py-20 flex flex-col items-center justify-center text-center gap-4 bg-surface rounded-lg border border-border p-12">
+                            <span className="material-symbols-outlined text-text-3 text-[48px] opacity-40">
                                 person_search
                             </span>
 
                             <div className="space-y-1">
-
-                                <h4 className="text-xl font-semibold text-white">
-                                    No film personalities found
+                                <h4 className="font-serif text-lg font-semibold text-text">
+                                    No film artists found
                                 </h4>
 
-                                <p className="text-sm text-[#99AABB]">
-                                    Try adjusting your search query or reset the active filters.
+                                <p className="text-sm text-text-3">
+                                    Try adjusting your search query.
                                 </p>
-
                             </div>
 
                             <button
                                 type="button"
                                 onClick={handleReset}
-                                className="px-5 py-2.5 rounded-lg bg-[#2C3440] hover:bg-[#262a2f] text-[#43fe6d] text-sm transition-colors"
+                                className="btn-secondary text-xs py-2 px-5"
                             >
-                                Clear All Filters
+                                Clear Search
                             </button>
-
                         </div>
                     )}
 
@@ -439,17 +405,16 @@ function People() {
                         filteredPeople.length > 0 &&
                         people.length < totalResults && (
                             <div className="pt-10 flex flex-col items-center justify-center gap-4">
-
                                 <button
                                     type="button"
                                     onClick={handleLoadMore}
                                     disabled={loadingMore}
-                                    className="group inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-[#181c20] hover:bg-[#1c2024] text-white transition-all disabled:opacity-50"
+                                    className="btn-secondary text-xs py-2.5 px-8"
                                 >
 
                                     {loadingMore ? (
                                         <>
-                                            <span className="material-symbols-outlined animate-spin text-[#43fe6d]">
+                                            <span className="material-symbols-outlined animate-spin text-[#C9A86A]">
                                                 progress_activity
                                             </span>
 
@@ -463,7 +428,7 @@ function People() {
                                                 Load More People
                                             </span>
 
-                                            <span className="material-symbols-outlined text-[#43fe6d] text-[18px] group-hover:translate-y-0.5 transition-transform">
+                                            <span className="material-symbols-outlined text-[#C9A86A] text-[18px] group-hover:translate-y-0.5 transition-transform">
                                                 expand_more
                                             </span>
                                         </>
@@ -482,7 +447,7 @@ function People() {
             </main>
 
             <Footer />
-        </>
+        </div>
     );
 }
 

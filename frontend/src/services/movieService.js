@@ -21,7 +21,9 @@ export const getMovies = async ({
                                     year = "",
                                     genre = "",
                                     rating = "",
-                                    language = ""
+                                    language = "",
+                                    fromDate = "",
+                                    toDate = ""
                                 } = {}) => {
     const response = await api.get("/tmdb/movies", {
         params: {
@@ -30,11 +32,33 @@ export const getMovies = async ({
             year: year || undefined,
             genre: genre || undefined,
             rating: rating || undefined,
-            language: language || undefined
+            language: language || undefined,
+            fromDate: fromDate || undefined,
+            toDate: toDate || undefined
         }
     });
 
     return response.data;
+};
+
+export const getNewReleases = async ({
+    page = 1,
+    sortBy = "primary_release_date.desc",
+    year = "",
+    language = "",
+    fromDate = "",
+    toDate = "",
+    genre = ""
+} = {}) => {
+    return getMovies({
+        page,
+        sortBy,
+        year,
+        language,
+        genre,
+        fromDate,
+        toDate
+    });
 };
 
 export const searchMovies = async (query, page = 1) => {
@@ -119,6 +143,21 @@ export const getMovieWatchProviders = async (movieId) => {
     return response.data;
 };
 
+export const getMovieImages = async (movieId) => {
+    const response = await api.get(`/tmdb/movies/${movieId}/images`);
+    return response.data;
+};
+
+export const getMovieKeywords = async (movieId) => {
+    const response = await api.get(`/tmdb/movies/${movieId}/keywords`);
+    return response.data;
+};
+
+export const getMovieReleaseDates = async (movieId) => {
+    const response = await api.get(`/tmdb/movies/${movieId}/release_dates`);
+    return response.data;
+};
+
 export const likeMovie = async (movieId) => {
     const response = await api.post(`/liked-movies/${movieId}`);
     return response.data;
@@ -159,6 +198,17 @@ export const getFilmBuffReviews = async (movieId) => {
     const response = await api.get(
         `/reviews/movie/${movieId}`
     );
+
+    return response.data;
+};
+
+export const getTopMovieLanguage = async (language) => {
+    const response = await api.get("/tmdb/movies/top", {
+        params: {
+            language: language
+        }
+    });
+    
 
     return response.data;
 };

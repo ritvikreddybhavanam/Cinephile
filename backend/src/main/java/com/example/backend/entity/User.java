@@ -19,6 +19,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String emailaddress;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -53,10 +54,12 @@ public class User {
         this.emailaddress = emailaddress;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @com.fasterxml.jackson.annotation.JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

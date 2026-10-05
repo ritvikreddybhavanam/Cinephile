@@ -96,7 +96,7 @@ function PersonStats({ credits }) {
 
                 <span className="flex items-center gap-1.5">
 
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#43fe6d]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C9A86A]" />
 
                     TMDB Verified Credits
 
@@ -115,7 +115,7 @@ function StatCard({
                       color
                   }) {
     const barColors = {
-        primary: "bg-[#43fe6d]",
+        primary: "bg-[#C9A86A]",
         orange: "bg-[#ff8000]",
         purple: "bg-[#ffd5c5]",
         gray: "bg-[#859582]"

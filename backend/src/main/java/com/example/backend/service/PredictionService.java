@@ -2,8 +2,12 @@ package com.example.backend.service;
 
 import com.example.backend.dto.PredictionRequest;
 import com.example.backend.dto.PredictionResponse;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -36,33 +40,42 @@ public class PredictionService {
         );
         requestBody.put("genres", request.getGenres());
 
-        ResponseEntity<Map> response =
-                restTemplate.postForEntity(
-                        pythonApiUrl,
-                        requestBody,
-                        Map.class
-                );
+        try {
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody);
 
-        Map<String, Object> responseBody =
-                response.getBody();
+            ResponseEntity<Map<String, Object>> response =
+                    restTemplate.exchange(
+                            pythonApiUrl,
+                            HttpMethod.POST,
+                            entity,
+                            new ParameterizedTypeReference<Map<String, Object>>() {}
+                    );
 
-        String title =
-                (String) responseBody.get("title");
+            Map<String, Object> responseBody = response.getBody();
 
-        double predictedRevenue =
-                ((Number) responseBody.get(
-                        "predicted_revenue"
-                )).doubleValue();
+            if (responseBody == null) {
+                throw new RuntimeException("Received empty response from prediction service");
+            }
 
-        double predictedRevenueMillions =
-                ((Number) responseBody.get(
-                        "predicted_revenue_millions"
-                )).doubleValue();
+            String title = (String) responseBody.getOrDefault("title", request.getTitle());
 
-        return new PredictionResponse(
-                title,
-                predictedRevenue,
-                predictedRevenueMillions
-        );
+            Number rev = (Number) responseBody.get("predicted_revenue");
+            Number revMillions = (Number) responseBody.get("predicted_revenue_millions");
+
+            double predictedRevenue = rev != null ? rev.doubleValue() : 0.0;
+            double predictedRevenueMillions = revMillions != null ? revMillions.doubleValue() : 0.0;
+
+            return new PredictionResponse(
+                    title,
+                    predictedRevenue,
+                    predictedRevenueMillions
+            );
+
+        } catch (RestClientException e) {
+            throw new RuntimeException(
+                    "Prediction service is unavailable. Please ensure the Python FastAPI server is running on port 8000.",
+                    e
+            );
+        }
     }
 }

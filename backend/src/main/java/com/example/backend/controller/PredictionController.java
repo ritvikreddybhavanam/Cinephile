@@ -22,13 +22,14 @@ public class PredictionController {
     public ResponseEntity<?> predict(
             @RequestBody PredictionRequest request
     ) {
-
-        System.out.println(
-                "PREDICTION CONTROLLER REACHED"
-        );
-
-        return ResponseEntity.ok(
-                predictionService.predict(request)
-        );
+        try {
+            return ResponseEntity.ok(
+                    predictionService.predict(request)
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(java.util.Map.of("message", e.getMessage()));
+        }
     }
 }

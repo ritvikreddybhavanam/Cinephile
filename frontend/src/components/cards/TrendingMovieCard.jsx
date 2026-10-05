@@ -1,32 +1,57 @@
+import { useNavigate } from "react-router-dom";
+
 const TrendingMovieCard = ({ movie }) => {
+    const navigate = useNavigate();
+
     return (
-        <div className="group relative aspect-[16/9] cursor-pointer overflow-hidden rounded-xl border border-[#262626] bg-[#101418] transition-all duration-300 hover:-translate-y-2 hover:border-[#4f4633] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
-            <img
-                src={movie.image}
-                alt={movie.title}
-                className="h-full w-full object-cover"
-            />
+        <div
+            onClick={() => navigate(`/movies/${movie.id}`)}
+            className="group relative aspect-[16/9] cursor-pointer overflow-hidden rounded-xl border border-border bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover"
+        >
+            {movie.backdrop || movie.image ? (
+                <img
+                    src={movie.backdrop || movie.image}
+                    alt={movie.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+            ) : (
+                <div className="flex h-full w-full items-center justify-center bg-surface-2 text-text-3">
+                    <span className="text-2xl opacity-40">▣</span>
+                </div>
+            )}
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,10,0.95)] via-[rgba(10,10,10,0.4)] to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg/95 via-bg/50 to-transparent" />
 
-            <div className="absolute bottom-0 left-0 flex w-full flex-col justify-end p-4">
-                <h4 className="truncate text-lg font-semibold text-[#e0e3e8] drop-shadow-md">
+            {/* Rank badge */}
+            <div className="absolute top-2.5 left-2.5 z-10">
+                <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-bg/80 backdrop-blur-md text-accent border border-accent/20">
+                    #{movie.rank}
+                </span>
+            </div>
+
+            {/* Language badge */}
+            {movie.language && (
+                <div className="absolute top-2.5 right-2.5 z-10">
+                    <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-bg/80 backdrop-blur-md text-text-3 border border-border">
+                        {movie.language}
+                    </span>
+                </div>
+            )}
+
+            <div className="absolute bottom-0 left-0 flex w-full flex-col justify-end p-3.5 z-10">
+                <h4 className="truncate text-sm font-semibold text-text group-hover:text-accent transition-colors drop-shadow">
                     {movie.title}
                 </h4>
-
-                <div className="mt-1 flex items-center justify-between">
-                    <span className="text-xs font-semibold tracking-wider text-gray-300">
-                        {movie.genre}
+                <div className="mt-1 flex items-center justify-between text-xs">
+                    <span className="text-[11px] text-text-3 truncate max-w-[65%]">
+                        {movie.year} · {movie.genre || "Film"}
                     </span>
-
-                    <div className="flex items-center text-[#eab308] drop-shadow">
-                        <span className="material-symbols-outlined filled text-sm">
+                    <div className="flex items-center gap-1 text-accent font-semibold shrink-0">
+                        <span className="material-symbols-outlined text-[14px]">
                             star
                         </span>
-
-                        <span className="ml-1 text-xs font-semibold">
-                            {movie.rating}
-                        </span>
+                        <span>{movie.rating}</span>
                     </div>
                 </div>
             </div>

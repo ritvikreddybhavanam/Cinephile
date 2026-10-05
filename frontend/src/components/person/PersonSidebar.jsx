@@ -40,7 +40,7 @@ function PersonSidebar({ person, externalIds }) {
 
                     <div className="flex items-center gap-2 mb-4">
 
-                        <span className="w-1.5 h-4 rounded bg-[#43fe6d]" />
+                        <span className="w-1.5 h-4 rounded bg-[#C9A86A]" />
 
                         <h3 className="text-xl font-bold text-white">
                             ALSO KNOWN AS
@@ -88,7 +88,7 @@ function PersonSidebar({ person, externalIds }) {
                                 className="flex items-center gap-2.5 bg-[#1c2024] hover:bg-[#2C3440] px-3 py-2 rounded-lg text-[#e0e3e8] transition-colors"
                             >
 
-                                <span className="w-2 h-2 rounded-full bg-[#43fe6d]" />
+                                <span className="w-2 h-2 rounded-full bg-[#C9A86A]" />
 
                                 <span className="text-[13px] font-medium">
                                     {link.name}
@@ -109,11 +109,11 @@ function PersonSidebar({ person, externalIds }) {
             {person?.biography && (
                 <div className="bg-[#181c20] rounded-xl p-6 shadow-md relative overflow-hidden">
 
-                    <span className="material-symbols-outlined text-[#43fe6d]/10 text-[80px] absolute -bottom-4 -right-2">
+                    <span className="material-symbols-outlined text-[#C9A86A]/10 text-[80px] absolute -bottom-4 -right-2">
                         format_quote
                     </span>
 
-                    <span className="font-mono text-[11px] text-[#43fe6d] uppercase font-bold tracking-wider mb-2 block">
+                    <span className="font-mono text-[11px] text-[#C9A86A] uppercase font-bold tracking-wider mb-2 block">
                         TMDB Biography
                     </span>
 

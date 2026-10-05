@@ -17,11 +17,13 @@ import {
     getPersonImages,
     getPersonExternalIds
 } from "../../../services/personService.js";
+import useDocumentTitle from "../../../hooks/useDocumentTitle.js";
 
 function PersonDetails() {
     const { id } = useParams();
 
     const [person, setPerson] = useState(null);
+    useDocumentTitle(person ? person.name : "Person Details");
     const [credits, setCredits] = useState(null);
     const [images, setImages] = useState(null);
     const [externalIds, setExternalIds] = useState(null);
@@ -82,7 +84,7 @@ function PersonDetails() {
 
                     <div className="flex flex-col items-center gap-4">
 
-                        <div className="w-10 h-10 border-4 border-[#2C3440] border-t-[#43fe6d] rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-4 border-[#2C3440] border-t-[#C9A86A] rounded-full animate-spin" />
 
                         <p className="text-[#99AABB]">
                             Loading person from TMDB...
@@ -128,45 +130,34 @@ function PersonDetails() {
     }
 
     return (
-        <div className="bg-[#0B0D0F] text-[#e0e3e8] min-h-screen">
-
+        <div className="bg-bg text-text min-h-screen font-sans antialiased">
             <Navbar />
 
-            <main className="w-full pt-16 bg-[#0B0D0F]">
-
+            <main className="w-full">
                 <div className="relative w-full overflow-hidden">
-
-                    <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-[#43fe6d]/10 rounded-full blur-[140px] pointer-events-none" />
-
-                    <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8 md:py-12 relative z-10">
+                    <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-8 md:py-12 relative z-10">
 
                         <PersonHero person={person} />
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
 
-                            <section className="lg:col-span-7 bg-[#181c20] p-6 md:p-8 rounded-xl shadow-md">
+                            <section className="lg:col-span-7 bg-surface border border-border p-6 md:p-8 rounded-lg shadow-card">
 
                                 <div className="flex items-center justify-between mb-4">
-
                                     <div className="flex items-center gap-2">
-
-                                        <span className="w-1.5 h-4 rounded bg-[#43fe6d]" />
-
-                                        <h2 className="text-2xl font-bold text-white">
-                                            BIOGRAPHY
+                                        <h2 className="font-serif text-2xl font-semibold text-text">
+                                            Biography
                                         </h2>
-
                                     </div>
 
-                                    <span className="font-mono text-[11px] text-[#99AABB] uppercase">
+                                    <span className="badge badge-accent text-[10px]">
                                         TMDB
                                     </span>
-
                                 </div>
 
-                                <p className="text-[16px] text-[#e0e3e8] leading-relaxed whitespace-pre-line">
+                                <p className="text-sm text-text-2 leading-relaxed whitespace-pre-line">
                                     {person.biography ||
-                                        "No biography available from TMDB."}
+                                        "No biography available for this artist."}
                                 </p>
 
                             </section>
@@ -174,7 +165,6 @@ function PersonDetails() {
                             <PersonStats
                                 credits={credits}
                             />
-
                         </div>
 
                         <KnownFor

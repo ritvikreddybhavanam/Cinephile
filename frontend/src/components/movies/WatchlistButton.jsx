@@ -6,14 +6,14 @@ function WatchlistButton({
 }) {
     return (
         <button
-            className={`watchlist-btn watchlist-btn-${variant}`}
+            type="button"
+            className="btn-primary text-xs py-2 px-5 flex items-center gap-1.5"
             onClick={onClick}
         >
-            <span className="material-symbols-outlined">
+            <span className="material-symbols-outlined text-[16px]">
                 add
             </span>
-
-            Watchlist
+            <span>Queue</span>
         </button>
     );
 }

@@ -1,0 +1,45 @@
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java / Maven / Backend
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Python / ML
+machine_learning/.venv/
+machine_learning/env/
+machine_learning/venv/
+machine_learning/__pycache__/
+machine_learning/*/__pycache__/
+machine_learning/data/raw/
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+
+# IDE & OS
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db

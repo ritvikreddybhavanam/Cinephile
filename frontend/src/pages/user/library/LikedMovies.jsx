@@ -420,52 +420,49 @@ export default function LikedMovies() {
     }, [movies]);
 
     return (
-        <div
-            className="min-h-screen bg-[#0b0f12] font-sans text-gray-100 selection:bg-[#00e054] selection:text-[#00390f]">
-            <Navbar/>
+        <div className="min-h-screen bg-bg font-sans text-text antialiased">
+            <Navbar />
 
-            <main className="flex-grow pb-20 pt-28">
+            <main className="flex-grow pb-16 pt-8 sm:pb-20 sm:pt-10">
 
                 {/* HEADER */}
 
-                <section className="mx-auto mb-8 max-w-[1440px] px-4 sm:px-8">
-                    <div className="border-b border-white/[0.08] pb-8">
+                <section className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                    <div className="border-b border-border pb-6 sm:pb-8">
 
-                        <div
-                            className="mb-3 inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 font-mono text-xs font-medium text-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.15)]">
-                            <Icon
-                                className="animate-pulse text-[14px] text-rose-500"
-                                style={{
-                                    fontVariationSettings:
-                                        "'FILL' 1",
-                                }}
-                            >
-                                favorite
-                            </Icon>
-
-                            LIBRARY / LIKED MOVIES
+                        <div className="mb-3 inline-flex items-center gap-2">
+                            <span className="badge badge-wine">
+                                <Icon
+                                    className="text-[13px]"
+                                    style={{
+                                        fontVariationSettings: "'FILL' 1",
+                                    }}
+                                >
+                                    favorite
+                                </Icon>
+                                Library / Favourites
+                            </span>
                         </div>
 
-                        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+                        <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
                             <div>
-                                <h1 className="mb-3 font-headline text-4xl font-black uppercase tracking-tight text-white sm:text-6xl">
-                                    Liked Movies
+                                <h1 className="mb-2 sm:mb-3 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text break-words">
+                                    Favourite Films
                                 </h1>
 
-                                <p className="max-w-2xl text-base font-light leading-relaxed text-[#8d9ba8] sm:text-lg">
+                                <p className="max-w-2xl text-sm sm:text-base font-normal leading-relaxed text-text-3">
                                     A personal archive of{" "}
-                                    <span className="font-semibold text-white">
+                                    <span className="font-semibold text-text">
                                         {movies.length} films
                                     </span>{" "}
-                                    that touched your cinematic
-                                    soul. Curated and cherished.
+                                    that define your cinema taste.
                                 </p>
                             </div>
                         </div>
 
                         {/* STATS */}
 
-                        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                        <div className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
 
                             <LikedStatsCard
                                 label="Total Liked"
@@ -474,7 +471,7 @@ export default function LikedMovies() {
                                 value={movies.length}
                                 suffix="Films"
                                 footer="Currently in library"
-                                footerClass="text-[#00e054]"
+                                footerClass="text-[#C9A86A]"
                                 filledIcon
                             />
 
@@ -492,7 +489,7 @@ export default function LikedMovies() {
                             <LikedStatsCard
                                 label="Hours Watched"
                                 icon="schedule"
-                                iconClass="text-[#00e054]"
+                                iconClass="text-[#C9A86A]"
                                 value={totalHours}
                                 suffix="hrs"
                                 footer="Based on movie runtime"
@@ -505,7 +502,7 @@ export default function LikedMovies() {
                                 iconClass="text-sky-400"
                                 value={topGenre}
                                 footer="Most common genre"
-                                footerClass="text-[#00e054]"
+                                footerClass="text-[#C9A86A]"
                                 className="col-span-2 sm:col-span-1"
                             />
 
@@ -515,11 +512,11 @@ export default function LikedMovies() {
 
                 {/* FILTERS */}
 
-                <section className="mx-auto mb-8 max-w-[1440px] px-4 sm:px-8">
+                <section className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 md:px-8">
                     <div
-                        className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#181c20]/80 p-4 backdrop-blur-md sm:p-5">
+                        className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#181c20]/80 p-3 sm:p-5 backdrop-blur-md">
 
-                        <div className="flex flex-col items-stretch justify-between gap-4 lg:flex-row lg:items-center">
+                        <div className="flex flex-col items-stretch justify-between gap-3 sm:gap-4 lg:flex-row lg:items-center">
 
                             {/* SEARCH */}
 
@@ -537,13 +534,13 @@ export default function LikedMovies() {
                                         )
                                     }
                                     placeholder="Search by title or year..."
-                                    className="w-full rounded-xl border border-white/[0.08] bg-[#080a0d] py-2.5 pl-10 pr-4 text-xs font-medium text-white placeholder-[#8d9ba8]/50 outline-none transition-colors focus:border-[#00e054] sm:text-sm"
+                                    className="w-full rounded-xl border border-white/[0.08] bg-[#080a0d] py-2.5 pl-10 pr-4 text-xs font-medium text-white placeholder-[#8d9ba8]/50 outline-none transition-colors focus:border-[#C9A86A] sm:text-sm"
                                 />
                             </div>
 
                             {/* OTHER FILTERS */}
 
-                            <div className="flex flex-wrap items-center gap-2.5">
+                            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
 
                                 {/* DECADE */}
 
@@ -554,7 +551,7 @@ export default function LikedMovies() {
                                             e.target.value
                                         )
                                     }
-                                    className="rounded-xl border border-white/[0.08] bg-[#080a0d] px-3.5 py-2.5 font-mono text-xs text-gray-200 outline-none"
+                                    className="rounded-xl border border-white/[0.08] bg-[#080a0d] px-3 py-2 sm:px-3.5 sm:py-2.5 font-mono text-xs text-gray-200 outline-none"
                                 >
                                     <option value="All">
                                         Decade: All
@@ -598,7 +595,7 @@ export default function LikedMovies() {
                                             e.target.value
                                         )
                                     }
-                                    className="rounded-xl border border-[#00e054]/40 bg-[#080a0d] px-3.5 py-2.5 font-mono text-xs text-[#00e054] outline-none"
+                                    className="rounded-xl border border-[#C9A86A]/40 bg-[#080a0d] px-3 py-2 sm:px-3.5 sm:py-2.5 font-mono text-xs text-[#C9A86A] outline-none"
                                 >
                                     <option value="Date Liked">
                                         Sort: Date Liked
@@ -629,7 +626,7 @@ export default function LikedMovies() {
                                                 : 4
                                         )
                                     }
-                                    className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2.5 font-mono text-xs transition-colors ${
+                                    className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 sm:px-3 sm:py-2.5 font-mono text-xs transition-colors ${
                                         ratingFilter ===
                                         4
                                             ? "border-yellow-500/40 bg-[#080a0d] text-yellow-500"
@@ -664,7 +661,7 @@ export default function LikedMovies() {
                                         className={`rounded-lg p-1.5 ${
                                             view ===
                                             "grid"
-                                                ? "bg-[#2c333a] text-[#00e054] shadow-sm"
+                                                ? "bg-[#2c333a] text-[#C9A86A] shadow-sm"
                                                 : "text-[#8d9ba8]"
                                         }`}
                                     >
@@ -683,7 +680,7 @@ export default function LikedMovies() {
                                         className={`rounded-lg p-1.5 ${
                                             view ===
                                             "list"
-                                                ? "bg-[#2c333a] text-[#00e054]"
+                                                ? "bg-[#2c333a] text-[#C9A86A]"
                                                 : "text-[#8d9ba8]"
                                         }`}
                                     >
@@ -699,9 +696,9 @@ export default function LikedMovies() {
                         {/* QUICK FILTER */}
 
                         <div
-                            className="custom-scrollbar flex items-center gap-2 overflow-x-auto pb-1 pt-1 font-mono text-xs">
+                            className="hide-scrollbar flex items-center gap-2 overflow-x-auto pb-1 pt-1 font-mono text-xs max-w-full">
 
-                            <span className="mr-1 hidden text-[11px] uppercase tracking-wider text-[#8d9ba8] sm:inline">
+                            <span className="mr-1 hidden text-[11px] uppercase tracking-wider text-[#8d9ba8] sm:inline shrink-0">
                                 Quick Filter:
                             </span>
 
@@ -712,9 +709,9 @@ export default function LikedMovies() {
                                 onClick={() =>
                                     setGenre("All")
                                 }
-                                className={`whitespace-nowrap rounded-lg px-3 py-1.5 transition-colors ${
+                                className={`shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 transition-colors ${
                                     genre === "All"
-                                        ? "bg-[#00e054] font-bold text-[#00390f] shadow-[0_0_12px_rgba(0,224,84,0.35)]"
+                                        ? "bg-[#C9A86A] font-bold text-[#0B0C10] shadow-[0_0_12px_rgba(201,168,106,0.25)]"
                                         : "border border-white/[0.08] bg-[#080a0d] text-[#8d9ba8] hover:bg-[#22272d] hover:text-white"
                                 }`}
                             >
@@ -725,12 +722,12 @@ export default function LikedMovies() {
 
                             {genresLoading ? (
                                 <span
-                                    className="whitespace-nowrap rounded-lg border border-white/[0.08] bg-[#080a0d] px-3 py-1.5 text-[#8d9ba8]">
+                                    className="shrink-0 whitespace-nowrap rounded-lg border border-white/[0.08] bg-[#080a0d] px-3 py-1.5 text-[#8d9ba8]">
                                     Loading genres...
                                 </span>
                             ) : genres.length === 0 ? (
                                 <span
-                                    className="whitespace-nowrap rounded-lg border border-rose-500/20 bg-rose-500/5 px-3 py-1.5 text-rose-400">
+                                    className="shrink-0 whitespace-nowrap rounded-lg border border-rose-500/20 bg-rose-500/5 px-3 py-1.5 text-rose-400">
                                     Failed to load genres
                                 </span>
                             ) : (
@@ -747,10 +744,10 @@ export default function LikedMovies() {
                                                     item.name
                                                 )
                                             }
-                                            className={`whitespace-nowrap rounded-lg px-3 py-1.5 transition-colors ${
+                                            className={`shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 transition-colors ${
                                                 genre ===
                                                 item.name
-                                                    ? "bg-[#00e054] font-bold text-[#00390f] shadow-[0_0_12px_rgba(0,224,84,0.35)]"
+                                                    ? "bg-[#C9A86A] font-bold text-[#0B0C10] shadow-[0_0_12px_rgba(201,168,106,0.25)]"
                                                     : "border border-white/[0.08] bg-[#080a0d] text-[#8d9ba8] hover:bg-[#22272d] hover:text-white"
                                             }`}
                                         >
@@ -774,12 +771,12 @@ export default function LikedMovies() {
 
                 {/* MOVIES */}
 
-                <section className="mx-auto mb-16 max-w-[1440px] px-4 sm:px-8">
+                <section className="mx-auto mb-16 max-w-[1200px] px-4 sm:px-6 md:px-8">
 
                     {loading ? (
                         <div className="rounded-2xl border border-white/[0.08] bg-[#181c20] px-6 py-20 text-center">
 
-                            <Icon className="mb-3 animate-spin text-5xl text-[#00e054]">
+                            <Icon className="mb-3 animate-spin text-5xl text-[#C9A86A]">
                                 progress_activity
                             </Icon>
 
@@ -798,7 +795,7 @@ export default function LikedMovies() {
                         <div
                             className={
                                 view === "grid"
-                                    ? "grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6"
+                                    ? "grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
                                     : "flex flex-col gap-4"
                             }
                         >
@@ -843,7 +840,7 @@ export default function LikedMovies() {
 
                 {!loading &&
                     movies.length > 0 && (
-                        <section className="mx-auto mb-12 max-w-[1440px] px-4 sm:px-8">
+                        <section className="mx-auto mb-12 max-w-[1200px] px-4 sm:px-8">
 
                             <div
                                 className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-[#181c20]/60 px-6 py-4 sm:flex-row">
@@ -884,14 +881,14 @@ export default function LikedMovies() {
 
                                     <button
                                         type="button"
-                                        className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#00e054] font-bold text-[#00390f] shadow-[0_0_12px_rgba(0,224,84,0.35)]"
+                                        className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#C9A86A] font-bold text-[#0B0C10] shadow-[0_0_12px_rgba(201,168,106,0.25)]"
                                     >
                                         1
                                     </button>
 
                                     <button
                                         type="button"
-                                        className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#080a0d] px-3 py-2 text-white transition-colors hover:border-[#00e054]"
+                                        className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#080a0d] px-3 py-2 text-white transition-colors hover:border-[#C9A86A]"
                                     >
                                         Next
 

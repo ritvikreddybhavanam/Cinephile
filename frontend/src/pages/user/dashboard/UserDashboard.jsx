@@ -1,352 +1,295 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Navbar from "../../../components/layout/Navbar.jsx";
 import Footer from "../../../components/layout/Footer.jsx";
-
 import LikedStatsCard from "../../../components/cards/LikedStatsCard.jsx";
 import TrendingMovieCard from "../../../components/cards/TrendingMovieCard.jsx";
 
 import {
-  getTrendingMovies,
-  getPosterUrl,
-  getBackdropUrl,
-  getMovieVideos,
+    getTrendingMovies,
+    getPosterUrl,
+    getBackdropUrl,
+    getMovieVideos,
 } from "../../../services/movieService.js";
 
 import {
-  addToWatchlist,
-  removeFromWatchlist,
-  checkWatchlist,
+    addToWatchlist,
+    removeFromWatchlist,
+    checkWatchlist,
 } from "../../../services/watchlistService.js";
 
-const stats = [
-  ["42", "Reviews", "text-[#43fe6d]"],
-  ["128", "Favorites", "text-[#43fe6d]"],
-  ["56", "Watchlist", "text-[#43fe6d]"],
-  ["4.1", "Avg Rating", "text-[#eab308]"],
-];
-
 function UserDashboard() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+    const location = useLocation();
+    const fromLogin = location.state?.fromLogin;
+    const preloadedMovies = location.state?.preloadedMovies;
 
-  const [isInWatchlist, setIsInWatchlist] = useState(false);
-  const [watchlistLoading, setWatchlistLoading] = useState(false);
+    const [movies, setMovies] = useState(() => {
+        if (preloadedMovies && preloadedMovies.length > 0) return preloadedMovies;
+        try {
+            const cached = sessionStorage.getItem("cached_dashboard_movies");
+            return cached ? JSON.parse(cached) : [];
+        } catch {
+            return [];
+        }
+    });
+    const [loading, setLoading] = useState(() => movies.length === 0);
+    const [error, setError] = useState("");
+    const [isInWatchlist, setIsInWatchlist] = useState(false);
+    const [watchlistLoading, setWatchlistLoading] = useState(false);
 
-  useEffect(() => {
-    const loadDashboardMovies = async () => {
-      try {
-        setLoading(true);
-        setError("");
+    useEffect(() => {
+        const loadDashboardMovies = async () => {
+            try {
+                if (movies.length === 0) {
+                    setLoading(true);
+                }
+                setError("");
+                const data = await getTrendingMovies();
+                const list = data?.results || [];
+                if (list.length > 0) {
+                    setMovies(list);
+                    try {
+                        sessionStorage.setItem("cached_dashboard_movies", JSON.stringify(list));
+                    } catch {}
+                }
+            } catch (error) {
+                console.error("Failed to load dashboard movies:", error);
+                if (movies.length === 0) {
+                    setError("Unable to load movies.");
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadDashboardMovies();
+    }, []);
 
-        const data = await getTrendingMovies();
+    const movieOfTheDay = movies[0];
+    const trendingMovies = movies.slice(1, 4);
 
-        setMovies(data.results || []);
-      } catch (error) {
-        console.error("Failed to load dashboard movies:", error);
+    useEffect(() => {
+        const checkMovieWatchlist = async () => {
+            if (!movieOfTheDay) return;
+            const token = localStorage.getItem("token");
+            if (!token) { setIsInWatchlist(false); return; }
+            try {
+                const result = await checkWatchlist(movieOfTheDay.id);
+                setIsInWatchlist(
+                    result === true || result?.exists === true || result?.inWatchlist === true
+                );
+            } catch (error) {
+                console.error("Failed to check watchlist:", error);
+                setIsInWatchlist(false);
+            }
+        };
+        checkMovieWatchlist();
+    }, [movieOfTheDay]);
 
-        setError("Unable to load movies.");
-      } finally {
-        setLoading(false);
-      }
+    const formatRating = (rating) =>
+        rating ? Number(rating).toFixed(1) : "0.0";
+
+    const mapTrendingMovie = (movie) => ({
+        id: movie.id,
+        title: movie.title,
+        genre: "Film",
+        rating: formatRating(movie.vote_average),
+        image: getPosterUrl(movie.poster_path),
+    });
+
+    const handleWatchTrailer = async () => {
+        if (!movieOfTheDay) return;
+        try {
+            const data = await getMovieVideos(movieOfTheDay.id);
+            const trailer =
+                data.results?.find(
+                    (v) => v.site === "YouTube" && v.type === "Trailer" && v.official
+                ) ||
+                data.results?.find((v) => v.site === "YouTube" && v.type === "Trailer");
+            if (trailer) {
+                window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank", "noopener,noreferrer");
+            } else {
+                alert("Trailer not available.");
+            }
+        } catch (error) {
+            console.error("Failed to load trailer:", error);
+            alert("Unable to load trailer.");
+        }
     };
 
-    loadDashboardMovies();
-  }, []);
+    const handleWatchlistToggle = async () => {
+        if (!movieOfTheDay) return;
+        const token = localStorage.getItem("token");
+        if (!token) { alert("Please login to use your watchlist."); return; }
 
-  const movieOfTheDay = movies[0];
-
-  const trendingMovies = movies.slice(1, 4);
-
-  useEffect(() => {
-    const checkMovieWatchlist = async () => {
-      if (!movieOfTheDay) {
-        return;
-      }
-
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setIsInWatchlist(false);
-        return;
-      }
-
-      try {
-        const result = await checkWatchlist(movieOfTheDay.id);
-
-        setIsInWatchlist(
-          result === true ||
-            result?.exists === true ||
-            result?.inWatchlist === true,
-        );
-      } catch (error) {
-        console.error("Failed to check watchlist:", error);
-
-        setIsInWatchlist(false);
-      }
+        try {
+            setWatchlistLoading(true);
+            if (isInWatchlist) {
+                await removeFromWatchlist(movieOfTheDay.id);
+                setIsInWatchlist(false);
+            } else {
+                await addToWatchlist(movieOfTheDay);
+                setIsInWatchlist(true);
+            }
+        } catch (error) {
+            console.error("Failed to update watchlist:", error);
+            if (error.response?.status === 401) {
+                alert("Please login to use your watchlist.");
+            } else if (error.response?.status === 403) {
+                alert("Access denied. Please login again.");
+            } else if (error.response?.status === 409) {
+                setIsInWatchlist(true);
+            } else {
+                alert("Unable to update your watchlist. Please try again.");
+            }
+        } finally {
+            setWatchlistLoading(false);
+        }
     };
 
-    checkMovieWatchlist();
-  }, [movieOfTheDay]);
+    return (
+        <div
+            className={`min-h-screen bg-bg text-text antialiased ${
+                fromLogin ? "cinematic-dashboard-entrance" : ""
+            }`}
+        >
+            <Navbar />
 
-  const formatRating = (rating) => {
-    if (!rating) {
-      return "0.0";
-    }
+            <main className="w-full pb-8">
 
-    return Number(rating).toFixed(1);
-  };
-
-  const mapTrendingMovie = (movie) => ({
-    id: movie.id,
-    title: movie.title,
-    genre: "MOVIE",
-    rating: formatRating(movie.vote_average),
-    image: getPosterUrl(movie.poster_path),
-  });
-
-  const handleWatchTrailer = async () => {
-    if (!movieOfTheDay) {
-      return;
-    }
-
-    try {
-      const data = await getMovieVideos(movieOfTheDay.id);
-
-      const trailer =
-        data.results?.find(
-          (video) =>
-            video.site === "YouTube" &&
-            video.type === "Trailer" &&
-            video.official,
-        ) ||
-        data.results?.find(
-          (video) => video.site === "YouTube" && video.type === "Trailer",
-        );
-
-      if (trailer) {
-        window.open(
-          `https://www.youtube.com/watch?v=${trailer.key}`,
-          "_blank",
-          "noopener,noreferrer",
-        );
-      } else {
-        alert("Trailer not available.");
-      }
-    } catch (error) {
-      console.error("Failed to load trailer:", error);
-
-      alert("Unable to load trailer.");
-    }
-  };
-
-  const handleWatchlistToggle = async () => {
-    if (!movieOfTheDay) {
-      return;
-    }
-
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Please login to use your watchlist.");
-      return;
-    }
-
-    try {
-      setWatchlistLoading(true);
-
-      if (isInWatchlist) {
-        await removeFromWatchlist(movieOfTheDay.id);
-
-        setIsInWatchlist(false);
-      } else {
-        await addToWatchlist(movieOfTheDay);
-
-        setIsInWatchlist(true);
-      }
-    } catch (error) {
-      console.error("Failed to update watchlist:", error);
-
-      if (error.response?.status === 401) {
-        alert("Please login to use your watchlist.");
-      } else if (error.response?.status === 403) {
-        alert("Access denied. Please login again.");
-      } else if (error.response?.status === 409) {
-        setIsInWatchlist(true);
-      } else {
-        alert("Unable to update your watchlist. Please try again.");
-      }
-    } finally {
-      setWatchlistLoading(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-[#0B0D0F] text-[#e0e3e8] antialiased">
-      <Navbar />
-
-      <main className="w-full pb-8 pt-20">
-        <section className="relative mb-16 h-[614px] min-h-[500px] w-full overflow-hidden">
-          {movieOfTheDay && (
-            <img
-              src={getBackdropUrl(movieOfTheDay.backdrop_path)}
-              alt={movieOfTheDay.title}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[rgba(10,10,10,0.7)] to-[rgba(10,10,10,0.2)]" />
-
-          <div className="absolute bottom-0 left-0 w-full px-5 pb-12 pt-32 md:px-16">
-            <div className="mx-auto max-w-[1400px]">
-              <div className="mb-4 inline-block rounded-full border border-[#43fe6d]/30 bg-[#43fe6d]/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#43fe6d] backdrop-blur-sm">
-                Movie of the Day
-              </div>
-
-              {loading ? (
-                <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white md:text-[64px] md:leading-[72px]">
-                  Loading...
-                </h1>
-              ) : movieOfTheDay ? (
-                <>
-                  <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white drop-shadow-lg md:text-[64px] md:leading-[72px]">
-                    {movieOfTheDay.title}
-                  </h1>
-
-                  <p className="mb-8 max-w-2xl text-base leading-6 text-[#bacbb6] drop-shadow-md">
-                    {movieOfTheDay.overview}
-                  </p>
-
-                  <div className="flex flex-wrap gap-4">
-                    <button
-                      type="button"
-                      onClick={handleWatchTrailer}
-                      className="flex cursor-pointer items-center gap-2 rounded-lg bg-[#43fe6d] px-6 py-3 text-base font-semibold text-[#00390f] transition-colors hover:bg-[#6cff80]"
-                    >
-                      <span className="material-symbols-outlined filled">
-                        play_arrow
-                      </span>
-                      Watch Trailer
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleWatchlistToggle}
-                      disabled={watchlistLoading}
-                      className={`flex cursor-pointer items-center gap-2 rounded-lg border px-6 py-3 text-base font-semibold backdrop-blur-md transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
-                        isInWatchlist
-                          ? "border-[#43fe6d]/40 bg-[#43fe6d]/20 text-[#43fe6d] hover:bg-[#43fe6d]/30"
-                          : "border-[#262626] bg-[#1c2024]/50 text-[#e0e3e8] hover:bg-[#1c2024]"
-                      }`}
-                    >
-                      <span className="material-symbols-outlined">
-                        {watchlistLoading
-                          ? "progress_activity"
-                          : isInWatchlist
-                            ? "check"
-                            : "add"}
-                      </span>
-
-                      {watchlistLoading
-                        ? "Updating..."
-                        : isInWatchlist
-                          ? "In Watchlist"
-                          : "Add to Watchlist"}
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <h1 className="mb-4 text-4xl font-extrabold text-white">
-                  No movie available
-                </h1>
-              )}
-            </div>
-          </div>
-        </section>
-
-        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-12 px-5 md:px-16 lg:grid-cols-12">
-          <div className="space-y-16 lg:col-span-8">
-            <div>
-              <h2 className="mb-2 text-2xl font-bold text-[#e0e3e8] md:text-[32px] md:leading-10">
-                Welcome back, Cinephile 🎬.
-              </h2>
-
-              <p className="text-base leading-6 text-[#a0a0a0]">
-                Your cinematic journey continues.
-              </p>
-            </div>
-
-            <section className="space-y-6">
-              <div className="flex items-end justify-between border-b border-[#262626] pb-4">
-                <h3 className="text-2xl font-bold text-[#e0e3e8]">
-                  Recent Activity
-                </h3>
-
-                <Link
-                  to="/myreviews"
-                  className="text-xs font-semibold tracking-wider text-[#43fe6d] transition-colors hover:text-[#6cff80]"
-                >
-                  VIEW ALL
-                </Link>
-              </div>
-
-              <div className="space-y-6">
-                {error ? (
-                  <p className="text-[#a0a0a0]">{error}</p>
-                ) : (
-                  <p className="text-[#a0a0a0]">
-                    Your recent reviews and activity will appear here.
-                  </p>
-                )}
-              </div>
-            </section>
-          </div>
-
-          <aside className="space-y-12 lg:col-span-4">
-            <section>
-              <div className="mb-6 flex items-end justify-between border-b border-[#262626] pb-2">
-                <h3 className="text-xl font-semibold text-[#e0e3e8]">
-                  Trending
-                </h3>
-
-                <Link
-                  to="/trending"
-                  className="text-xs font-semibold tracking-wider text-[#43fe6d] transition-colors hover:text-[#6cff80]"
-                >
-                  MORE
-                </Link>
-              </div>
-
-                <div className="space-y-4">
-                    {loading ? (
-                        <p className="text-[#a0a0a0]">Loading trending movies...</p>
-                    ) : trendingMovies.length > 0 ? (
-                        trendingMovies.map((movie) => (
-                            <Link
-                                to={`/movies/${movie.id}`}
-                                key={movie.id}
-                            >
-                                <TrendingMovieCard
-                                    movie={mapTrendingMovie(movie)}
-                                />
-                            </Link>
-                        ))
-                    ) : (
-                        <p className="text-[#a0a0a0]">
-                            No trending movies available.
-                        </p>
+                {/* ── Hero: Film of the Day ── */}
+                <section className="relative mb-10 min-h-[360px] w-full overflow-hidden sm:mb-16 sm:min-h-[480px] md:h-[540px] lg:h-[600px]">
+                    {movieOfTheDay && (
+                        <img
+                            src={getBackdropUrl(movieOfTheDay.backdrop_path)}
+                            alt={movieOfTheDay.title}
+                            className="absolute inset-0 h-full w-full object-cover opacity-40"
+                        />
                     )}
-                </div>
-            </section>
-          </aside>
-        </div>
-      </main>
 
-      <Footer />
-    </div>
-  );
+                    <div className="absolute inset-0 hero-gradient" />
+                    <div className="absolute inset-0 hero-gradient-side" />
+
+                    <div className="absolute bottom-0 left-0 w-full px-4 pb-8 pt-20 sm:px-6 sm:pb-12 md:px-10 lg:px-16">
+                        <div className="mx-auto max-w-[1200px]">
+                            <div className="mb-3 inline-block">
+                                <span className="badge badge-accent">Featured Today</span>
+                            </div>
+
+                            {loading ? (
+                                <div className="h-10 w-64 skeleton rounded mb-4" />
+                            ) : movieOfTheDay ? (
+                                <>
+                                    <h1 className="mb-4 font-serif text-2xl font-semibold tracking-tight text-text sm:text-4xl md:text-5xl lg:text-6xl break-words">
+                                        {movieOfTheDay.title}
+                                    </h1>
+
+                                    <p className="mb-6 sm:mb-8 max-w-2xl text-sm sm:text-base leading-relaxed text-text-2 line-clamp-3 sm:line-clamp-4 md:line-clamp-none">
+                                        {movieOfTheDay.overview}
+                                    </p>
+
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+                                        <button
+                                            type="button"
+                                            onClick={handleWatchTrailer}
+                                            className="btn-primary text-sm py-2.5 px-6"
+                                        >
+                                            <span className="material-symbols-outlined text-[18px]">play_arrow</span>
+                                            Watch Trailer
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={handleWatchlistToggle}
+                                            disabled={watchlistLoading}
+                                            className={`text-sm py-2.5 px-6 rounded-full border font-semibold backdrop-blur-md transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60 ${
+                                                isInWatchlist
+                                                    ? "bg-accent/20 border-accent/40 text-accent hover:bg-accent/30"
+                                                    : "border-border bg-surface/50 text-text-2 hover:bg-surface"
+                                            }`}
+                                        >
+                                            <span className="material-symbols-outlined text-[18px]">
+                                                {watchlistLoading ? "progress_activity" : isInWatchlist ? "check" : "add"}
+                                            </span>
+                                            {watchlistLoading ? "Updating…" : isInWatchlist ? "In Watchlist" : "Add to Watchlist"}
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <h1 className="text-2xl font-serif font-semibold text-text">No film available</h1>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── Main Grid ── */}
+                <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-8 px-4 sm:px-6 md:gap-12 md:px-10 lg:grid-cols-12 lg:px-12">
+
+                    {/* ── Left column ── */}
+                    <div className="space-y-10 sm:space-y-14 lg:col-span-8">
+                        <div>
+                            <h2 className="font-serif text-xl font-semibold text-text sm:text-2xl">
+                                Welcome back, Cinephile.
+                            </h2>
+                            <p className="mt-1 text-sm text-text-3">
+                                Your cinematic journey continues.
+                            </p>
+                        </div>
+
+                        {/* Recent Activity */}
+                        <section className="space-y-5">
+                            <div className="section-header">
+                                <h3 className="section-title">Recent Activity</h3>
+                                <Link to="/myreviews" className="section-link">
+                                    View all
+                                </Link>
+                            </div>
+
+                            <div className="space-y-4">
+                                {error ? (
+                                    <p className="text-sm text-text-3">{error}</p>
+                                ) : (
+                                    <p className="text-sm text-text-3">
+                                        Your recent reviews and activity will appear here.
+                                    </p>
+                                )}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* ── Right sidebar ── */}
+                    <aside className="space-y-10 lg:col-span-4">
+                        <section>
+                            <div className="section-header mb-5">
+                                <h3 className="section-title">Trending</h3>
+                                <Link to="/trending" className="section-link">More</Link>
+                            </div>
+
+                            <div className="space-y-3">
+                                {loading ? (
+                                    <>
+                                        <div className="aspect-[16/9] w-full skeleton rounded-lg" />
+                                        <div className="aspect-[16/9] w-full skeleton rounded-lg" />
+                                        <div className="aspect-[16/9] w-full skeleton rounded-lg" />
+                                    </>
+                                ) : trendingMovies.length > 0 ? (
+                                    trendingMovies.map((movie) => (
+                                        <Link to={`/movies/${movie.id}`} key={movie.id} className="block no-underline">
+                                            <TrendingMovieCard movie={mapTrendingMovie(movie)} />
+                                        </Link>
+                                    ))
+                                ) : (
+                                    <p className="text-sm text-text-3">No trending films available.</p>
+                                )}
+                            </div>
+                        </section>
+                    </aside>
+                </div>
+            </main>
+
+            <Footer />
+        </div>
+    );
 }
 
 export default UserDashboard;

@@ -4,7 +4,7 @@ function CriticStandardTip() {
     return (
         <div className="bg-[#181c20] rounded-xl p-5 shadow-sm">
             <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-[#262a2f] flex items-center justify-center flex-shrink-0 text-[#43fe6d]">
+                <div className="w-8 h-8 rounded-full bg-[#262a2f] flex items-center justify-center flex-shrink-0 text-[#C9A86A]">
                     <Icon className="text-[18px]">
                         verified
                     </Icon>

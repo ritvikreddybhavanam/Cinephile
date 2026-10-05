@@ -50,7 +50,8 @@ public class WatchedMovieService {
             Integer year,
             String genre,
             String service,
-            Double rating
+            Double rating,
+            String language
     ) {
 
         User user = userRepository
@@ -80,6 +81,7 @@ public class WatchedMovieService {
         watchedMovie.setGenre(genre);
         watchedMovie.setService(service);
         watchedMovie.setRating(rating);
+        watchedMovie.setLanguage(language);
 
         return watchedMovieRepository.save(
                 watchedMovie

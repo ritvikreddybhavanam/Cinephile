@@ -18,6 +18,7 @@ import UserDashboard from "../pages/user/dashboard/UserDashboard.jsx";
 import Movies from "../pages/user/movies/Movies.jsx";
 import MovieDetails from "../pages/user/movies/MovieDetails.jsx";
 import Trending from "../pages/user/movies/Trending.jsx";
+import NewReleases from "../pages/user/movies/NewReleases.jsx";
 import Genres from "../pages/user/movies/Genres.jsx";
 import WatchedFilms from "../pages/user/movies/WatchedFilms.jsx";
 
@@ -45,6 +46,7 @@ import Privacy from "../pages/navbar_pages/Privacy.jsx";
 import TermsOfService from "../pages/navbar_pages/TermsOfService.jsx";
 import People from "../pages/user/people/People.jsx";
 import MoviesLanguage from "../pages/user/movies/MoviesLanguage.jsx";
+import LanguageDetails from "../pages/user/movies/LanguageDetails.jsx";
 
 function AppRoutes() {
     return (
@@ -123,6 +125,15 @@ function AppRoutes() {
                 element={
                     <PrivateRoute>
                         <Trending />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/new-releases"
+                element={
+                    <PrivateRoute>
+                        <NewReleases />
                     </PrivateRoute>
                 }
             />
@@ -261,6 +272,24 @@ function AppRoutes() {
                         <MoviesLanguage />
                     </PrivateRoute>
                 } />
+
+            <Route
+                path="/languages/:languageCode"
+                element={
+                    <PrivateRoute>
+                        <LanguageDetails />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/language/:languageCode"
+                element={
+                    <PrivateRoute>
+                        <LanguageDetails />
+                    </PrivateRoute>
+                }
+            />
 
         </Routes>
     );

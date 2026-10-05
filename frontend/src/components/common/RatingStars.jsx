@@ -1,12 +1,18 @@
 function RatingStars({ rating = 0, max = 5 }) {
     return (
-        <div className="rating-stars" aria-label={`${rating} out of ${max} stars`}>
+        <div
+            className="flex items-center gap-0.5"
+            aria-label={`${rating} out of ${max} stars`}
+            role="img"
+        >
             {Array.from({ length: max }, (_, index) => (
                 <span
                     key={index}
-                    className={`material-symbols-outlined ${
-    index < rating ? "filled" : "empty"
-}`}
+                    className="material-symbols-outlined text-[16px]"
+                    style={{
+                        fontVariationSettings: "'FILL' 1",
+                        color: index < rating ? "var(--color-accent)" : "var(--color-border)",
+                    }}
                 >
                     star
                 </span>

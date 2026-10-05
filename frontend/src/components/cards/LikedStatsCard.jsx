@@ -13,43 +13,36 @@ function LikedStatsCard({
 }) {
     return (
         <div
-            className={`flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#181c20]/70 p-4 transition-colors hover:border-[#00e054]/40 ${className}`}
+            className={`flex flex-col justify-between rounded-lg border border-border bg-surface p-4 transition-all duration-200 hover:border-accent/30 hover:shadow-card ${className}`}
         >
-            <div className="mb-2 flex items-center justify-between text-[#8d9ba8]">
-                <span className="font-mono text-[11px] uppercase tracking-wider">
+            <div className="mb-3 flex items-center justify-between text-text-3">
+                <span className="text-[10px] font-semibold uppercase tracking-widest">
                     {label}
                 </span>
-
                 <Icon
                     className={`text-[18px] ${iconClass}`}
-                    style={
-                        filledIcon
-                            ? { fontVariationSettings: "'FILL' 1" }
-                            : undefined
-                    }
+                    style={filledIcon ? { fontVariationSettings: "'FILL' 1" } : undefined}
                 >
                     {icon}
                 </Icon>
             </div>
 
             <div>
-                <div className="font-headline text-2xl font-bold text-white">
+                <div className="font-serif text-2xl font-semibold text-text">
                     {value}
-
                     {suffix && (
                         <span
                             className={
                                 suffix === "★"
-                                    ? "ml-1 text-lg text-yellow-500"
-                                    : "ml-1 font-sans text-xs font-normal text-[#8d9ba8]"
+                                    ? "ml-1 text-lg text-accent"
+                                    : "ml-1 text-xs font-normal text-text-3"
                             }
                         >
                             {suffix}
                         </span>
                     )}
                 </div>
-
-                <div className={`mt-1 font-mono text-[11px] ${footerClass}`}>
+                <div className={`mt-1 text-[11px] text-text-3 ${footerClass}`}>
                     {footer}
                 </div>
             </div>

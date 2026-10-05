@@ -12,7 +12,7 @@ function PersonPhotos({ images }) {
 
                 <div className="flex items-center gap-2">
 
-                    <span className="w-1.5 h-4 rounded bg-[#43fe6d]" />
+                    <span className="w-1.5 h-4 rounded bg-[#C9A86A]" />
 
                     <h2 className="text-2xl font-bold text-white tracking-tight">
                         PHOTOS

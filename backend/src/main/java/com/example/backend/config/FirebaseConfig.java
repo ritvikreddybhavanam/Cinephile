@@ -13,29 +13,30 @@ public class FirebaseConfig {
 
     @PostConstruct
     public void initializeFirebase() throws Exception {
-
-        InputStream serviceAccount =
-                getClass()
-                        .getClassLoader()
-                        .getResourceAsStream(
-                                "firebase-service-account.json"
-                        );
-
-        if (serviceAccount == null) {
-            throw new RuntimeException(
-                    "Firebase service account JSON file not found"
-            );
+        if (!FirebaseApp.getApps().isEmpty()) {
+            return;
         }
 
-        FirebaseOptions options =
-                FirebaseOptions.builder()
-                        .setCredentials(
-                                GoogleCredentials.fromStream(
-                                        serviceAccount
-                                )
-                        )
-                        .build();
+        try (InputStream serviceAccount = getClass()
+                .getClassLoader()
+                .getResourceAsStream("firebase-service-account.json")) {
 
-        FirebaseApp.initializeApp(options);
+            if (serviceAccount == null) {
+                throw new RuntimeException(
+                        "Firebase service account JSON file not found"
+                );
+            }
+
+            FirebaseOptions options =
+                    FirebaseOptions.builder()
+                            .setCredentials(
+                                    GoogleCredentials.fromStream(
+                                            serviceAccount
+                                    )
+                            )
+                            .build();
+
+            FirebaseApp.initializeApp(options);
+        }
     }
 }

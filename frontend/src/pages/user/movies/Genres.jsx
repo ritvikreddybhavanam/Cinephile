@@ -202,53 +202,53 @@ export default function Genres() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0b0f13] text-gray-200 font-sans antialiased selection:bg-[#00e054] selection:text-black">
+        <div className="min-h-screen bg-bg text-text font-sans antialiased">
             <Navbar />
 
-            <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            <main className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8">
 
                 <section className="space-y-4">
-                    <div className="flex items-center justify-between">
+                    <div className="section-header">
                         <div>
-                            <h1 className="text-3xl sm:text-4xl font-black text-white">
-                                Explore Movies
+                            <p className="label-caps mb-1">Catalog Index</p>
+                            <h1 className="section-title text-3xl sm:text-4xl">
+                                Film Genres
                             </h1>
-
-                            <p className="text-sm text-gray-400 mt-1">
-                                Discover movies by genre
+                            <p className="text-xs sm:text-sm text-text-3 mt-1">
+                                Discover motion pictures by artistic category
                             </p>
                         </div>
 
-                        <span className="text-xs text-[#00e054] font-semibold">
+                        <span className="badge badge-accent">
                             {genres.length} Genres
                         </span>
                     </div>
 
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 text-xs">
+                    <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-2 text-xs max-w-full">
                         <button
                             onClick={() => handleGenre(null)}
-                            className={`whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
+                            className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full transition-all text-xs font-semibold ${
                                 activeGenre === null
-                                    ? "bg-[#00e054] text-[#070a0d] font-bold shadow-[0_0_25px_-5px_rgba(0,224,84,0.35)]"
-                                    : "bg-[#10151c] hover:bg-[#161c24] text-gray-300 border border-[#212936]"
+                                    ? "bg-accent text-bg shadow-[0_4px_16px_rgba(201,168,106,0.25)]"
+                                    : "bg-surface hover:bg-surface-2 text-text-2 border border-border"
                             }`}
                         >
                             All Genres
                         </button>
 
                         {genresLoading ? (
-                            <span className="px-4 py-2 text-gray-500">
-                                Loading genres...
+                            <span className="px-4 py-2 text-text-3 text-xs">
+                                Loading genres…
                             </span>
                         ) : (
                             genres.map((genre) => (
                                 <button
                                     key={genre.id}
                                     onClick={() => handleGenre(genre)}
-                                    className={`whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
+                                    className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full transition-all text-xs font-semibold ${
                                         activeGenre?.id === genre.id
-                                            ? "bg-[#00e054] text-[#070a0d] font-bold shadow-[0_0_25px_-5px_rgba(0,224,84,0.35)]"
-                                            : "bg-[#10151c] hover:bg-[#161c24] text-gray-300 border border-[#212936]"
+                                            ? "bg-accent text-bg shadow-[0_4px_16px_rgba(201,168,106,0.25)]"
+                                            : "bg-surface hover:bg-surface-2 text-text-2 border border-border"
                                     }`}
                                 >
                                     {genre.name}
@@ -258,20 +258,16 @@ export default function Genres() {
                     </div>
                 </section>
 
-                <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border pb-4">
                     <div>
-                        <h2 className="text-xl sm:text-2xl font-black text-white">
+                        <h2 className="font-serif text-xl sm:text-2xl font-semibold text-text">
                             {activeGenre
-                                ? `${activeGenre.name} Movies`
-                                : "All Movies"}
+                                ? `${activeGenre.name} Cinema`
+                                : "All Curated Cinema"}
                         </h2>
-
-                        <p className="text-xs text-gray-400 mt-1">
-                            Movies loaded from TMDB through your backend
-                        </p>
                     </div>
 
-                    <div className="flex items-center bg-[#161c24] p-1 rounded-xl border border-[#212936] text-xs font-semibold">
+                    <div className="flex items-center bg-surface p-1 rounded-full border border-border text-xs overflow-x-auto max-w-full">
                         {[
                             "Featured",
                             "Popular",
@@ -281,14 +277,10 @@ export default function Genres() {
                             <button
                                 key={sort}
                                 onClick={() => handleSort(sort)}
-                                className={`px-3.5 py-1.5 rounded-lg transition-all ${
+                                className={`whitespace-nowrap px-4 py-1.5 rounded-full transition-all font-semibold ${
                                     activeSort === sort
-                                        ? "bg-[#00e054] text-[#070a0d] font-bold shadow-sm"
-                                        : "text-gray-400 hover:text-white"
-                                } ${
-                                    sort === "Top Rated"
-                                        ? "hidden sm:inline-block"
-                                        : ""
+                                        ? "bg-accent text-bg"
+                                        : "text-text-3 hover:text-text"
                                 }`}
                             >
                                 {sort}
@@ -300,89 +292,72 @@ export default function Genres() {
                 <section className="space-y-6">
 
                     {loading && (
-                        <div className="flex justify-center py-20">
-                            <div className="w-10 h-10 border-4 border-[#212936] border-t-[#00e054] rounded-full animate-spin" />
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                            {Array.from({ length: 12 }).map((_, i) => (
+                                <div key={i} className="flex flex-col gap-2">
+                                    <div className="aspect-[2/3] w-full skeleton rounded-lg" />
+                                    <div className="h-3 w-3/4 skeleton rounded" />
+                                    <div className="h-2.5 w-1/2 skeleton rounded" />
+                                </div>
+                            ))}
                         </div>
                     )}
 
                     {!loading && error && (
                         <div className="text-center py-20">
-                            <p className="text-red-400 font-semibold">
+                            <p className="text-error font-semibold mb-4">
                                 {error}
                             </p>
-
                             <button
                                 onClick={handleRetry}
-                                className="mt-4 px-5 py-2 bg-[#00e054] text-[#070a0d] font-bold rounded-lg"
+                                className="btn-primary text-xs py-2 px-6"
                             >
                                 Try Again
                             </button>
                         </div>
                     )}
 
-                    {!loading &&
-                        !error &&
-                        movies.length === 0 && (
-                            <div className="text-center py-20">
-                                <p className="text-gray-400">
-                                    No movies found.
-                                </p>
-                            </div>
-                        )}
+                    {!loading && !error && movies.length === 0 && (
+                        <div className="text-center py-20">
+                            <p className="text-text-3 text-sm">
+                                No films discovered in this category.
+                            </p>
+                        </div>
+                    )}
 
-                    {!loading &&
-                        !error &&
-                        movies.length > 0 && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-5">
-                                {movies.map((movie) => (
-                                    <Link
-                                        key={`${movie.id}-${movie.title}`}
-                                        to={`/movies/${movie.id}`}
-                                        className="block"
-                                    >
-                                        <MovieCard movie={movie} />
-                                    </Link>
-                                ))}
-                            </div>
-                        )}
-
-                    {!loading &&
-                        !error &&
-                        movies.length > 0 &&
-                        hasMore && (
-                            <div className="flex justify-center pt-6 pb-4">
-                                <button
-                                    onClick={handleLoadMore}
-                                    disabled={loadingMore}
-                                    className="px-8 py-3 bg-[#161c24] hover:bg-[#212936] text-gray-200 hover:text-white font-semibold rounded-xl border border-[#212936] transition-all flex items-center gap-3 text-sm shadow-md hover:border-[#00e054]/60 disabled:opacity-60 disabled:cursor-not-allowed"
+                    {!loading && !error && movies.length > 0 && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                            {movies.map((movie) => (
+                                <Link
+                                    key={`${movie.id}-${movie.title}`}
+                                    to={`/movies/${movie.id}`}
+                                    className="block no-underline"
                                 >
-                                    {loadingMore ? (
-                                        <>
-                                            <span className="w-4 h-4 border-2 border-gray-500 border-t-[#00e054] rounded-full animate-spin" />
-                                            Loading...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span className="text-[#00e054]">
-                                                ↓
-                                            </span>
-                                            Load More
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                        )}
+                                    <MovieCard movie={movie} />
+                                </Link>
+                            ))}
+                        </div>
+                    )}
 
-                    {!loading &&
-                        !error &&
-                        movies.length > 0 &&
-                        !hasMore && (
-                            <div className="text-center pt-6 pb-4">
-                                <p className="text-xs text-gray-500">
-                                    No more movies to load
-                                </p>
-                            </div>
-                        )}
+                    {!loading && !error && movies.length > 0 && hasMore && (
+                        <div className="flex justify-center pt-6 pb-4">
+                            <button
+                                onClick={handleLoadMore}
+                                disabled={loadingMore}
+                                className="btn-secondary text-xs py-2.5 px-8"
+                            >
+                                {loadingMore ? "Loading More…" : "Load More Films ↓"}
+                            </button>
+                        </div>
+                    )}
+
+                    {!loading && !error && movies.length > 0 && !hasMore && (
+                        <div className="text-center pt-6 pb-4">
+                            <p className="text-xs text-text-3">
+                                You have viewed all films in this category.
+                            </p>
+                        </div>
+                    )}
                 </section>
             </main>
 

@@ -1,0 +1,13 @@
+{
+  "name": "cinephile",
+  "private": true,
+  "scripts": {
+    "frontend": "npm --prefix frontend run dev",
+    "backend": "cd backend && mvnw spring-boot:run",
+    "ml": "python -m uvicorn api.app:app --app-dir machine_learning --reload --port 8000",
+    "dev": "concurrently -n \"frontend,backend,ml\" -c \"cyan,magenta,yellow\" \"npm run frontend\" \"npm run backend\" \"npm run ml\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

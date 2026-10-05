@@ -2,52 +2,53 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <footer className="w-full border-t border-[#262626] bg-[#0b0d0f]">
-            <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-8 px-6 py-8 min-[801px]:px-16 max-[800px]:flex-col max-[800px]:items-center max-[800px]:text-center">
+        <footer className="w-full border-t border-border bg-surface mt-16">
+            <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-8 px-4 py-10 text-center sm:px-6 md:flex-row md:px-10 md:text-left lg:px-12">
 
-                <div className="footer-brand-section">
+                {/* Brand */}
+                <div>
                     <Link
                         to="/"
-                        className="font-['Hanken_Grotesk'] text-[32px] font-bold text-[#43fe6d] no-underline"
+                        className="font-serif text-2xl font-semibold text-accent no-underline"
+                        aria-label="Cinephile home"
                     >
-                        Cinephile 🎬
+                        Cinephile
                     </Link>
-
-                    <p className="mt-2 font-['Inter'] text-base text-[#a0a0a0]">
-                        © 2026 Cinephile 🎬. All rights reserved.
+                    <p className="mt-2 text-xs text-text-3 leading-relaxed max-w-[240px] md:max-w-none">
+                        A platform for serious film lovers.
+                    </p>
+                    <p className="mt-1 text-xs text-text-3">
+                        © {new Date().getFullYear()} Cinephile. All rights reserved.
                     </p>
                 </div>
 
-                <div className="flex flex-wrap gap-8 max-[800px]:justify-center max-[800px]:gap-x-6 max-[800px]:gap-y-4">
+                {/* Links */}
+                <nav aria-label="Footer navigation" className="flex flex-wrap justify-center gap-x-8 gap-y-3 md:justify-end">
                     <Link
                         to="/about"
-                        className="font-['Inter'] text-base text-[#a0a0a0] no-underline transition-colors duration-200 hover:text-[#e0e3e8]"
+                        className="text-sm text-text-3 no-underline transition-colors duration-200 hover:text-text"
                     >
-                        About Us
+                        About
                     </Link>
-
                     <Link
                         to="/community"
-                        className="font-['Inter'] text-base text-[#a0a0a0] no-underline transition-colors duration-200 hover:text-[#e0e3e8]"
+                        className="text-sm text-text-3 no-underline transition-colors duration-200 hover:text-text"
                     >
                         Community
                     </Link>
-
                     <Link
                         to="/privacy"
-                        className="font-['Inter'] text-base text-[#a0a0a0] no-underline transition-colors duration-200 hover:text-[#e0e3e8]"
+                        className="text-sm text-text-3 no-underline transition-colors duration-200 hover:text-text"
                     >
-                        Privacy Policy
+                        Privacy
                     </Link>
-
                     <Link
                         to="/terms"
-                        className="font-['Inter'] text-base text-[#a0a0a0] no-underline transition-colors duration-200 hover:text-[#e0e3e8]"
+                        className="text-sm text-text-3 no-underline transition-colors duration-200 hover:text-text"
                     >
-                        Terms of Service
+                        Terms
                     </Link>
-                </div>
-
+                </nav>
             </div>
         </footer>
     );

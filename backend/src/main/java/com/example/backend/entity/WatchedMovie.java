@@ -19,6 +19,7 @@ public class WatchedMovie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
@@ -46,6 +47,9 @@ public class WatchedMovie {
 
     private Double rating;
 
+    @Column(length = 20)
+    private String language;
+
     @Column(nullable = false)
     private LocalDateTime watchedAt;
 
@@ -61,6 +65,7 @@ public class WatchedMovie {
         return id;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public User getUser() {
         return user;
     }
@@ -123,6 +128,14 @@ public class WatchedMovie {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public LocalDateTime getWatchedAt() {

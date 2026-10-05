@@ -77,6 +77,11 @@ public class WatchedMovieController {
                         request.get("rating").toString()
                 );
 
+        String language =
+                request.get("language") == null
+                        ? null
+                        : request.get("language").toString();
+
         return ResponseEntity.ok(
                 watchedMovieService.addWatchedMovie(
                         email,
@@ -86,7 +91,8 @@ public class WatchedMovieController {
                         year,
                         genre,
                         service,
-                        rating
+                        rating,
+                        language
                 )
         );
     }

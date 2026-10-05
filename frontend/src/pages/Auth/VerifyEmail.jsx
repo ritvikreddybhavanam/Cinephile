@@ -67,7 +67,7 @@ function VerifyEmail() {
                 setVerified(true);
 
                 setMessage(
-                    "Email verified successfully. You can now create your Cinephile 🎬 account."
+                    "Email verified successfully. You can now create your Cinephile account."
                 );
             } else {
                 setVerified(false);
@@ -266,72 +266,62 @@ function VerifyEmail() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#0b0d0f] px-4 text-[#e0e3e8]">
-
+        <div className="flex min-h-screen items-center justify-center bg-bg px-4 text-text antialiased font-sans">
             <div className="w-full max-w-md">
-
-                <div className="rounded-2xl border border-[#262c30] bg-[#101418] p-8 shadow-[0_20px_70px_rgba(0,0,0,0.55)]">
-
+                <div className="rounded-lg border border-border bg-surface/90 backdrop-blur-md p-8 shadow-elevated">
                     <div className="text-center">
-
-                        <h1 className="font-['Hanken_Grotesk'] text-4xl font-extrabold text-[#43fe6d]">
-                            Cinephile 🎬
+                        <h1 className="font-serif text-3xl font-semibold text-accent tracking-tight">
+                            Cinephile
                         </h1>
 
-                        <div className="mx-auto mt-4 h-1 w-12 rounded-full bg-[#43fe6d]" />
-
-                        <h2 className="mt-6 text-2xl font-bold text-[#f1f3f4]">
-                            Verify your email
+                        <h2 className="mt-4 font-serif text-xl font-semibold text-text">
+                            Verify Your Email
                         </h2>
 
-                        <p className="mt-3 text-sm leading-6 text-[#92999f]">
-                            We sent a verification link to
+                        <p className="mt-2 text-xs text-text-3 leading-relaxed">
+                            We dispatched an authentication link to
                         </p>
 
-                        <p className="mt-1 break-all text-sm font-semibold text-[#43fe6d]">
+                        <p className="mt-1 break-all text-xs font-semibold text-accent">
                             {email || "your email address"}
                         </p>
-
                     </div>
 
                     {error && (
-                        <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3">
-                            <p className="text-sm leading-5 text-red-400">
+                        <div className="mt-6 rounded-lg border border-error/30 bg-error/10 px-4 py-3">
+                            <p className="text-xs leading-5 text-error">
                                 {error}
                             </p>
                         </div>
                     )}
 
                     {message && (
-                        <div className="mt-6 rounded-lg border border-[#43fe6d]/30 bg-[#43fe6d]/10 px-4 py-3">
-                            <p className="text-sm leading-5 text-[#43fe6d]">
+                        <div className="mt-6 rounded-lg border border-success/30 bg-success/10 px-4 py-3">
+                            <p className="text-xs leading-5 text-success">
                                 {message}
                             </p>
                         </div>
                     )}
 
                     {!verified ? (
-                        <div className="mt-8 space-y-4">
-
+                        <div className="mt-6 space-y-3">
                             <button
                                 type="button"
                                 onClick={checkVerification}
                                 disabled={checking}
-                                className="group flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#43fe6d] px-6 font-['Hanken_Grotesk'] text-base font-bold text-[#00390f] transition-all duration-200 hover:bg-[#6cff80] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="btn-primary w-full py-3 text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-2"
                             >
                                 {checking ? (
                                     <>
-                                        <span className="material-symbols-outlined animate-spin text-[20px]">
+                                        <span className="material-symbols-outlined animate-spin text-[18px]">
                                             progress_activity
                                         </span>
-
-                                        Checking...
+                                        Checking…
                                     </>
                                 ) : (
                                     <>
                                         I've Verified My Email
-
-                                        <span className="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:translate-x-1">
+                                        <span className="material-symbols-outlined text-[18px]">
                                             check_circle
                                         </span>
                                     </>
@@ -342,27 +332,24 @@ function VerifyEmail() {
                                 type="button"
                                 onClick={resendVerificationEmail}
                                 disabled={resending}
-                                className="w-full text-center text-sm text-[#777f85] transition-colors hover:text-[#43fe6d] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="w-full text-center text-xs text-text-3 transition-colors hover:text-accent disabled:cursor-not-allowed disabled:opacity-50 py-2"
                             >
                                 {resending
-                                    ? "Sending..."
-                                    : "Resend verification email"}
+                                    ? "Sending…"
+                                    : "Resend verification link"}
                             </button>
-
                         </div>
                     ) : (
                         <form
                             onSubmit={handleCreateAccount}
-                            className="mt-8 space-y-5"
+                            className="mt-6 space-y-4"
                         >
-
                             <div>
-
                                 <label
                                     htmlFor="password"
-                                    className="mb-2 block text-sm font-medium text-[#c7ced2]"
+                                    className="label-caps mb-1.5 block"
                                 >
-                                    Password
+                                    Set Password
                                 </label>
 
                                 <input
@@ -370,23 +357,19 @@ function VerifyEmail() {
                                     type="password"
                                     value={password}
                                     onChange={(event) =>
-                                        setPassword(
-                                            event.target.value
-                                        )
+                                        setPassword(event.target.value)
                                     }
                                     placeholder="Enter your password"
                                     required
                                     minLength={6}
-                                    className="h-12 w-full rounded-lg border border-[#2a3035] bg-[#181c20] px-4 text-sm text-[#e0e3e8] outline-none transition-all placeholder:text-[#5f666b] focus:border-[#43fe6d] focus:bg-[#1a1f23] focus:ring-2 focus:ring-[#43fe6d]/10"
+                                    className="mc-input rounded-lg text-sm"
                                 />
-
                             </div>
 
                             <div>
-
                                 <label
                                     htmlFor="confirmPassword"
-                                    className="mb-2 block text-sm font-medium text-[#c7ced2]"
+                                    className="label-caps mb-1.5 block"
                                 >
                                     Confirm Password
                                 </label>
@@ -396,57 +379,48 @@ function VerifyEmail() {
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(event) =>
-                                        setConfirmPassword(
-                                            event.target.value
-                                        )
+                                        setConfirmPassword(event.target.value)
                                     }
                                     placeholder="Confirm your password"
                                     required
                                     minLength={6}
-                                    className="h-12 w-full rounded-lg border border-[#2a3035] bg-[#181c20] px-4 text-sm text-[#e0e3e8] outline-none transition-all placeholder:text-[#5f666b] focus:border-[#43fe6d] focus:bg-[#1a1f23] focus:ring-2 focus:ring-[#43fe6d]/10"
+                                    className="mc-input rounded-lg text-sm"
                                 />
-
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={creating}
-                                className="group flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#43fe6d] px-6 font-['Hanken_Grotesk'] text-base font-bold text-[#00390f] transition-all duration-200 hover:bg-[#6cff80] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="btn-primary w-full py-3 text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-2 mt-4"
                             >
                                 {creating ? (
                                     <>
-                                        <span className="material-symbols-outlined animate-spin text-[20px]">
+                                        <span className="material-symbols-outlined animate-spin text-[18px]">
                                             progress_activity
                                         </span>
-
-                                        Creating Account...
+                                        Creating Account…
                                     </>
                                 ) : (
                                     <>
-                                        Verify & Create Account
-
-                                        <span className="material-symbols-outlined text-[20px]">
+                                        Complete Registration
+                                        <span className="material-symbols-outlined text-[18px]">
                                             arrow_forward
                                         </span>
                                     </>
                                 )}
                             </button>
-
                         </form>
                     )}
 
                     <button
                         type="button"
                         onClick={() => navigate("/register")}
-                        className="mt-6 w-full text-center text-sm text-[#777f85] transition-colors hover:text-[#43fe6d]"
+                        className="mt-6 w-full text-center text-xs text-text-3 transition-colors hover:text-accent"
                     >
                         ← Back to Registration
                     </button>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

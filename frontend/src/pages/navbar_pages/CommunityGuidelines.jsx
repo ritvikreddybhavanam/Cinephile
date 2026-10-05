@@ -20,7 +20,7 @@ const CommunityGuidelines = () => {
         <div className="bg-surface text-on-surface antialiased min-h-screen">
             <Navbar />
 
-            <main className="w-full pt-16 bg-surface min-h-screen">
+            <main className="w-full bg-surface min-h-screen">
                 <div className="relative w-full overflow-hidden">
 
                     {/* Ambient Glow */}
@@ -48,8 +48,8 @@ const CommunityGuidelines = () => {
                             </p>
 
                             <p className="font-body-lg text-body-lg text-text-dim leading-relaxed pt-2">
-                                Cinephile 🎬 was founded as an intimate haven for the moving
-                                image—a quiet, darkened hall where Cinephile 🎬s, practitioners,
+                                Cinephile was founded as an intimate haven for the moving
+                                image—a quiet, darkened hall where Cinephiles, practitioners,
                                 and first-time voyeurs dissect visual language, historical
                                 weight, and emotional resonance. Our platform prioritizes
                                 intentional discourse over reactionary static. Participation
@@ -78,7 +78,7 @@ const CommunityGuidelines = () => {
                     </span>
 
                                         <p className="font-title-md text-title-md text-text-main">
-                                            A sanctuary engineered for discerning Cinephile 🎬s.
+                                            A sanctuary engineered for discerning Cinephiles.
                                         </p>
                                     </div>
 
@@ -148,7 +148,7 @@ const CommunityGuidelines = () => {
                                     icon="edit_note"
                                     color="text-primary"
                                     title="Original Thought & Integrity"
-                                    description="Write what you see and feel. Plagiarism, algorithmic automated scraping, uncredited regurgitation of academic papers, and coordinated review bombing are fundamentally antithetical to Cinephile 🎬. Accounts running bot syndicates or spamming 1-star brigades face permanent revocation."
+                                    description="Write what you see and feel. Plagiarism, algorithmic automated scraping, uncredited regurgitation of academic papers, and coordinated review bombing are fundamentally antithetical to Cinephile. Accounts running bot syndicates or spamming 1-star brigades face permanent revocation."
                                     footer="Quality: Authentic Authorship"
                                 />
 
@@ -226,7 +226,7 @@ const CommunityGuidelines = () => {
                                 <p className="font-body-sm text-body-sm text-text-dim leading-relaxed">
                                     Believe your essay was erroneously flagged? We honor
                                     context. Authors can trigger a secondary assessment by our
-                                    Cinephile 🎬 Trust Panel within 14 days of any enforcement
+                                    Cinephile Trust Panel within 14 days of any enforcement
                                     decision.
                                 </p>
                             </div>
@@ -293,7 +293,7 @@ const CommunityGuidelines = () => {
                                         setSubmitted(false);
                                         setShowModal(true);
                                     }}
-                                    className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-primary text-on-primary font-metadata text-metadata font-bold flex items-center justify-center gap-2.5 transition-all duration-200 hover:opacity-95 shadow-[0_0_24px_rgba(67,254,109,0.35)] active:scale-[0.98]"
+                                    className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-primary text-on-primary font-metadata text-metadata font-bold flex items-center justify-center gap-2.5 transition-all duration-200 hover:opacity-95 shadow-[0_0_24px_rgba(201,168,106,0.25)] active:scale-[0.98]"
                                 >
                   <span className="material-symbols-outlined text-[20px]">
                     flag
@@ -451,7 +451,7 @@ const CommunityGuidelines = () => {
 
                                     <p className="font-body-sm text-body-sm text-text-dim">
                                         Our team has initiated an archival integrity audit. Thank
-                                        you for safeguarding Cinephile 🎬.
+                                        you for safeguarding Cinephile.
                                     </p>
 
                                     <button

@@ -6,10 +6,10 @@ const AboutUs = () => {
     <div className="bg-surface text-on-surface antialiased min-h-screen">
       <Navbar />
 
-      <main className="w-full pt-16 bg-surface min-h-[calc(100vh-280px)]">
+      <main className="w-full bg-surface min-h-[calc(100vh-280px)]">
 
         {/* Hero Section */}
-        <section className="relative max-w-7xl mx-auto px-margin-sm md:px-margin-md pt-12 md:pt-20 pb-16 md:pb-24 flex flex-col gap-10">
+        <section className="relative max-w-[1200px] mx-auto px-margin-sm md:px-margin-md pt-12 md:pt-20 pb-16 md:pb-24 flex flex-col gap-10">
 
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -33,12 +33,12 @@ const AboutUs = () => {
               <h1 className="font-display-lg text-display-lg text-text-main tracking-tight font-extrabold">
                 About{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-text-main via-on-surface to-primary">
-                  Cinephile 🎬
+                  Cinephile
                 </span>
               </h1>
 
               <p className="font-title-md text-title-md text-text-dim font-light leading-relaxed">
-                The Definitive Journal for Cinephile 🎬s.
+                The Definitive Journal for Cinephiles.
               </p>
             </div>
 
@@ -99,7 +99,7 @@ const AboutUs = () => {
         {/* Statistics */}
         <section className="w-full bg-surface-container-lowest py-12 md:py-16">
 
-          <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md">
+          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
 
@@ -140,7 +140,7 @@ const AboutUs = () => {
         </section>
 
         {/* Curated Manifesto */}
-        <section className="max-w-7xl mx-auto px-margin-sm md:px-margin-md py-16 md:py-24 flex flex-col gap-12">
+        <section className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md py-16 md:py-24 flex flex-col gap-12">
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
 
@@ -195,7 +195,7 @@ const AboutUs = () => {
               icon="forum"
               title="Community Critique"
               color="text-rating-star"
-              description="A space built for discourse that values insight over hot takes. Our community celebrates verified critics, passionate scholars, festival programmers, and curious Cinephile 🎬s sharing nuanced perspectives."
+              description="A space built for discourse that values insight over hot takes. Our community celebrates verified critics, passionate scholars, festival programmers, and curious Cinephiles sharing nuanced perspectives."
               link="Community Standards"
             />
 
@@ -205,7 +205,7 @@ const AboutUs = () => {
         {/* Team Section */}
         <section className="w-full bg-surface-container-lowest/70 py-16 md:py-24">
 
-          <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md flex flex-col gap-12">
+          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md flex flex-col gap-12">
 
             <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
 
@@ -230,9 +230,9 @@ const AboutUs = () => {
               <TeamCard
                 name="Elena Vance"
                 role="EDITOR-IN-CHIEF"
-                subtitle="Former Festival Programmer, Cannes Cinephile 🎬s"
+                subtitle="Former Festival Programmer, Cannes Cinephiles"
                 image="https://lh3.googleusercontent.com/aida-public/AB6AXuDXyEyQwgWI60kuH1x_CfF0jMQmHtJE3lsR_IVvQ936ZgxtuSI0QIRj4b5CsL2owqHXV-7VQRXnxiUjTcjj5mk2UPV3vVJXoPNqtT5xcfFYoMzd6asU9g5b-x6DVBY9_739Ivjc-dNmEu7jpXI25K0ex9okCtesZOGjaeeB24gey5jaPHoAnyOeAfEm_GtgLj2bfMPwSPeeSdmauGIt3A7HJIwgcCHe7-uyoyDM9cyyJQmHyCjAVKkT"
-                description="Leads critical curation and the quarterly Cinephile 🎬 print monographs. Deep specialist in European post-war realism and modern French cinema."
+                description="Leads critical curation and the quarterly Cinephile print monographs. Deep specialist in European post-war realism and modern French cinema."
                 stat="42 Monographs Edited"
                 icon="menu_book"
                 color="text-primary"
@@ -271,7 +271,7 @@ const AboutUs = () => {
                 </span>
 
                 <p className="font-body-sm text-body-sm text-on-surface leading-relaxed">
-                  Cinephile 🎬 is fully patron- and subscriber-sustained. We carry
+                  Cinephile is fully patron- and subscriber-sustained. We carry
                   no tracking cookies, display programmatic banners, or
                   algorithmic sponsored placements. Our sole responsibility is
                   to the cinematic art form and the people who cherish it.
@@ -295,7 +295,7 @@ const AboutUs = () => {
         </section>
 
         {/* Community Section */}
-        <section className="max-w-7xl mx-auto px-margin-sm md:px-margin-md py-16 md:py-20">
+        <section className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md py-16 md:py-20">
 
           <div className="bg-surface-container-low rounded-2xl p-8 md:p-12 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-10">
 
@@ -311,7 +311,7 @@ const AboutUs = () => {
 
               <p className="font-body-sm text-body-sm text-text-dim leading-relaxed">
                 Are you a film historian, festival curator, or technical
-                colorist? Cinephile 🎬 accepts community contributions for missing
+                colorist? Cinephile accepts community contributions for missing
                 release prints, lost audio tracks, and rare regional premiere
                 documentation.
               </p>
@@ -404,7 +404,7 @@ const AboutUs = () => {
         {/* Contact Section */}
         <section className="w-full pb-16 md:pb-24">
 
-          <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md">
+          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
 
             <div className="p-8 md:p-12 rounded-2xl bg-surface-container-lowest flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-sm">
 

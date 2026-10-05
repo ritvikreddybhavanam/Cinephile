@@ -35,7 +35,7 @@ function ReviewActions() {
 
                 <button
                     type="button"
-                    className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#00e054] text-[#00390f] hover:bg-[#43fe6d] transition-all text-sm font-bold shadow-lg shadow-[#43fe6d]/20 flex items-center justify-center gap-2 transform active:scale-95"
+                    className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#C9A86A] text-[#0B0C10] hover:bg-[#C9A86A] transition-all text-sm font-bold shadow-lg shadow-[#C9A86A]/20 flex items-center justify-center gap-2 transform active:scale-95"
                 >
                     <Icon className="text-[20px]">
                         publish

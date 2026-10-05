@@ -1,252 +1,1012 @@
-@import "tailwindcss";
+/* ============================================================
+   MIDNIGHT CINEMA — Design Token Foundation
+   All colors, typography, radius, motion and spacing live here.
+   Nothing is hardcoded in components.
+   ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
 
+@import "tailwindcss";
+
 @theme {
-    /* =========================
-       Colors
-       ========================= */
+    /* ========================
+       COLOR TOKENS
+       ======================== */
 
-    --color-surface-dim: #101418;
-    --color-on-background: #e0e3e8;
-    --color-on-secondary-container: #5e2b00;
-    --color-on-surface: #e0e3e8;
-    --color-on-secondary-fixed: #311300;
-    --color-on-error-container: #ffdad6;
-    --color-on-primary-fixed-variant: #00531a;
+    /* Page & surface backgrounds */
+    --color-bg:              #0B0C10;
+    --color-surface:         #14161C;
+    --color-surface-2:       #1B1E26;
 
-    --color-primary-container: #00e054;
+    /* Borders — 1px only */
+    --color-border:          #262A34;
 
-    --color-background: #101418;
-    --color-tertiary: #ffd5c5;
-    --color-on-error: #690005;
-    --color-on-secondary: #502400;
-    --color-surface: #101418;
+    /* Text hierarchy */
+    --color-text:            #ECE8E1;
+    --color-text-2:          #A6A29A;
+    --color-text-3:          #6E6B65;
 
-    --color-on-tertiary-fixed: #360f00;
-    --color-tertiary-fixed: #ffdbcd;
-    --color-surface-bright: #363a3e;
-    --color-on-surface-variant: #bacbb6;
+    /* Accent — champagne gold */
+    --color-accent:          #C9A86A;
+    --color-accent-hover:    #DDBF85;
+    --color-accent-soft:     rgba(201,168,106,0.12);
 
-    --color-secondary: #ffb787;
+    /* Semantic */
+    --color-wine:            #7C3A4B;
+    --color-success:         #7FA88C;
+    --color-error:           #C4646F;
 
-    --color-inverse-on-surface: #2d3135;
+    /* Legacy aliases kept for Tailwind class names */
+    --color-primary:         #C9A86A;
+    --color-on-primary:      #0B0C10;
 
-    --color-on-tertiary: #53220b;
-    --color-primary-fixed-dim: #15e558;
+    /* ========================
+       FONT FAMILIES
+       ======================== */
+    --font-serif:            "Fraunces", Georgia, serif;
+    --font-sans:             "Inter", system-ui, sans-serif;
 
-    --color-border-subtle: #262626;
+    /* Legacy display/body aliases */
+    --font-display-lg:       "Fraunces", Georgia, serif;
+    --font-headline-lg:      "Fraunces", Georgia, serif;
+    --font-body-lg:          "Inter", system-ui, sans-serif;
+    --font-body-md:          "Inter", system-ui, sans-serif;
+    --font-body-sm:          "Inter", system-ui, sans-serif;
+    --font-label-sm:         "Inter", system-ui, sans-serif;
+    --font-metadata:         "Inter", system-ui, sans-serif;
+    --font-label-caps:       "Inter", system-ui, sans-serif;
+    --font-title-md:         "Inter", system-ui, sans-serif;
 
-    --color-tertiary-fixed-dim: #ffb597;
-    --color-surface-tint: #15e558;
-    --color-tertiary-container: #ffaf8e;
-    --color-outline-variant: #3c4b3a;
+    /* ========================
+       BORDER RADIUS
+       ======================== */
+    --radius-sm:             6px;
+    --radius-DEFAULT:        10px;
+    --radius-md:             10px;
+    --radius-lg:             14px;
+    --radius-xl:             20px;
+    --radius-full:           9999px;
 
-    --color-error-container: #93000a;
-    --color-secondary-fixed-dim: #ffb787;
-    --color-error: #ffb4ab;
+    /* ========================
+       SPACING (8px grid)
+       ======================== */
+    --spacing-max-width:     1200px;
 
-    --color-on-primary-fixed: #002106;
+    /* ========================
+       SHADOWS
+       ======================== */
+    --shadow-card:           0 8px 30px rgba(0,0,0,0.45);
+    --shadow-card-hover:     0 12px 40px rgba(0,0,0,0.6);
+    --shadow-elevated:       0 20px 60px rgba(0,0,0,0.7);
 
-    --color-surface-container: #1c2024;
+    /* ========================
+       MOTION
+       ======================== */
+    --duration-fast:         150ms;
+    --duration-base:         200ms;
+    --duration-slow:         350ms;
+    --ease-default:          cubic-bezier(0.4, 0, 0.2, 1);
 
-    --color-on-primary: #00390f;
+    /* ========================
+       FONT SIZES (kept for legacy classes)
+       ======================== */
+    --text-display-lg:               48px;
+    --text-display-lg--line-height:  56px;
+    --text-display-lg--font-weight:  600;
 
-    --color-primary-fixed: #6cff80;
+    --text-headline-lg:              32px;
+    --text-headline-lg--line-height: 40px;
+    --text-headline-lg--font-weight: 600;
 
-    --color-on-tertiary-fixed-variant: #6f371f;
-
-    --color-surface-deep: #0B0D0F;
-
-    --color-surface-container-low: #181c20;
-
-    --color-surface-variant: #31353a;
-
-    --color-rating-gold: #eab308;
-
-    --color-text-muted: #a0a0a0;
-
-    --color-secondary-container: #ff8000;
-
-    --color-on-tertiary-container: #794026;
-
-    --color-inverse-primary: #006e25;
-
-    --color-surface-container-lowest: #0b0f12;
-
-    --color-outline: #859582;
-
-    --color-inverse-surface: #e0e3e8;
-
-    --color-on-primary-container: #005d1e;
-
-    --color-surface-container-highest: #31353a;
-
-    --color-primary: #43fe6d;
-
-    --color-on-secondary-fixed-variant: #723600;
-
-    --color-secondary-fixed: #ffdcc7;
-
-    --color-surface-container-high: #262a2f;
-
-    --color-surface-muted: #2C3440;
-
-    --color-text-main: #FFFFFF;
-
-    --color-rating-star: #FFCC00;
-
-    --color-text-dim: #99AABB;
-
-
-    /* =========================
-       Font Families
-       ========================= */
-
-    --font-display-lg: "Hanken Grotesk", sans-serif;
-    --font-body-lg: "Inter", sans-serif;
-    --font-title-md: "Hanken Grotesk", sans-serif;
-    --font-label-sm: "Inter", sans-serif;
-    --font-body-md: "Inter", sans-serif;
-    --font-headline-lg-mobile: "Hanken Grotesk", sans-serif;
-    --font-headline-lg: "Hanken Grotesk", sans-serif;
-    --font-metadata: "Inter", sans-serif;
-    --font-label-caps: "JetBrains Mono", monospace;
-    --font-body-sm: "Inter", sans-serif;
-
-
-    /* =========================
-       Border Radius
-       ========================= */
-
-    --radius-DEFAULT: 0.125rem;
-    --radius-lg: 0.25rem;
-    --radius-xl: 0.5rem;
-    --radius-full: 0.75rem;
-
-
-    /* =========================
-       Spacing
-       ========================= */
-
-    --spacing-stack-md: 16px;
-    --spacing-margin-desktop: 64px;
-    --spacing-gutter: 20px;
-    --spacing-stack-sm: 8px;
-    --spacing-margin-mobile: 20px;
-    --spacing-stack-lg: 32px;
-    --spacing-max-width: 1400px;
-    --spacing-margin-md: 40px;
-    --spacing-unit: 4px;
-    --spacing-margin-lg: 80px;
-    --spacing-margin-sm: 16px;
-    --spacing-poster-aspect: 66.666667%;
-
-
-    /* =========================
-       Font Sizes
-       ========================= */
-
-    --text-display-lg: 48px;
-    --text-display-lg--line-height: 56px;
-    --text-display-lg--letter-spacing: -0.02em;
-    --text-display-lg--font-weight: 800;
-
-    --text-body-lg: 16px;
+    --text-body-lg:              16px;
     --text-body-lg--line-height: 24px;
     --text-body-lg--font-weight: 400;
 
-    --text-title-md: 20px;
-    --text-title-md--line-height: 28px;
-    --text-title-md--font-weight: 600;
-
-    --text-label-sm: 12px;
-    --text-label-sm--line-height: 16px;
-    --text-label-sm--letter-spacing: 0.05em;
-    --text-label-sm--font-weight: 600;
-
-    --text-body-md: 16px;
+    --text-body-md:              15px;
     --text-body-md--line-height: 24px;
     --text-body-md--font-weight: 400;
 
-    --text-headline-lg-mobile: 24px;
-    --text-headline-lg-mobile--line-height: 32px;
-    --text-headline-lg-mobile--font-weight: 700;
+    --text-body-sm:              13px;
+    --text-body-sm--line-height: 20px;
+    --text-body-sm--font-weight: 400;
 
-    --text-headline-lg: 32px;
-    --text-headline-lg--line-height: 40px;
-    --text-headline-lg--font-weight: 700;
+    --text-label-sm:                    11px;
+    --text-label-sm--line-height:       16px;
+    --text-label-sm--letter-spacing:    0.12em;
+    --text-label-sm--font-weight:       600;
 
-    --text-metadata: 13px;
+    --text-metadata:              13px;
     --text-metadata--line-height: 18px;
     --text-metadata--font-weight: 500;
 
-    --text-label-caps: 12px;
-    --text-label-caps--line-height: 16px;
-    --text-label-caps--letter-spacing: 0.05em;
-    --text-label-caps--font-weight: 500;
-
-    --text-body-sm: 14px;
-    --text-body-sm--line-height: 20px;
-    --text-body-sm--font-weight: 400;
+    /* ========================
+       LEGACY COMPAT COLORS
+       (so old Tailwind classes still resolve)
+       ======================== */
+    --color-background:                 #0B0C10;
+    --color-surface-dim:                #0B0C10;
+    --color-on-background:              #ECE8E1;
+    --color-on-surface:                 #ECE8E1;
+    --color-on-surface-variant:         #A6A29A;
+    --color-surface-container:          #1B1E26;
+    --color-surface-container-low:      #14161C;
+    --color-surface-container-high:     #22263A;
+    --color-surface-container-highest:  #262A34;
+    --color-surface-container-lowest:   #0B0C10;
+    --color-surface-variant:            #1B1E26;
+    --color-surface-bright:             #22263A;
+    --color-surface-tint:               #C9A86A;
+    --color-surface-deep:               #0B0C10;
+    --color-surface-muted:              #14161C;
+    --color-outline:                    #262A34;
+    --color-outline-variant:            #262A34;
+    --color-border-subtle:              #262A34;
+    --color-text-muted:                 #6E6B65;
+    --color-text-dim:                   #A6A29A;
+    --color-text-main:                  #ECE8E1;
+    --color-rating-gold:                #C9A86A;
+    --color-rating-star:                #C9A86A;
+    --color-inverse-surface:            #ECE8E1;
+    --color-inverse-on-surface:         #14161C;
+    --color-inverse-primary:            #0B0C10;
+    --color-primary-container:          rgba(201,168,106,0.15);
+    --color-on-primary-container:       #C9A86A;
+    --color-primary-fixed:              #C9A86A;
+    --color-primary-fixed-dim:          #A68A52;
+    --color-on-primary-fixed:           #0B0C10;
+    --color-on-primary-fixed-variant:   #0B0C10;
+    --color-secondary:                  #A6A29A;
+    --color-on-secondary:               #0B0C10;
+    --color-secondary-container:        #1B1E26;
+    --color-on-secondary-container:     #ECE8E1;
+    --color-secondary-fixed:            #A6A29A;
+    --color-secondary-fixed-dim:        #6E6B65;
+    --color-on-secondary-fixed:         #ECE8E1;
+    --color-on-secondary-fixed-variant: #ECE8E1;
+    --color-tertiary:                   #7FA88C;
+    --color-on-tertiary:                #0B0C10;
+    --color-tertiary-container:         rgba(127,168,140,0.15);
+    --color-on-tertiary-container:      #7FA88C;
+    --color-tertiary-fixed:             #7FA88C;
+    --color-tertiary-fixed-dim:         #5A8A6A;
+    --color-on-tertiary-fixed:          #0B0C10;
+    --color-on-tertiary-fixed-variant:  #0B0C10;
+    --color-error:                      #C4646F;
+    --color-on-error:                   #0B0C10;
+    --color-error-container:            rgba(196,100,111,0.15);
+    --color-on-error-container:         #C4646F;
 }
 
+/* ============================================================
+   THEME VARIABLES — DARK (DEFAULT) & LIGHT MODES
+   ============================================================ */
 
-/* =========================
-   Global Styles
-   ========================= */
+:root,
+html.dark,
+[data-theme="dark"] {
+    /* Page & surface backgrounds */
+    --color-bg:                         #0B0C10;
+    --color-surface:                    #14161C;
+    --color-surface-2:                  #1B1E26;
+
+    /* Borders */
+    --color-border:                     #262A34;
+
+    /* Text hierarchy */
+    --color-text:                       #ECE8E1;
+    --color-text-2:                     #A6A29A;
+    --color-text-3:                     #6E6B65;
+
+    /* Accent — champagne gold */
+    --color-accent:                     #C9A86A;
+    --color-accent-hover:               #DDBF85;
+    --color-accent-soft:                rgba(201,168,106,0.12);
+
+    /* Semantic */
+    --color-wine:                       #7C3A4B;
+    --color-success:                    #7FA88C;
+    --color-error:                      #C4646F;
+
+    /* Button specific */
+    --color-btn-primary-text:           #0B0C10;
+
+    /* Shadows */
+    --shadow-card:                      0 8px 30px rgba(0,0,0,0.45);
+    --shadow-card-hover:                0 12px 40px rgba(0,0,0,0.6);
+    --shadow-elevated:                  0 20px 60px rgba(0,0,0,0.7);
+
+    /* Legacy aliases */
+    --color-background:                 #0B0C10;
+    --color-surface-dim:                #0B0C10;
+    --color-on-background:              #ECE8E1;
+    --color-on-surface:                 #ECE8E1;
+    --color-on-surface-variant:         #A6A29A;
+    --color-surface-container:          #1B1E26;
+    --color-surface-container-low:      #14161C;
+    --color-surface-container-high:     #22263A;
+    --color-surface-container-highest:  #262A34;
+    --color-surface-container-lowest:   #0B0C10;
+    --color-surface-variant:            #1B1E26;
+    --color-surface-bright:             #22263A;
+    --color-surface-tint:               #C9A86A;
+    --color-surface-deep:               #0B0C10;
+    --color-surface-muted:              #14161C;
+    --color-outline:                    #262A34;
+    --color-outline-variant:            #262A34;
+    --color-border-subtle:              #262A34;
+    --color-text-muted:                 #6E6B65;
+    --color-text-dim:                   #A6A29A;
+    --color-text-main:                  #ECE8E1;
+    --color-rating-gold:                #C9A86A;
+    --color-rating-star:                #C9A86A;
+    --color-inverse-surface:            #ECE8E1;
+    --color-inverse-on-surface:         #14161C;
+    --color-inverse-primary:            #0B0C10;
+    --color-primary:                    #C9A86A;
+    --color-on-primary:                 #0B0C10;
+    --color-primary-container:          rgba(201,168,106,0.15);
+    --color-on-primary-container:       #C9A86A;
+    --color-primary-fixed:              #C9A86A;
+    --color-primary-fixed-dim:          #A68A52;
+    --color-on-primary-fixed:           #0B0C10;
+    --color-on-primary-fixed-variant:   #0B0C10;
+    --color-secondary:                  #A6A29A;
+    --color-on-secondary:               #0B0C10;
+    --color-secondary-container:        #1B1E26;
+    --color-on-secondary-container:     #ECE8E1;
+    --color-secondary-fixed:            #A6A29A;
+    --color-secondary-fixed-dim:        #6E6B65;
+    --color-on-secondary-fixed:         #ECE8E1;
+    --color-on-secondary-fixed-variant: #ECE8E1;
+    --color-tertiary:                   #7FA88C;
+    --color-on-tertiary:                #0B0C10;
+    --color-tertiary-container:         rgba(127,168,140,0.15);
+    --color-on-tertiary-container:      #7FA88C;
+    --color-tertiary-fixed:             #7FA88C;
+    --color-tertiary-fixed-dim:         #5A8A6A;
+    --color-on-tertiary-fixed:          #0B0C10;
+    --color-on-tertiary-fixed-variant:  #0B0C10;
+    --color-error-container:            rgba(196,100,111,0.15);
+    --color-on-error-container:         #C4646F;
+}
+
+html.light,
+[data-theme="light"],
+.light {
+    /* Page & surface backgrounds — archival warm ivory */
+    --color-bg:                         #F8F6F0;
+    --color-surface:                    #FFFFFF;
+    --color-surface-2:                  #F0ECE1;
+
+    /* Borders */
+    --color-border:                     #E2DDD3;
+
+    /* Text hierarchy — ink slate */
+    --color-text:                       #191816;
+    --color-text-2:                     #545048;
+    --color-text-3:                     #8C867A;
+
+    /* Accent — warm bronze gold with high contrast */
+    --color-accent:                     #B38628;
+    --color-accent-hover:               #996F1D;
+    --color-accent-soft:                rgba(179, 134, 40, 0.12);
+
+    /* Semantic */
+    --color-wine:                       #872E44;
+    --color-success:                    #2E7D52;
+    --color-error:                      #C23847;
+
+    /* Button specific */
+    --color-btn-primary-text:           #FFFFFF;
+
+    /* Shadows */
+    --shadow-card:                      0 4px 20px rgba(28, 25, 23, 0.06), 0 1px 3px rgba(28, 25, 23, 0.04);
+    --shadow-card-hover:                0 10px 30px rgba(28, 25, 23, 0.12), 0 0 0 1px rgba(179, 134, 40, 0.35);
+    --shadow-elevated:                  0 16px 40px rgba(28, 25, 23, 0.12);
+
+    /* Legacy aliases */
+    --color-background:                 #F8F6F0;
+    --color-surface-dim:                #F2EFE8;
+    --color-on-background:              #191816;
+    --color-on-surface:                 #191816;
+    --color-on-surface-variant:         #545048;
+    --color-surface-container:          #F0ECE1;
+    --color-surface-container-low:      #FFFFFF;
+    --color-surface-container-high:     #E8E3D7;
+    --color-surface-container-highest:  #E0DACD;
+    --color-surface-container-lowest:   #FAF8F4;
+    --color-surface-variant:            #F0ECE1;
+    --color-surface-bright:             #FFFFFF;
+    --color-surface-tint:               #B38628;
+    --color-surface-deep:               #EDE8DE;
+    --color-surface-muted:              #F5F2EA;
+    --color-outline:                    #E2DDD3;
+    --color-outline-variant:            #D5CFC3;
+    --color-border-subtle:              #E2DDD3;
+    --color-text-muted:                 #8C867A;
+    --color-text-dim:                   #545048;
+    --color-text-main:                  #191816;
+    --color-rating-gold:                #B38628;
+    --color-rating-star:                #B38628;
+    --color-inverse-surface:            #14161C;
+    --color-inverse-on-surface:         #ECE8E1;
+    --color-inverse-primary:            #FFFFFF;
+    --color-primary:                    #B38628;
+    --color-on-primary:                 #FFFFFF;
+    --color-primary-container:          rgba(179, 134, 40, 0.12);
+    --color-on-primary-container:       #B38628;
+    --color-primary-fixed:              #B38628;
+    --color-primary-fixed-dim:          #996F1D;
+    --color-on-primary-fixed:           #FFFFFF;
+    --color-on-primary-fixed-variant:   #FFFFFF;
+    --color-secondary:                  #545048;
+    --color-on-secondary:               #FFFFFF;
+    --color-secondary-container:        #F0ECE1;
+    --color-on-secondary-container:     #191816;
+    --color-secondary-fixed:            #545048;
+    --color-secondary-fixed-dim:        #8C867A;
+    --color-on-secondary-fixed:         #191816;
+    --color-on-secondary-fixed-variant: #191816;
+    --color-tertiary:                   #2E7D52;
+    --color-on-tertiary:                #FFFFFF;
+    --color-tertiary-container:         rgba(46, 125, 82, 0.12);
+    --color-on-tertiary-container:      #2E7D52;
+    --color-tertiary-fixed:             #2E7D52;
+    --color-tertiary-fixed-dim:         #22603E;
+    --color-on-tertiary-fixed:          #FFFFFF;
+    --color-on-tertiary-fixed-variant:  #FFFFFF;
+    --color-error-container:            rgba(194, 56, 71, 0.12);
+    --color-on-error-container:         #C23847;
+}
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 html {
-    background: #0a0a0a;
+    background: var(--color-bg, #0B0C10);
+    overflow-x: hidden;
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.light {
+    color-scheme: light;
 }
 
 body {
     margin: 0;
     min-width: 320px;
-    background-color: #0a0a0a;
-    color: #e5e2e1;
-    font-family: "Inter", sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: var(--color-bg, #0B0C10);
+    color: var(--color-text, #ECE8E1);
+    font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#root {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img, video, iframe, canvas, svg {
+    max-width: 100%;
+    display: block;
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+
+.font-serif { font-family: var(--font-serif); }
+.font-sans  { font-family: var(--font-sans);  }
+
+/* Section headings */
+.heading-display {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--color-text);
+}
+
+/* Small uppercase gold labels */
+.label-caps {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+/* ============================================================
+   RESPONSIVE FONT SCALE
+   ============================================================ */
+
+@media (max-width: 639px) {
+    :root {
+        --text-display-lg: 28px;
+        --text-display-lg--line-height: 36px;
+        --text-headline-lg: 22px;
+        --text-headline-lg--line-height: 30px;
+    }
 }
 
 
-/* =========================
-   Scrollbar
-   ========================= */
+/* ============================================================
+   SCROLLBAR THEME
+   ============================================================ */
 
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
+::-webkit-scrollbar-track {
+    background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) var(--color-surface);
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
 
-/* =========================
-   Glass Effect
-   ========================= */
+/* ============================================================
+   TEXT SELECTION
+   ============================================================ */
 
-.glass-overlay {
-    background: rgba(18, 18, 18, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+::selection {
+    background: rgba(201, 168, 106, 0.25);
+    color: var(--color-text);
 }
 
 
-/* =========================
-   Movie Card Hover
-   ========================= */
+/* ============================================================
+   FOCUS STYLES (WCAG AA)
+   ============================================================ */
+
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+
+/* ============================================================
+   CARD SYSTEM
+   ============================================================ */
+
+.mc-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-DEFAULT);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--duration-base) var(--ease-default),
+                box-shadow var(--duration-base) var(--ease-default),
+                border-color var(--duration-base) var(--ease-default);
+}
+
+.mc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover), 0 0 0 1px rgba(201, 168, 106, 0.35);
+    border-color: rgba(201, 168, 106, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mc-card { transition: none; }
+    .mc-card:hover { transform: none; }
+}
+
+
+/* ============================================================
+   MOVIE POSTER CARD
+   ============================================================ */
+
+.poster-card {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-DEFAULT);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform var(--duration-base) var(--ease-default),
+                box-shadow var(--duration-base) var(--ease-default),
+                border-color var(--duration-base) var(--ease-default);
+}
+
+.poster-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover), 0 0 0 1px rgba(201, 168, 106, 0.35);
+    border-color: rgba(201, 168, 106, 0.35);
+}
+
+.poster-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-default);
+}
+
+.poster-card:hover img {
+    transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .poster-card { transition: none; }
+    .poster-card:hover { transform: none; }
+    .poster-card img { transition: none; }
+}
+
+
+/* ============================================================
+   BUTTON SYSTEM
+   ============================================================ */
+
+/* Primary — gold pill */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    color: var(--color-btn-primary-text, #0B0C10);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: none;
+    cursor: pointer;
+    transition: background var(--duration-base), transform var(--duration-fast), box-shadow var(--duration-base);
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(201, 168, 106, 0.35);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+/* Secondary — outlined gold pill */
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-accent);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--color-accent);
+    cursor: pointer;
+    transition: background var(--duration-base), color var(--duration-base), transform var(--duration-fast);
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: var(--color-accent-soft);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active { transform: translateY(0); }
+
+/* Ghost — text only */
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--color-text-2);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    transition: color var(--duration-base), background var(--duration-base);
+    text-decoration: none;
+}
+
+.btn-ghost:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary, .btn-secondary, .btn-ghost {
+        transition: none;
+    }
+    .btn-primary:hover, .btn-secondary:hover { transform: none; }
+}
+
+
+/* ============================================================
+   INPUT SYSTEM
+   ============================================================ */
+
+.mc-input {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color var(--duration-base), box-shadow var(--duration-base);
+}
+
+.mc-input::placeholder { color: var(--color-text-3); }
+
+.mc-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.15);
+}
+
+/* Ensure inputs with left icon have adequate padding so text/placeholder never overlaps icon */
+.mc-input.pl-9,
+.mc-input.pl-10,
+.mc-input.pl-11,
+.mc-input.\!pl-11,
+.mc-input.\!pl-10,
+.mc-input.\!pl-9,
+.mc-input-icon-left {
+    padding-left: 2.75rem !important; /* 44px */
+}
+
+/* Ensure inputs with right icon/button have adequate padding so text never overlaps button */
+.mc-input.pr-10,
+.mc-input.pr-11,
+.mc-input.\!pr-11,
+.mc-input.\!pr-10,
+.mc-input-icon-right {
+    padding-right: 2.75rem !important; /* 44px */
+}
+
+
+/* ============================================================
+   SECTION DIVIDER / HEADING BAR
+   ============================================================ */
+
+.section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.section-link {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color var(--duration-base);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.section-link:hover { color: var(--color-accent-hover); }
+
+
+/* ============================================================
+   STAR RATING
+   ============================================================ */
+
+.star-filled { color: var(--color-accent); }
+.star-empty  { color: var(--color-border); }
+
+
+/* ============================================================
+   BADGE SYSTEM
+   ============================================================ */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.badge-accent {
+    background: var(--color-accent-soft);
+    border: 1px solid rgba(201, 168, 106, 0.3);
+    color: var(--color-accent);
+}
+
+.badge-wine {
+    background: rgba(124, 58, 75, 0.15);
+    border: 1px solid rgba(124, 58, 75, 0.35);
+    color: var(--color-wine);
+}
+
+.badge-success {
+    background: rgba(127, 168, 140, 0.15);
+    border: 1px solid rgba(127, 168, 140, 0.3);
+    color: var(--color-success);
+}
+
+
+/* ============================================================
+   GLASS / BACKDROP BLUR
+   ============================================================ */
+
+.glass-overlay {
+    background: rgba(11, 12, 16, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+html.light .glass-overlay,
+.light .glass-overlay {
+    background: rgba(248, 246, 240, 0.85);
+}
+
+.navbar-blur {
+    background: rgba(11, 12, 16, 0.85);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+html.light .navbar-blur,
+.light .navbar-blur {
+    background: rgba(248, 246, 240, 0.92);
+}
+
+
+/* ============================================================
+   FILM GRAIN TEXTURE (subtle, 3-4%)
+   ============================================================ */
+
+.film-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+}
+
+
+/* ============================================================
+   HERO GRADIENT OVERLAY
+   ============================================================ */
+
+.hero-gradient {
+    background: linear-gradient(
+        to top,
+        #0B0C10 5%,
+        rgba(11, 12, 16, 0.8) 40%,
+        rgba(11, 12, 16, 0.4) 70%,
+        transparent 100%
+    );
+}
+
+html.light .hero-gradient,
+.light .hero-gradient {
+    background: linear-gradient(
+        to top,
+        #F8F6F0 5%,
+        rgba(248, 246, 240, 0.88) 40%,
+        rgba(248, 246, 240, 0.45) 70%,
+        transparent 100%
+    );
+}
+
+.hero-gradient-side {
+    background: linear-gradient(
+        to right,
+        #0B0C10 0%,
+        rgba(11, 12, 16, 0.85) 35%,
+        rgba(11, 12, 16, 0.3) 65%,
+        transparent 100%
+    );
+}
+
+html.light .hero-gradient-side,
+.light .hero-gradient-side {
+    background: linear-gradient(
+        to right,
+        #F8F6F0 0%,
+        rgba(248, 246, 240, 0.92) 35%,
+        rgba(248, 246, 240, 0.4) 65%,
+        transparent 100%
+    );
+}
+
+
+/* ============================================================
+   SKELETON LOADERS
+   ============================================================ */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-surface) 0%,
+        var(--color-surface-2) 50%,
+        var(--color-surface) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.8s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-pulse {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; background: var(--color-surface); }
+}
+
+
+/* ============================================================
+   MOVIE CARD HOVER (legacy class compat)
+   ============================================================ */
 
 .movie-card-hover {
-    transition:
-            transform 300ms ease,
-            box-shadow 300ms ease;
+    transition: transform var(--duration-base) var(--ease-default),
+                box-shadow var(--duration-base) var(--ease-default),
+                border-color var(--duration-base) var(--ease-default);
 }
 
 .movie-card-hover:hover {
-    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.5);
     transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover), 0 0 0 1px rgba(201, 168, 106, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .movie-card-hover { transition: none; }
+    .movie-card-hover:hover { transform: none; box-shadow: none; }
+}
+
+
+/* ============================================================
+   CHART / ANALYTICS PALETTE
+   ============================================================ */
+
+:root {
+    --chart-1: #C9A86A;
+    --chart-2: #8F7749;
+    --chart-3: #5C4C2E;
+    --chart-4: #A6A29A;
+    --chart-5: #6E6B65;
+}
+
+html.light,
+.light {
+    --chart-1: #B38628;
+    --chart-2: #996F1D;
+    --chart-3: #6E4D0F;
+    --chart-4: #545048;
+    --chart-5: #8C867A;
+}
+
+
+/* ============================================================
+   PAGE LAYOUT UTILITY
+   ============================================================ */
+
+.page-container {
+    width: 100%;
+    max-width: var(--spacing-max-width, 1200px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+    .page-container { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (min-width: 1024px) {
+    .page-container { padding-left: 48px; padding-right: 48px; }
+}
+
+
+/* ============================================================
+   MISC UTILITIES
+   ============================================================ */
+
+.no-underline { text-decoration: none; }
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ============================================================
+   CINEMATIC TRANSITIONS
+   ============================================================ */
+
+@keyframes cinematicFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.99);
+        filter: brightness(1.25);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+.cinematic-dashboard-entrance {
+    animation: cinematicFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

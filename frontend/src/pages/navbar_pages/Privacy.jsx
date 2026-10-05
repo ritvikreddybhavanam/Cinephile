@@ -42,7 +42,7 @@ const Privacy = () => {
         <div className="bg-surface text-on-surface antialiased min-h-screen">
             <Navbar />
 
-            <main className="w-full pt-16 bg-surface min-h-[calc(100vh-280px)]">
+            <main className="w-full bg-surface min-h-[calc(100vh-280px)]">
                 <div className="flex flex-col w-full">
 
                     {/* Ambient Glow */}
@@ -79,7 +79,7 @@ const Privacy = () => {
 
                                     <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
                                         Our architectural commitment to protecting your film
-                                        curation habits, critical thoughts, and digital Cinephile 🎬
+                                        curation habits, critical thoughts, and digital Cinephile
                                         footprint.
                                     </p>
                                 </div>
@@ -132,7 +132,7 @@ const Privacy = () => {
                                         </h2>
 
                                         <p className="font-body-sm text-body-sm text-text-dim leading-relaxed">
-                                            We operate Cinephile 🎬 as fellow film collectors. We don't
+                                            We operate Cinephile as fellow film collectors. We don't
                                             monetize your midnight re-watches, sell viewing habits to
                                             third-party ad brokers, or lock away your archives. Your
                                             taste is personal, deliberate, and entirely yours.
@@ -240,9 +240,9 @@ const Privacy = () => {
                                             <p>
                                                 When you create an account, log your screenings,
                                                 publish long-form retrospective reviews, or sync
-                                                streaming providers, Cinephile 🎬 gathers distinct
+                                                streaming providers, Cinephile gathers distinct
                                                 categories of user records necessary to render your
-                                                Cinephile 🎬 workspace.
+                                                Cinephile workspace.
                                             </p>
 
                                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
@@ -295,7 +295,7 @@ const Privacy = () => {
 
                                         <div className="font-body-lg text-body-lg text-on-surface space-y-4 leading-relaxed">
                                             <p>
-                                                Cinephile 🎬 utilizes gathered information to engineer a
+                                                Cinephile utilizes gathered information to engineer a
                                                 responsive, deeply tailored film discovery engine and
                                                 maintain community integrity.
                                             </p>
@@ -347,9 +347,9 @@ const Privacy = () => {
 
                                         <div className="font-body-lg text-body-lg text-on-surface space-y-4 leading-relaxed">
                                             <p>
-                                                By nature, Cinephile 🎬 offers social curation, but privacy
+                                                By nature, Cinephile offers social curation, but privacy
                                                 is the sovereign choice of each member. You hold
-                                                complete administrative autonomy over what the Cinephile 🎬
+                                                complete administrative autonomy over what the Cinephile
                                                 collective sees.
                                             </p>
 
@@ -408,7 +408,7 @@ const Privacy = () => {
 
                                         <div className="font-body-lg text-body-lg text-on-surface space-y-4 leading-relaxed">
                                             <p>
-                                                Cinephile 🎬 connects with premier cinematic archival APIs,
+                                                Cinephile connects with premier cinematic archival APIs,
                                                 including <strong>The Movie Database (TMDb)</strong>{" "}
                                                 and <strong>JustWatch</strong>, to provide real-time
                                                 regional streaming availability across platforms
@@ -459,7 +459,7 @@ const Privacy = () => {
                                             <p>
                                                 Under the European General Data Protection Regulation
                                                 (GDPR), California Consumer Privacy Act (CCPA/CPRA), and
-                                                international privacy frameworks, Cinephile 🎬 provides
+                                                international privacy frameworks, Cinephile provides
                                                 uniform guarantees universally:
                                             </p>
 
@@ -554,7 +554,7 @@ const Privacy = () => {
                                                     </h3>
 
                                                     <p className="font-body-sm text-body-sm text-text-dim max-w-md">
-                                                        Cinephile 🎬 Inc. Data Protection Office
+                                                        Cinephile Inc. Data Protection Office
                                                         <br />
                                                         Attn: Privacy & Trust Counsel
                                                         <br />
@@ -593,7 +593,7 @@ const Privacy = () => {
                   </span>
 
                                     <span className="font-metadata text-metadata">
-                    Cinephile 🎬 Global Privacy Framework v4.2 // Encrypted Storage
+                    Cinephile Global Privacy Framework v4.2 // Encrypted Storage
                     Standard
                   </span>
                                 </div>

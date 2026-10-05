@@ -8,6 +8,7 @@ import {
     getMovieDetails,
     createReview,
 } from "../../../services/movieService.js";
+import useDocumentTitle from "../../../hooks/useDocumentTitle.js";
 
 const initialTags = [];
 
@@ -17,6 +18,7 @@ function WriteReview() {
     const navigate = useNavigate();
 
     const [movie, setMovie] = useState(null);
+    useDocumentTitle(movie?.title ? `Review ${movie.title}` : "Write Review");
     const [movieLoading, setMovieLoading] = useState(true);
     const [publishing, setPublishing] = useState(false);
 
@@ -150,7 +152,7 @@ function WriteReview() {
 
                 <main className="flex min-h-[80vh] items-center justify-center">
                     <div className="flex flex-col items-center gap-4">
-                        <span className="material-symbols-outlined animate-spin text-4xl text-[#43fe6d]">
+                        <span className="material-symbols-outlined animate-spin text-4xl text-[#C9A86A]">
                             progress_activity
                         </span>
 
@@ -187,7 +189,7 @@ function WriteReview() {
                         <button
                             type="button"
                             onClick={() => navigate(-1)}
-                            className="mt-5 rounded-lg bg-[#00e054] px-5 py-2.5 text-sm font-bold text-[#00390f] transition-colors hover:bg-[#43fe6d]"
+                            className="mt-5 rounded-lg bg-[#C9A86A] px-5 py-2.5 text-sm font-bold text-[#0B0C10] transition-colors hover:bg-[#C9A86A]"
                         >
                             Go Back
                         </button>
@@ -259,15 +261,15 @@ function WriteReview() {
                             <div className="absolute inset-0 bg-gradient-to-b from-[#101418]/60 via-[#0b0f12]/85 to-[#0b0f12]" />
                         </div>
 
-                        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-8 pt-28 md:px-10">
+                        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 pb-8 pt-20 sm:pt-28 md:px-10">
 
                             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                                 <div>
-                                    <h1 className="mt-1 text-3xl font-bold leading-10 tracking-tight text-white md:text-[32px]">
+                                    <h1 className="mt-1 text-2xl sm:text-3xl font-bold leading-tight tracking-tight text-white md:text-[32px]">
                                         Draft Your Critical Review
                                     </h1>
 
-                                    <p className="mt-1 max-w-xl text-sm leading-5 text-[#99AABB]">
+                                    <p className="mt-1 max-w-xl text-xs sm:text-sm leading-5 text-[#99AABB]">
                                         Pen your cinematic analysis, dissect craft and storytelling,
                                         and log your impression into the collective community archive.
                                     </p>
@@ -381,7 +383,7 @@ function WriteReview() {
                                                     `/movies/${movieId}`
                                                 )
                                             }
-                                            className="flex items-center gap-1 text-[13px] text-[#43fe6d] hover:underline"
+                                            className="flex items-center gap-1 text-[13px] text-[#C9A86A] hover:underline"
                                         >
                                             Film info
 
@@ -411,7 +413,7 @@ function WriteReview() {
                                             </label>
 
                                             <span className="text-sm leading-5 text-[#99AABB]">
-                                                Score this motion picture on our Cinephile 🎬 scale
+                                                Score this motion picture on our Cinephile scale
                                             </span>
                                         </div>
 
@@ -559,7 +561,7 @@ function WriteReview() {
                                                     |
                                                 </span>
 
-                                                <span className="flex items-center gap-1 text-[#43fe6d]">
+                                                <span className="flex items-center gap-1 text-[#C9A86A]">
                                                     <span className="material-symbols-outlined text-[14px]">
                                                         markdown
                                                     </span>
@@ -646,7 +648,7 @@ function WriteReview() {
 
                                     <div className="flex items-center gap-2">
 
-                                        <span className="material-symbols-outlined text-[20px] text-[#43fe6d]">
+                                        <span className="material-symbols-outlined text-[20px] text-[#C9A86A]">
                                             calendar_clock
                                         </span>
 
@@ -716,7 +718,7 @@ function WriteReview() {
                                                         className="peer sr-only"
                                                     />
 
-                                                    <div className="rounded-lg bg-[#0B0D0F] p-2.5 text-center text-[13px] text-[#99AABB] transition-all peer-checked:bg-[#31353a] peer-checked:text-[#43fe6d]">
+                                                    <div className="rounded-lg bg-[#0B0D0F] p-2.5 text-center text-[13px] text-[#99AABB] transition-all peer-checked:bg-[#31353a] peer-checked:text-[#C9A86A]">
                                                         {label}
                                                     </div>
                                                 </label>
@@ -753,7 +755,7 @@ function WriteReview() {
                                                         e.target.checked
                                                     )
                                                 }
-                                                className="h-4 w-4 cursor-pointer rounded accent-[#43fe6d]"
+                                                className="h-4 w-4 cursor-pointer rounded accent-[#C9A86A]"
                                             />
                                         </label>
                                     </div>
@@ -835,7 +837,7 @@ function WriteReview() {
                                                         className="peer sr-only"
                                                     />
 
-                                                    <div className="flex items-center justify-center gap-2 rounded-lg bg-[#0B0D0F] p-2.5 text-[13px] text-[#99AABB] transition-all peer-checked:bg-[#31353a] peer-checked:text-[#43fe6d]">
+                                                    <div className="flex items-center justify-center gap-2 rounded-lg bg-[#0B0D0F] p-2.5 text-[13px] text-[#99AABB] transition-all peer-checked:bg-[#31353a] peer-checked:text-[#C9A86A]">
                     <span className="material-symbols-outlined text-[17px]">
                         {value === "public"
                             ? "public"
@@ -879,7 +881,7 @@ function WriteReview() {
                                     type="button"
                                     onClick={handlePublishReview}
                                     disabled={publishing}
-                                    className="flex w-full transform items-center justify-center gap-2 rounded-lg bg-[#00e054] px-6 py-3 text-sm font-bold text-[#00390f] shadow-lg shadow-[#43fe6d]/20 transition-all hover:bg-[#43fe6d] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                                    className="flex w-full transform items-center justify-center gap-2 rounded-lg bg-[#C9A86A] px-6 py-3 text-sm font-bold text-[#0B0C10] shadow-lg shadow-[#C9A86A]/20 transition-all hover:bg-[#C9A86A] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                                 >
                                     <span className="material-symbols-outlined text-[20px]">
                                         {publishing

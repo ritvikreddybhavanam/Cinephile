@@ -26,7 +26,7 @@ function MovieTile({ movie }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
             </Link>
 
-            <div className="text-[10px] text-[#00e054] leading-none mt-1 truncate">
+            <div className="text-[10px] text-[#C9A86A] leading-none mt-1 truncate">
                 {movie.rating != null ? movie.rating : "Not Rated"}
 
                 {movie.listCount && (

@@ -19,7 +19,8 @@ export const addToWatched = async (movie) => {
             ? movie.genres.map((genre) => genre.name).join(", ")
             : movie.genre || null,
         service: movie.service || null,
-        rating: movie.vote_average ?? null
+        rating: movie.vote_average ?? null,
+        language: movie.original_language || movie.language || null
     });
 
     return response.data;

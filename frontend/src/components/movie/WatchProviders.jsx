@@ -1,67 +1,48 @@
 function WatchProviders({ watchProviders }) {
-    const indiaProviders =
-        watchProviders?.results?.IN || null;
-
-    const streamingProviders =
-        indiaProviders?.flatrate || [];
-
-    const rentProviders =
-        indiaProviders?.rent || [];
-
-    const buyProviders =
-        indiaProviders?.buy || [];
+    const indiaProviders = watchProviders?.results?.IN || null;
+    const streamingProviders = indiaProviders?.flatrate || [];
+    const rentProviders = indiaProviders?.rent || [];
+    const buyProviders = indiaProviders?.buy || [];
 
     const getProviderLink = (provider) => {
         switch (provider.provider_name) {
             case "Netflix":
                 return "https://www.netflix.com/in/";
-
             case "Amazon Prime Video":
                 return "https://www.primevideo.com/";
-
             case "Disney Plus":
                 return "https://www.disneyplus.com/";
-
             case "JioHotstar":
                 return "https://www.hotstar.com/in/";
-
             case "YouTube":
                 return "https://www.youtube.com/";
-
             default:
                 return "";
         }
     };
 
-    const renderProvider = (
-        provider,
-        type
-    ) => {
-        const providerLink =
-            getProviderLink(provider);
-
+    const renderProvider = (provider, type) => {
+        const providerLink = getProviderLink(provider);
         const content = (
             <>
                 {provider.logo_path ? (
                     <img
                         src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
                         alt={provider.provider_name}
-                        className="w-10 h-10 rounded-lg object-cover"
+                        className="w-8 h-8 rounded object-cover"
                     />
                 ) : (
-                    <div className="w-10 h-10 rounded-lg bg-[#212936] flex items-center justify-center text-xs">
+                    <div className="w-8 h-8 rounded bg-surface-2 flex items-center justify-center text-[10px] text-text-3 font-semibold">
                         OTT
                     </div>
                 )}
-
-                <span className="font-bold">
+                <span className="text-sm font-medium text-text group-hover:text-accent transition-colors">
                     {provider.provider_name}
                 </span>
             </>
         );
 
-        const key =
-            `${type}-${provider.provider_id}`;
+        const key = `${type}-${provider.provider_id}`;
 
         if (providerLink) {
             return (
@@ -70,7 +51,7 @@ function WatchProviders({ watchProviders }) {
                     href={providerLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 bg-[#070a0d] border border-[#303946] rounded-xl px-4 py-3 hover:border-[#00e054] hover:bg-[#00e054]/10 transition-all cursor-pointer"
+                    className="group flex items-center gap-3 bg-surface border border-border rounded-lg px-4 py-2.5 hover:border-accent/40 hover:bg-surface-2 transition-all cursor-pointer no-underline"
                 >
                     {content}
                 </a>
@@ -80,7 +61,7 @@ function WatchProviders({ watchProviders }) {
         return (
             <div
                 key={key}
-                className="flex items-center gap-3 bg-[#070a0d] border border-[#303946] rounded-xl px-4 py-3"
+                className="flex items-center gap-3 bg-surface border border-border rounded-lg px-4 py-2.5"
             >
                 {content}
             </div>
@@ -93,122 +74,66 @@ function WatchProviders({ watchProviders }) {
         buyProviders.length > 0;
 
     return (
-        <section className="max-w-7xl mx-auto px-6 pb-14">
-
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-7">
-
-                <h2 className="text-2xl md:text-3xl font-black">
-                    Where to Watch
-                </h2>
-
-                <span className="text-sm text-gray-500">
-                    Availability in India
-                </span>
-
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+            <div className="section-header mb-6">
+                <div>
+                    <p className="label-caps mb-1">Availability</p>
+                    <h2 className="section-title">Where to Curate & Experience</h2>
+                </div>
+                <span className="text-xs text-text-3">India Region</span>
             </div>
 
             {indiaProviders ? (
-
-                <div className="bg-[#161c24] border border-[#212936] rounded-2xl p-6">
-
+                <div className="bg-surface border border-border rounded-lg p-6 sm:p-8">
                     {/* STREAMING */}
                     {streamingProviders.length > 0 && (
-                        <div className="mb-7">
-
-                            <h3 className="text-lg font-bold mb-4">
-                                Streaming
-                            </h3>
-
-                            <div className="flex flex-wrap gap-5">
-
-                                {streamingProviders.map(
-                                    (provider) =>
-                                        renderProvider(
-                                            provider,
-                                            "stream"
-                                        )
+                        <div className="mb-6">
+                            <h3 className="label-caps mb-3">Subscription</h3>
+                            <div className="flex flex-wrap gap-3">
+                                {streamingProviders.map((provider) =>
+                                    renderProvider(provider, "stream")
                                 )}
-
                             </div>
-
                         </div>
                     )}
 
                     {/* RENT */}
                     {rentProviders.length > 0 && (
-                        <div className="mb-7">
-
-                            <h3 className="text-lg font-bold mb-4">
-                                Rent
-                            </h3>
-
-                            <div className="flex flex-wrap gap-5">
-
-                                {rentProviders.map(
-                                    (provider) =>
-                                        renderProvider(
-                                            provider,
-                                            "rent"
-                                        )
+                        <div className="mb-6">
+                            <h3 className="label-caps mb-3">Rent</h3>
+                            <div className="flex flex-wrap gap-3">
+                                {rentProviders.map((provider) =>
+                                    renderProvider(provider, "rent")
                                 )}
-
                             </div>
-
                         </div>
                     )}
 
                     {/* BUY */}
                     {buyProviders.length > 0 && (
                         <div>
-
-                            <h3 className="text-lg font-bold mb-4">
-                                Buy
-                            </h3>
-
-                            <div className="flex flex-wrap gap-5">
-
-                                {buyProviders.map(
-                                    (provider) =>
-                                        renderProvider(
-                                            provider,
-                                            "buy"
-                                        )
+                            <h3 className="label-caps mb-3">Purchase</h3>
+                            <div className="flex flex-wrap gap-3">
+                                {buyProviders.map((provider) =>
+                                    renderProvider(provider, "buy")
                                 )}
-
                             </div>
-
                         </div>
                     )}
 
                     {!hasProviders && (
-                        <p className="text-gray-500">
-                            No streaming information
-                            available in India.
+                        <p className="text-sm text-text-3">
+                            No streaming distribution information available in this territory.
                         </p>
                     )}
-
-                    {hasProviders && (
-                        <p className="text-sm text-gray-500 mt-6">
-                            Click a provider to visit its
-                            streaming platform.
-                        </p>
-                    )}
-
                 </div>
-
             ) : (
-
-                <div className="bg-[#161c24] border border-[#212936] rounded-2xl p-6">
-
-                    <p className="text-gray-500">
-                        No streaming information available
-                        in India.
+                <div className="bg-surface border border-border rounded-lg p-6 text-center">
+                    <p className="text-sm text-text-3">
+                        No distribution information available for this territory.
                     </p>
-
                 </div>
-
             )}
-
         </section>
     );
 }

@@ -1,17 +1,11 @@
 function MetricCard({ label, value, suffix }) {
     return (
-        <div className="px-4 py-2 bg-surface-container rounded-lg">
-            <p className="font-label-caps text-label-caps text-text-dim uppercase">
-                {label}
-            </p>
-
-            <p className="font-title-md text-title-md font-bold text-text-main">
+        <div className="px-4 py-3 bg-surface border border-border rounded-lg">
+            <p className="label-caps mb-1">{label}</p>
+            <p className="text-lg font-semibold text-text">
                 {value}
-
                 {suffix && (
-                    <span className="text-primary text-[12px] font-normal ml-1">
-                        {suffix}
-                    </span>
+                    <span className="text-accent text-xs font-normal ml-1">{suffix}</span>
                 )}
             </p>
         </div>

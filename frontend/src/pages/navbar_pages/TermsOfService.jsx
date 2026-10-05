@@ -48,18 +48,18 @@ const TermsOfService = () => {
         <div className="dark">
             <Navbar />
 
-            <main className="w-full pt-16 bg-surface min-h-[calc(100vh-280px)]">
+            <main className="w-full bg-surface min-h-[calc(100vh-280px)]">
                 <div className="flex flex-col w-full">
 
                     {/* Hero Section */}
                     <section className="relative w-full overflow-hidden bg-surface py-16 md:py-24">
                         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-                        <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md relative z-10">
+                        <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md relative z-10">
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12">
                                 <div className="max-w-3xl flex flex-col gap-4">
                                     <div className="inline-flex items-center gap-2.5 self-start bg-surface-container px-3.5 py-1.5 rounded-full">
-                                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#00e054]"></span>
+                                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#C9A86A]"></span>
 
                                         <span className="font-label-caps text-label-caps uppercase tracking-wider text-primary">
                       Version 2.4 • Effective October 2024
@@ -71,8 +71,8 @@ const TermsOfService = () => {
                                     </h1>
 
                                     <p className="font-body-lg text-body-lg text-text-dim max-w-2xl leading-relaxed">
-                                        The agreement governing your use of the Cinephile 🎬 platform,
-                                        community Cinephile 🎬 spaces, and cinema archive services.
+                                        The agreement governing your use of the Cinephile platform,
+                                        community Cinephile spaces, and cinema archive services.
                                     </p>
                                 </div>
 
@@ -89,7 +89,7 @@ const TermsOfService = () => {
                     </span>
 
                                         <span className="font-label-caps text-label-caps text-text-dim">
-                      Cinephile 🎬 Archive Inc.
+                      Cinephile Archive Inc.
                     </span>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ const TermsOfService = () => {
 
                     {/* Content */}
                     <section className="w-full bg-surface py-10">
-                        <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md">
+                        <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
                                 {/* Sidebar */}
@@ -244,7 +244,7 @@ const TermsOfService = () => {
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
                                             By accessing, browsing, creating an account on, or
-                                            integrating with the Cinephile 🎬 web application, mobile
+                                            integrating with the Cinephile web application, mobile
                                             clients, and connected Application Programming Interfaces
                                             (“APIs”), you acknowledge that you have read, understood,
                                             and agree to be bound by these Terms of Service.
@@ -280,7 +280,7 @@ const TermsOfService = () => {
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
                                             To log film diary entries, publish critical reviews,
-                                            compile curated lists, and interact with the Cinephile 🎬
+                                            compile curated lists, and interact with the Cinephile
                                             community, you must establish an account. You agree to
                                             provide accurate, truthful, and up-to-date credential
                                             information during setup.
@@ -305,7 +305,7 @@ const TermsOfService = () => {
                         security@filmbuff.app
                       </span>{" "}
                                             without delay if you detect any unauthorized breach or
-                                            credential compromise. Cinephile 🎬 cannot and will not be
+                                            credential compromise. Cinephile cannot and will not be
                                             liable for losses arising from your failure to safeguard
                                             authentication factors.
                                         </p>
@@ -321,7 +321,7 @@ const TermsOfService = () => {
                                         />
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            Cinephile 🎬 is founded on rigorous, respectful dialogue
+                                            Cinephile is founded on rigorous, respectful dialogue
                                             among cinema enthusiasts. We defend freedom of critical
                                             expression while maintaining strict barriers against
                                             malicious disruption.
@@ -338,11 +338,11 @@ const TermsOfService = () => {
                                                 </strong>{" "}
                                                 You retain full copyright ownership of all original
                                                 reviews, essays, ratings, and list commentaries you
-                                                author on Cinephile 🎬.
+                                                author on Cinephile.
                                             </p>
 
                                             <p className="font-body-sm text-body-sm text-text-dim leading-relaxed">
-                                                By publishing, you grant Cinephile 🎬 a non-exclusive,
+                                                By publishing, you grant Cinephile a non-exclusive,
                                                 worldwide, royalty-free license to display, index,
                                                 format, and redistribute your public content across the
                                                 platform and our search engines solely for the purpose
@@ -386,7 +386,7 @@ const TermsOfService = () => {
                                         />
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            Cinephile 🎬 synthesizes data from varied bibliographic and
+                                            Cinephile synthesizes data from varied bibliographic and
                                             cinema repositories. All movie posters, stills,
                                             promotional backdrops, and studio identifiers remain the
                                             copyrighted intellectual property of their respective
@@ -413,9 +413,9 @@ const TermsOfService = () => {
                                         </div>
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            The Cinephile 🎬 name, stylized logotype, curated index
+                                            The Cinephile name, stylized logotype, curated index
                                             algorithms, user interface layouts, and custom codebases
-                                            are the exclusive proprietary property of Cinephile 🎬 Inc.
+                                            are the exclusive proprietary property of Cinephile Inc.
                                         </p>
                                     </section>
 
@@ -429,7 +429,7 @@ const TermsOfService = () => {
                                         />
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            Cinephile 🎬 offers premium tier memberships (“Pro” and
+                                            Cinephile offers premium tier memberships (“Pro” and
                                             “Patron”) providing advanced analytics, personalized
                                             year-in-review compilations, ad-free viewing, and
                                             prioritized feature requests.
@@ -466,7 +466,7 @@ const TermsOfService = () => {
                                         />
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            Cinephile 🎬 and all catalog materials are provided on an
+                                            Cinephile and all catalog materials are provided on an
                                             “AS IS” and “AS AVAILABLE” basis without express or
                                             implied warranties. We make no warranty that service will
                                             be completely uninterrupted, timely, secure, or devoid of
@@ -474,7 +474,7 @@ const TermsOfService = () => {
                                         </p>
 
                                         <p className="font-body-lg text-body-lg text-text-dim leading-relaxed">
-                                            In no event shall Cinephile 🎬 Inc., its officers, directors,
+                                            In no event shall Cinephile Inc., its officers, directors,
                                             or employees be liable for indirect, incidental, punitive,
                                             or consequential damages resulting from lost review data,
                                             service outages, or unauthorized account penetrations.
@@ -486,7 +486,7 @@ const TermsOfService = () => {
                       </span>
 
                                             <p className="font-body-sm text-body-sm text-text-dim leading-normal">
-                                                Cinephile 🎬 reserves the unilateral right to suspend,
+                                                Cinephile reserves the unilateral right to suspend,
                                                 demote, or terminate accounts violating community codes
                                                 of conduct without prior notice or prorated liability.
                                             </p>
@@ -539,7 +539,7 @@ const TermsOfService = () => {
                                             </div>
 
                                             <a
-                                                className="px-6 py-3 rounded-lg bg-primary text-on-primary font-metadata text-metadata font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_0_16px_rgba(0,224,84,0.3)] shrink-0"
+                                                className="px-6 py-3 rounded-lg bg-primary text-on-primary font-metadata text-metadata font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_0_16px_rgba(201,168,106,0.25)] shrink-0"
                                                 href="mailto:legal@filmbuff.app"
                                             >
                                                 Contact legal@filmbuff.app

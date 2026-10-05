@@ -213,27 +213,25 @@ function WatchedFilms() {
     };
 
     return (
-        <div className="bg-[#101418] text-[#9ab] min-h-screen flex flex-col font-sans antialiased text-[13px]">
-
+        <div className="bg-bg text-text min-h-screen flex flex-col font-sans antialiased">
             <Navbar />
 
-            <main className="flex-1 max-w-[1560px] w-full mx-auto px-4 lg:px-8 py-5">
+            <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
 
-                <div className="flex flex-wrap items-center justify-between border-b border-[#212730] pb-2.5 mb-4 text-[11px]">
-
-                    <div className="flex items-baseline space-x-2">
-
-                        <h1 className="text-white uppercase font-bold text-sm tracking-wider">
-                            Watched
+                <div className="section-header mb-6">
+                    <div>
+                        <p className="label-caps mb-1">Archive</p>
+                        <h1 className="section-title text-3xl sm:text-4xl">
+                            Logged Films
                         </h1>
-
-                        <span className="text-[#647280] font-normal text-xs">
-                            {filteredMovies.length} films
-                        </span>
-
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3">
+                    <span className="badge badge-accent">
+                        {filteredMovies.length} {filteredMovies.length === 1 ? "Film" : "Films"}
+                    </span>
+                </div>
+
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
 
                         <select
                             value={ratingFilter}
@@ -243,7 +241,7 @@ function WatchedFilms() {
                                 );
                                 resetPage();
                             }}
-                            className="bg-transparent border-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
+                            className="bg-[#181d22] sm:bg-transparent border border-[#212730] sm:border-0 rounded px-2 py-1 sm:p-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
                         >
                             <option value="All">
                                 Rating
@@ -274,7 +272,7 @@ function WatchedFilms() {
                                 );
                                 resetPage();
                             }}
-                            className="bg-transparent border-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
+                            className="bg-[#181d22] sm:bg-transparent border border-[#212730] sm:border-0 rounded px-2 py-1 sm:p-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
                         >
                             <option value="All">
                                 Decade
@@ -305,7 +303,7 @@ function WatchedFilms() {
                                 );
                                 resetPage();
                             }}
-                            className="bg-transparent border-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
+                            className="bg-[#181d22] sm:bg-transparent border border-[#212730] sm:border-0 rounded px-2 py-1 sm:p-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
                         >
                             <option value="All">
                                 Genre
@@ -352,7 +350,7 @@ function WatchedFilms() {
                                 );
                                 resetPage();
                             }}
-                            className="bg-transparent border-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
+                            className="bg-[#181d22] sm:bg-transparent border border-[#212730] sm:border-0 rounded px-2 py-1 sm:p-0 text-[#7f8e9d] text-[11px] uppercase focus:ring-0 cursor-pointer"
                         >
                             <option value="All">
                                 Service
@@ -379,7 +377,7 @@ function WatchedFilms() {
                                 );
                                 resetPage();
                             }}
-                            className="bg-transparent border-0 text-white text-[11px] uppercase focus:ring-0 cursor-pointer"
+                            className="bg-[#181d22] sm:bg-transparent border border-[#212730] sm:border-0 rounded px-2 py-1 sm:p-0 text-white text-[11px] uppercase focus:ring-0 cursor-pointer"
                         >
                             <option value="Release Date">
                                 Sort by Release Date
@@ -393,9 +391,7 @@ function WatchedFilms() {
                                 Sort by Title
                             </option>
                         </select>
-
                     </div>
-                </div>
 
                 <div className="mb-4">
 
@@ -411,7 +407,7 @@ function WatchedFilms() {
                                 resetPage();
                             }}
                             placeholder="Search watched films..."
-                            className="w-full bg-[#181d22] text-xs text-white placeholder-[#5a6875] rounded-full px-3.5 py-2 pl-9 border border-[#252d37] focus:outline-none focus:border-[#00e054] focus:ring-0"
+                            className="w-full bg-[#181d22] text-xs text-white placeholder-[#5a6875] rounded-full px-3.5 py-2 pl-9 border border-[#252d37] focus:outline-none focus:border-[#C9A86A] focus:ring-0"
                         />
 
                         <svg
@@ -442,7 +438,7 @@ function WatchedFilms() {
 
                     <div className="flex min-h-[400px] items-center justify-center">
 
-                        <div className="flex items-center gap-3 text-[#00e054]">
+                        <div className="flex items-center gap-3 text-[#C9A86A]">
 
                             <span className="material-symbols-outlined animate-spin">
                                 progress_activity
@@ -457,7 +453,7 @@ function WatchedFilms() {
                 ) : (
 
                     <>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 2xl:grid-cols-14 gap-[6px] pb-8">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 2xl:grid-cols-14 gap-1.5 sm:gap-2 pb-8">
 
                             {displayedMovies.map(
                                 (movie) => (
@@ -489,7 +485,7 @@ function WatchedFilms() {
                         {filteredMovies.length > 0 && (
                             <nav
                                 aria-label="Pagination"
-                                className="flex items-center justify-between border-t border-[#212730] pt-4 pb-8"
+                                className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#212730] pt-4 pb-8"
                             >
 
                                 <div className="text-xs text-[#627181]">
@@ -513,7 +509,7 @@ function WatchedFilms() {
 
                                 </div>
 
-                                <div className="flex items-center space-x-1">
+                                <div className="flex flex-wrap items-center justify-center gap-1">
 
                                     <button
                                         disabled={
@@ -528,36 +524,14 @@ function WatchedFilms() {
                                                     )
                                             )
                                         }
-                                        className="px-2.5 py-1 text-xs font-medium text-[#7a8c9e] hover:text-white hover:bg-[#181d24] rounded-sm transition-colors disabled:opacity-30"
+                                        className="px-2.5 py-1 text-xs font-medium text-[#7a8c9e] hover:text-white hover:bg-[#181d24] rounded-sm transition-colors disabled:opacity-30 cursor-pointer"
                                     >
-                                        ←
+                                        ← Newer
                                     </button>
 
-                                    {Array.from(
-                                        {
-                                            length:
-                                            totalPages
-                                        },
-                                        (_, index) =>
-                                            index + 1
-                                    ).map((page) => (
-                                        <button
-                                            key={page}
-                                            onClick={() =>
-                                                setCurrentPage(
-                                                    page
-                                                )
-                                            }
-                                            className={`px-2.5 py-1 text-xs font-semibold rounded-sm ${
-                                                currentPage ===
-                                                page
-                                                    ? "text-[#00e054] bg-[#1a232b]"
-                                                    : "text-[#7a8c9e] hover:text-white hover:bg-[#181d24]"
-                                            }`}
-                                        >
-                                            {page}
-                                        </button>
-                                    ))}
+                                    <span className="px-2 text-xs font-semibold text-[#C9A86A]">
+                                        Page {currentPage} of {totalPages}
+                                    </span>
 
                                     <button
                                         disabled={
@@ -573,7 +547,7 @@ function WatchedFilms() {
                                                     )
                                             )
                                         }
-                                        className="px-3 py-1 text-xs font-medium text-[#8fa1b3] hover:text-white hover:bg-[#181d24] rounded-sm transition-colors flex items-center gap-1 disabled:opacity-30"
+                                        className="px-2.5 py-1 text-xs font-medium text-[#8fa1b3] hover:text-white hover:bg-[#181d24] rounded-sm transition-colors flex items-center gap-1 disabled:opacity-30 cursor-pointer"
                                     >
                                         Older →
                                     </button>

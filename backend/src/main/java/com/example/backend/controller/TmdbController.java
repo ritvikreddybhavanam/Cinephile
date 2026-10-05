@@ -41,7 +41,9 @@ public class TmdbController {
             @RequestParam(required = false) String year,
             @RequestParam(required = false) String genre,
             @RequestParam(required = false) String rating,
-            @RequestParam(required = false) String language
+            @RequestParam(required = false) String language,
+            @RequestParam(required = false) String fromDate,
+            @RequestParam(required = false) String toDate
     ) {
         return ResponseEntity.ok(
                 tmdbService.getMovies(
@@ -50,7 +52,9 @@ public class TmdbController {
                         year,
                         genre,
                         rating,
-                        language
+                        language,
+                        fromDate,
+                        toDate
                 )
         );
     }
@@ -135,6 +139,33 @@ public class TmdbController {
         );
     }
 
+    @GetMapping("/movies/{movieId}/images")
+    public ResponseEntity<String> getMovieImages(
+            @PathVariable Long movieId
+    ) {
+        return ResponseEntity.ok(
+                tmdbService.getMovieImages(movieId)
+        );
+    }
+
+    @GetMapping("/movies/{movieId}/keywords")
+    public ResponseEntity<String> getMovieKeywords(
+            @PathVariable Long movieId
+    ) {
+        return ResponseEntity.ok(
+                tmdbService.getMovieKeywords(movieId)
+        );
+    }
+
+    @GetMapping("/movies/{movieId}/release_dates")
+    public ResponseEntity<String> getMovieReleaseDates(
+            @PathVariable Long movieId
+    ) {
+        return ResponseEntity.ok(
+                tmdbService.getMovieReleaseDates(movieId)
+        );
+    }
+
     /*
      * =========================
      * PEOPLE
@@ -196,9 +227,18 @@ public class TmdbController {
         );
     }
 
-    @GetMapping("languages")
+    @GetMapping("/languages")
     public List<Map<String, Object>> getLanguages() {
         return tmdbService.getLanguages();
+    }
+
+    @GetMapping("/movies/top")
+    public ResponseEntity<String> getTopMoviesByLanguage(
+            @RequestParam String language
+    ) {
+        return ResponseEntity.ok(
+                tmdbService.getTopMoviesByLanguage(language)
+        );
     }
 
     /*

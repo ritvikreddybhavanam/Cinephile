@@ -36,7 +36,7 @@ public class LikedMovieController {
 
     @PostMapping("/{tmdbMovieId}")
     public ResponseEntity<?> likeMovie(
-            @RequestHeader("Authorization") String authorization,
+            @RequestHeader(value = "Authorization", required = false) String authorization,
             @PathVariable Long tmdbMovieId
     ) {
 
@@ -60,7 +60,7 @@ public class LikedMovieController {
 
     @DeleteMapping("/{tmdbMovieId}")
     public ResponseEntity<?> unlikeMovie(
-            @RequestHeader("Authorization") String authorization,
+            @RequestHeader(value = "Authorization", required = false) String authorization,
             @PathVariable Long tmdbMovieId
     ) {
 
@@ -84,7 +84,7 @@ public class LikedMovieController {
 
     @GetMapping
     public ResponseEntity<?> getLikedMovies(
-            @RequestHeader("Authorization") String authorization
+            @RequestHeader(value = "Authorization", required = false) String authorization
     ) {
 
         String emailaddress = getEmailFromToken(authorization);
@@ -172,7 +172,7 @@ public class LikedMovieController {
 
     @GetMapping("/{tmdbMovieId}/status")
     public ResponseEntity<?> getLikeStatus(
-            @RequestHeader("Authorization") String authorization,
+            @RequestHeader(value = "Authorization", required = false) String authorization,
             @PathVariable Long tmdbMovieId
     ) {
 

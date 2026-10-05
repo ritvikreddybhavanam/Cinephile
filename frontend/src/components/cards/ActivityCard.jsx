@@ -2,54 +2,42 @@ import RatingStars from "../common/RatingStars";
 
 const ActivityCard = ({ movie }) => {
     return (
-        <article className="group overflow-hidden rounded-xl border border-[#262626] bg-[#101418] transition-colors hover:border-[#3c4b3a]">
+        <article className="group overflow-hidden rounded-lg border border-border bg-surface transition-all duration-200 hover:border-accent/30 hover:shadow-card">
             <div className="flex flex-col md:flex-row">
-                <div className="relative h-48 flex-shrink-0 md:h-auto md:w-1/4">
+                <div className="relative h-48 flex-shrink-0 md:h-auto md:w-1/4 overflow-hidden">
                     <img
                         src={movie.image}
                         alt={`${movie.title} poster`}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                     />
-
-                    <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-transparent" />
                 </div>
 
-                <div className="flex flex-col justify-between p-6 md:w-3/4">
+                <div className="flex flex-col justify-between p-5 md:w-3/4">
                     <div>
                         <div className="mb-2 flex items-start justify-between">
-                            <h4 className="text-xl font-bold text-[#e0e3e8]">
+                            <h4 className="text-base font-semibold text-text">
                                 {movie.title}{" "}
-                                <span className="text-sm font-normal text-[#a0a0a0]">
-                                    {movie.year}
-                                </span>
+                                <span className="text-sm font-normal text-text-3">{movie.year}</span>
                             </h4>
-
-                            <span className="text-xs font-medium text-[#a0a0a0]">
-                                {movie.time}
-                            </span>
+                            <span className="text-[11px] text-text-3">{movie.time}</span>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-3">
                             <RatingStars rating={movie.rating} />
                         </div>
 
-                        <p className="mb-4 text-base italic leading-6 text-[#bacbb6]">
+                        <p className="mb-4 text-sm italic leading-relaxed text-text-2">
                             "{movie.review}"
                         </p>
                     </div>
 
                     <div className="flex gap-4">
-                        <button className="flex items-center gap-1 text-sm text-[#a0a0a0] transition-colors hover:text-[#43fe6d]">
-                            <span className="material-symbols-outlined text-sm">
-                                thumb_up
-                            </span>
+                        <button className="flex items-center gap-1 text-xs text-text-3 transition-colors hover:text-accent">
+                            <span className="material-symbols-outlined text-sm">thumb_up</span>
                             {movie.likes}
                         </button>
-
-                        <button className="flex items-center gap-1 text-sm text-[#a0a0a0] transition-colors hover:text-[#43fe6d]">
-                            <span className="material-symbols-outlined text-sm">
-                                chat_bubble
-                            </span>
+                        <button className="flex items-center gap-1 text-xs text-text-3 transition-colors hover:text-accent">
+                            <span className="material-symbols-outlined text-sm">chat_bubble</span>
                             {movie.comments}
                         </button>
                     </div>

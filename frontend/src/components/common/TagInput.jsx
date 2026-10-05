@@ -23,20 +23,20 @@ function TagInput({ tags, setTags }) {
     return (
         <div>
             <div className="flex items-center justify-between mb-2">
-                <label className="text-xs tracking-wider text-[#99AABB] uppercase">
+                <label className="text-xs tracking-wider text-text-3 uppercase font-medium">
                     Thematic Tags & Motifs
                 </label>
 
-                <span className="text-[13px] text-[#99AABB]">
+                <span className="text-[13px] text-text-3">
                     Categorize for community discovery
                 </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 p-3 bg-[#0B0D0F] rounded-lg">
+            <div className="flex flex-wrap items-center gap-2 p-3 bg-surface rounded-lg border border-border">
                 {tags.map((tag) => (
                     <span
                         key={tag}
-                        className="px-2.5 py-1 rounded-full bg-[#262a2f] text-white text-[13px] flex items-center gap-1.5"
+                        className="px-2.5 py-1 rounded-full bg-surface-2 text-text text-[13px] flex items-center gap-1.5 border border-border"
                     >
                         #{tag}
 
@@ -44,7 +44,7 @@ function TagInput({ tags, setTags }) {
                             type="button"
                             aria-label={`Remove ${tag}`}
                             onClick={() => removeTag(tag)}
-                            className="hover:text-[#ffb4ab] transition-colors"
+                            className="text-text-3 hover:text-error transition-colors flex items-center justify-center cursor-pointer"
                         >
                             <Icon className="text-[14px]">
                                 close
@@ -60,7 +60,7 @@ function TagInput({ tags, setTags }) {
                         onChange={(e) => setTagInput(e.target.value)}
                         onKeyDown={addTag}
                         placeholder="+ Add motif or keyword..."
-                        className="bg-transparent text-white text-[13px] placeholder:text-[#99AABB]/60 focus:outline-none px-2 py-0.5"
+                        className="bg-transparent text-text text-[13px] placeholder:text-text-3 focus:outline-none px-2 py-0.5"
                     />
                 </div>
             </div>

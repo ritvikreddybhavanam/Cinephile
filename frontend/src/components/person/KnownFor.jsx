@@ -25,7 +25,7 @@ function KnownFor({ credits }) {
 
                 <div className="flex items-center gap-2">
 
-                    <span className="w-1.5 h-4 rounded bg-[#43fe6d]" />
+                    <span className="w-1.5 h-4 rounded bg-[#C9A86A]" />
 
                     <h2 className="text-2xl font-bold text-white tracking-tight">
                         KNOWN FOR
@@ -74,7 +74,7 @@ function KnownFor({ credits }) {
 
                             <div className="absolute inset-0 bg-[#0B0D0F]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
 
-                                <span className="w-10 h-10 rounded-full bg-[#43fe6d] text-[#00390f] flex items-center justify-center">
+                                <span className="w-10 h-10 rounded-full bg-[#C9A86A] text-[#0B0C10] flex items-center justify-center">
                                     <span className="material-symbols-outlined">
                                         open_in_new
                                     </span>
@@ -86,7 +86,7 @@ function KnownFor({ credits }) {
 
                         <div className="p-3.5">
 
-                            <span className="text-[16px] font-bold text-white truncate block group-hover:text-[#43fe6d] transition-colors">
+                            <span className="text-[16px] font-bold text-white truncate block group-hover:text-[#C9A86A] transition-colors">
                                 {movie.title || movie.name}
                             </span>
 

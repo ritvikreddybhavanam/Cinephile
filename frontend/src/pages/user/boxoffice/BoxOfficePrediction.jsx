@@ -229,7 +229,7 @@ function BoxOfficePrediction() {
 
                 <div className="absolute top-20 right-10 w-[450px] h-[300px] bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none" />
 
-                <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md pt-8 pb-10 relative z-10">
+                <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-6 sm:pt-8 pb-8 sm:pb-10 relative z-10">
 
                     <div className="max-w-3xl">
 
@@ -237,17 +237,17 @@ function BoxOfficePrediction() {
 
                             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
 
-                            <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+                            <span className="font-label-caps text-xs sm:text-label-caps text-on-surface-variant uppercase tracking-wider">
                                 Box Office Prediction
                             </span>
 
                         </div>
 
-                        <h1 className="font-display-lg text-display-lg text-text-main tracking-tight font-extrabold">
+                        <h1 className="font-headline-lg text-2xl sm:text-4xl md:text-5xl text-text-main tracking-tight font-extrabold break-words">
                             Box Office Prediction
                         </h1>
 
-                        <p className="font-body-lg text-body-lg text-text-dim mt-3 leading-relaxed">
+                        <p className="font-body-lg text-sm sm:text-base md:text-body-lg text-text-dim mt-2 sm:mt-3 leading-relaxed">
                             Enter the movie details below to estimate its worldwide box office revenue.
                         </p>
 
@@ -257,7 +257,7 @@ function BoxOfficePrediction() {
 
             </section>
 
-            <div className="max-w-7xl mx-auto px-margin-sm md:px-margin-md py-8 w-full">
+            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-6 sm:py-8 w-full">
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
@@ -613,7 +613,7 @@ function BoxOfficePrediction() {
                                         disabled={
                                             isPredicting
                                         }
-                                        className="group w-full py-4 px-6 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-headline-lg text-title-md font-bold tracking-tight transition-all duration-200 shadow-[0_4px_24px_rgba(67,254,109,0.25)] hover:shadow-[0_6px_32px_rgba(67,254,109,0.4)] flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
+                                        className="group w-full py-4 px-6 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-headline-lg text-title-md font-bold tracking-tight transition-all duration-200 shadow-[0_4px_24px_rgba(201,168,106,0.25)] hover:shadow-[0_6px_32px_rgba(201,168,106,0.25)] flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
                                     >
 
                                         <span className="material-symbols-outlined text-[24px] group-hover:rotate-12 transition-transform duration-300">
@@ -731,13 +731,13 @@ function BoxOfficePrediction() {
                                     </div>
                                 )}
 
-                                <div className="bg-surface-deep p-6 rounded-xl relative overflow-hidden flex flex-col items-center text-center">
+                                <div className="bg-surface-deep p-4 sm:p-6 rounded-xl relative overflow-hidden flex flex-col items-center text-center">
 
-                                    <span className="font-label-caps text-label-caps text-text-dim uppercase tracking-wider mb-2">
-                                        Estimated Worldwide Box Office Revenue
-                                    </span>
+                                    <span className="font-label-caps text-xs sm:text-label-caps text-text-dim uppercase tracking-wider mb-2">
+                                         Estimated Worldwide Box Office Revenue
+                                     </span>
 
-                                    <div className="font-display-lg text-[44px] md:text-display-lg text-primary font-extrabold tracking-tight leading-none drop-shadow-[0_0_24px_rgba(67,254,109,0.35)] my-2">
+                                    <div className="font-headline-lg text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-primary font-extrabold tracking-tight leading-tight drop-shadow-[0_0_24px_rgba(201,168,106,0.25)] my-2 break-words text-center">
 
                                         {prediction
                                             ? `$${Number(
@@ -747,13 +747,13 @@ function BoxOfficePrediction() {
 
                                     </div>
 
-                                    <div className="inline-flex items-center gap-2 mt-3 px-3.5 py-1.5 bg-surface-container rounded-lg font-label-caps text-label-caps text-on-surface">
+                                    <div className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mt-3 px-3 py-1.5 bg-surface-container rounded-lg font-label-caps text-xs sm:text-label-caps text-on-surface text-center break-words max-w-full">
 
                                         <span className="text-text-dim">
                                             Exact Computed Figure:
                                         </span>
 
-                                        <span className="font-bold text-primary font-metadata tracking-normal">
+                                        <span className="font-bold text-primary font-metadata tracking-normal break-all">
 
                                             {prediction
                                                 ? `Estimated Revenue: $${Number(
@@ -770,7 +770,7 @@ function BoxOfficePrediction() {
 
                                     </div>
 
-                                    <div className="w-full mt-6 pt-4 bg-surface-container-lowest/70 p-3 rounded-lg flex items-center justify-between font-metadata text-metadata">
+                                    <div className="w-full mt-6 pt-4 bg-surface-container-lowest/70 p-3 rounded-lg flex flex-col sm:flex-row gap-2 items-start sm:items-center justify-between font-metadata text-metadata">
 
                                         <div className="text-left">
 
@@ -778,7 +778,7 @@ function BoxOfficePrediction() {
                                                 ESTIMATED MULTIPLIER
                                             </span>
 
-                                            <span className="font-bold text-text-main">
+                                            <span className="font-bold text-text-main text-xs sm:text-sm">
 
                                                 {predictionMultiplier
                                                     ? `${predictionMultiplier}x Production Budget`
@@ -788,13 +788,13 @@ function BoxOfficePrediction() {
 
                                         </div>
 
-                                        <div className="text-right">
+                                        <div className="text-left sm:text-right">
 
                                             <span className="text-text-dim block text-xs font-label-caps">
                                                 PREDICTED REVENUE
                                             </span>
 
-                                            <span className="font-semibold text-primary">
+                                            <span className="font-semibold text-primary text-xs sm:text-sm">
 
                                                 {prediction
                                                     ? `$${Number(

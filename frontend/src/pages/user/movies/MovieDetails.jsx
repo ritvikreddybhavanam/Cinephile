@@ -18,11 +18,14 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../../components/review/ReviewSection.jsx";
 
 import MovieHero from "../../../components/movie/MovieHero.jsx";
-import TrailerSection from "../../../components/movie/TrailerSection.jsx";
+import MovieVideosSection from "../../../components/movie/MovieVideosSection.jsx";
+import MoviePhotos from "../../../components/movie/MoviePhotos.jsx";
+import MovieCollection from "../../../components/movie/MovieCollection.jsx";
 import WatchProviders from "../../../components/movie/WatchProviders.jsx";
 import CastSection from "../../../components/movie/CastSection.jsx";
 import CrewSection from "../../../components/movie/CrewSection.jsx";
 import MovieInfo from "../../../components/movie/MovieInfo.jsx";
+import MovieKeywords from "../../../components/movie/MovieKeywords.jsx";
 import RecommendationSection from "../../../components/movie/RecommendationSection.jsx";
 
 import {
@@ -32,6 +35,10 @@ import {
     getMovieReviews,
     getFilmBuffReviews,
     getMovieRecommendations,
+    getSimilarMovies,
+    getMovieImages,
+    getMovieKeywords,
+    getMovieReleaseDates,
     getPosterUrl,
     getBackdropUrl,
     getMovieWatchProviders,
@@ -52,6 +59,7 @@ import {
     removeFromWatched,
     checkWatched
 } from "../../../services/watchedMovieService.js";
+import useDocumentTitle from "../../../hooks/useDocumentTitle.js";
 
 function MovieDetails() {
     const { movieId } = useParams();
@@ -69,10 +77,24 @@ function MovieDetails() {
     const [movie, setMovie] =
         useState(null);
 
+    useDocumentTitle(movie ? movie.title : "Movie Details");
+
     const [credits, setCredits] =
         useState(null);
 
     const [videos, setVideos] =
+        useState(null);
+
+    const [images, setImages] =
+        useState(null);
+
+    const [keywords, setKeywords] =
+        useState([]);
+
+    const [similar, setSimilar] =
+        useState([]);
+
+    const [releaseDates, setReleaseDates] =
         useState(null);
 
     const [reviews, setReviews] =
@@ -113,6 +135,7 @@ function MovieDetails() {
 
     const [watchedLoading, setWatchedLoading] =
         useState(false);
+
 
     /*
      * ------------------------------------------------
@@ -387,6 +410,10 @@ function MovieDetails() {
                         getMovieReviews(movieId),
                         getFilmBuffReviews(movieId),
                         getMovieRecommendations(movieId),
+                        getSimilarMovies(movieId),
+                        getMovieImages(movieId),
+                        getMovieKeywords(movieId),
+                        getMovieReleaseDates(movieId),
                         getMovieWatchProviders(movieId),
                         getMyReviews()
                     ]);
@@ -398,6 +425,10 @@ function MovieDetails() {
                     reviewsResult,
                     filmBuffReviewsResult,
                     recommendationsResult,
+                    similarResult,
+                    imagesResult,
+                    keywordsResult,
+                    releaseDatesResult,
                     watchProvidersResult,
                     myReviewsResult
                 ] = results;
@@ -427,12 +458,18 @@ function MovieDetails() {
                  */
 
                 if (
-                    creditsResult.status ===
-                    "fulfilled"
+                    creditsResult.status === "fulfilled" &&
+                    (creditsResult.value?.cast?.length > 0 || creditsResult.value?.crew?.length > 0)
                 ) {
-                    setCredits(
-                        creditsResult.value
-                    );
+                    setCredits(creditsResult.value);
+                } else if (
+                    movieResult.status === "fulfilled" &&
+                    movieResult.value?.credits &&
+                    (movieResult.value.credits?.cast?.length > 0 || movieResult.value.credits?.crew?.length > 0)
+                ) {
+                    setCredits(movieResult.value.credits);
+                } else if (creditsResult.status === "fulfilled") {
+                    setCredits(creditsResult.value);
                 } else {
                     console.error(
                         "Failed to load credits:",
@@ -453,6 +490,8 @@ function MovieDetails() {
                     setVideos(
                         videosResult.value
                     );
+                } else if (movieResult.status === "fulfilled" && movieResult.value?.videos) {
+                    setVideos(movieResult.value.videos);
                 } else {
                     console.error(
                         "Failed to load videos:",
@@ -460,6 +499,65 @@ function MovieDetails() {
                     );
 
                     setVideos(null);
+                }
+
+                /*
+                 * IMAGES / PHOTOS
+                 */
+
+                if (
+                    imagesResult.status === "fulfilled" &&
+                    (imagesResult.value?.backdrops?.length || imagesResult.value?.posters?.length || imagesResult.value?.logos?.length)
+                ) {
+                    setImages(imagesResult.value);
+                } else if (movieResult.status === "fulfilled" && movieResult.value?.images) {
+                    setImages(movieResult.value.images);
+                } else if (imagesResult.status === "fulfilled") {
+                    setImages(imagesResult.value);
+                } else {
+                    setImages(null);
+                }
+
+                /*
+                 * KEYWORDS
+                 */
+
+                if (
+                    keywordsResult.status === "fulfilled" &&
+                    keywordsResult.value?.keywords
+                ) {
+                    setKeywords(keywordsResult.value.keywords);
+                } else if (movieResult.status === "fulfilled" && movieResult.value?.keywords?.keywords) {
+                    setKeywords(movieResult.value.keywords.keywords);
+                } else {
+                    setKeywords([]);
+                }
+
+                /*
+                 * SIMILAR MOVIES
+                 */
+
+                if (
+                    similarResult.status === "fulfilled" &&
+                    similarResult.value?.results
+                ) {
+                    setSimilar(similarResult.value.results);
+                } else if (movieResult.status === "fulfilled" && movieResult.value?.similar?.results) {
+                    setSimilar(movieResult.value.similar.results);
+                } else {
+                    setSimilar([]);
+                }
+
+                /*
+                 * RELEASE DATES / CERTIFICATION
+                 */
+
+                if (releaseDatesResult.status === "fulfilled") {
+                    setReleaseDates(releaseDatesResult.value);
+                } else if (movieResult.status === "fulfilled" && movieResult.value?.release_dates) {
+                    setReleaseDates(movieResult.value.release_dates);
+                } else {
+                    setReleaseDates(null);
                 }
 
                 /*
@@ -483,7 +581,7 @@ function MovieDetails() {
                 }
 
                 /*
-                 * Cinephile 🎬 REVIEWS
+                 * Cinephile REVIEWS
                  */
 
                 if (
@@ -499,7 +597,7 @@ function MovieDetails() {
                     );
                 } else {
                     console.error(
-                        "Failed to load Cinephile 🎬 reviews:",
+                        "Failed to load Cinephile reviews:",
                         filmBuffReviewsResult.reason
                     );
 
@@ -745,24 +843,41 @@ function MovieDetails() {
 
     /*
      * ------------------------------------------------
+     * EFFECTIVE CREDITS (State fallback to movie.credits)
+     * ------------------------------------------------
+     */
+
+    const effectiveCredits = useMemo(() => {
+        if (credits?.cast?.length || credits?.crew?.length) {
+            return credits;
+        }
+        if (movie?.credits?.cast?.length || movie?.credits?.crew?.length) {
+            return movie.credits;
+        }
+        return credits || movie?.credits || null;
+    }, [credits, movie]);
+
+    /*
+     * ------------------------------------------------
      * DIRECTORS
      * ------------------------------------------------
      */
 
     const directors =
         useMemo(() => {
-            if (!credits?.crew) {
+            const crewList = effectiveCredits?.crew || [];
+            if (!crewList.length) {
                 return [];
             }
 
-            return credits.crew.filter(
+            return crewList.filter(
                 (person) =>
                     person.department ===
                     "Directing" &&
                     person.job ===
                     "Director"
             );
-        }, [credits]);
+        }, [effectiveCredits]);
 
     /*
      * ------------------------------------------------
@@ -772,11 +887,12 @@ function MovieDetails() {
 
     const producers =
         useMemo(() => {
-            if (!credits?.crew) {
+            const crewList = effectiveCredits?.crew || [];
+            if (!crewList.length) {
                 return [];
             }
 
-            return credits.crew.filter(
+            return crewList.filter(
                 (person) =>
                     person.department ===
                     "Production" &&
@@ -789,7 +905,7 @@ function MovieDetails() {
                         person.job
                     )
             );
-        }, [credits]);
+        }, [effectiveCredits]);
 
     /*
      * ------------------------------------------------
@@ -799,11 +915,12 @@ function MovieDetails() {
 
     const writers =
         useMemo(() => {
-            if (!credits?.crew) {
+            const crewList = effectiveCredits?.crew || [];
+            if (!crewList.length) {
                 return [];
             }
 
-            return credits.crew.filter(
+            return crewList.filter(
                 (person) =>
                     person.department ===
                     "Writing" ||
@@ -817,7 +934,91 @@ function MovieDetails() {
                         person.job
                     )
             );
-        }, [credits]);
+        }, [effectiveCredits]);
+
+    /*
+     * ------------------------------------------------
+     * CREW
+     * ------------------------------------------------
+     */
+
+    const crew =
+        useMemo(() => {
+            const crewList = effectiveCredits?.crew || [];
+            if (!crewList.length) {
+                return [];
+            }
+
+            const getJobPriority = (job = "", department = "") => {
+                const j = job.toLowerCase();
+                const d = department.toLowerCase();
+
+                if (j === "director") return 1;
+                if (
+                    ["screenplay", "writer", "story", "written by", "teleplay", "characters"].includes(j) ||
+                    d === "writing"
+                ) {
+                    return 2;
+                }
+                if (j === "producer") return 3;
+                if (j.includes("producer") || d === "production") return 4;
+                if (
+                    ["director of photography", "cinematography", "cinematographer"].includes(j) ||
+                    d === "camera"
+                ) {
+                    return 5;
+                }
+                if (
+                    ["original music composer", "composer", "music", "original score"].includes(j) ||
+                    d === "sound"
+                ) {
+                    return 6;
+                }
+                if (["editor", "film editor"].includes(j) || d === "editing") return 7;
+                if (["production design", "production designer", "art direction"].includes(j) || d === "art") return 8;
+                if (["costume design", "costume designer"].includes(j) || d === "costume & make-up") return 9;
+                return 20;
+            };
+
+            const personMap = new Map();
+
+            crewList.forEach((person) => {
+                if (!person || !person.id) return;
+                const priority = getJobPriority(person.job, person.department);
+
+                if (!personMap.has(person.id)) {
+                    personMap.set(person.id, {
+                        ...person,
+                        jobs: person.job ? [person.job] : [],
+                        priority,
+                        popularity: person.popularity || 0,
+                    });
+                } else {
+                    const existing = personMap.get(person.id);
+                    if (person.job && !existing.jobs.includes(person.job)) {
+                        existing.jobs.push(person.job);
+                    }
+                    if (priority < existing.priority) {
+                        existing.priority = priority;
+                    }
+                    if (!existing.profile_path && person.profile_path) {
+                        existing.profile_path = person.profile_path;
+                    }
+                }
+            });
+
+            return Array.from(personMap.values())
+                .map((person) => ({
+                    ...person,
+                    job: person.jobs.slice(0, 2).join(", ") || person.job || person.department || "Crew"
+                }))
+                .sort((a, b) => {
+                    if (a.priority !== b.priority) {
+                        return a.priority - b.priority;
+                    }
+                    return (b.popularity || 0) - (a.popularity || 0);
+                });
+        }, [effectiveCredits]);
 
     /*
      * ------------------------------------------------
@@ -827,18 +1028,19 @@ function MovieDetails() {
 
     const cast =
         useMemo(() => {
-            if (!credits?.cast) {
+            const rawCast = effectiveCredits?.cast || [];
+            if (!Array.isArray(rawCast) || !rawCast.length) {
                 return [];
             }
 
             return [
-                ...credits.cast
+                ...rawCast
             ].sort(
                 (a, b) =>
                     (a.order ?? 999) -
                     (b.order ?? 999)
             );
-        }, [credits]);
+        }, [effectiveCredits]);
 
     /*
      * ------------------------------------------------
@@ -846,32 +1048,120 @@ function MovieDetails() {
      * ------------------------------------------------
      */
 
-    const trailer =
-        useMemo(() => {
-            if (!videos?.results) {
-                return null;
-            }
+    /*
+     * ------------------------------------------------
+     * VIDEOS & TRAILER
+     * ------------------------------------------------
+     */
 
-            return (
-                videos.results.find(
-                    (video) =>
-                        video.site === "YouTube" &&
-                        video.type === "Trailer" &&
-                        video.official
-                ) ||
-                videos.results.find(
-                    (video) =>
-                        video.site === "YouTube" &&
-                        video.type === "Trailer"
-                ) ||
-                videos.results.find(
-                    (video) =>
-                        video.site === "YouTube" &&
-                        video.type === "Teaser"
-                ) ||
-                null
-            );
-        }, [videos]);
+    const effectiveVideos = useMemo(() => {
+        if (videos?.results?.length) {
+            return videos.results;
+        }
+        if (movie?.videos?.results?.length) {
+            return movie.videos.results;
+        }
+        return videos?.results || movie?.videos?.results || [];
+    }, [videos, movie]);
+
+    const trailer = useMemo(() => {
+        if (!effectiveVideos.length) {
+            return null;
+        }
+
+        return (
+            effectiveVideos.find(
+                (video) =>
+                    video.site === "YouTube" &&
+                    video.type === "Trailer" &&
+                    video.official
+            ) ||
+            effectiveVideos.find(
+                (video) =>
+                    video.site === "YouTube" &&
+                    video.type === "Trailer"
+            ) ||
+            effectiveVideos.find(
+                (video) =>
+                    video.site === "YouTube" &&
+                    video.type === "Teaser"
+            ) ||
+            null
+        );
+    }, [effectiveVideos]);
+
+    /*
+     * ------------------------------------------------
+     * IMAGES, KEYWORDS, SIMILAR, CERTIFICATION
+     * ------------------------------------------------
+     */
+
+    const effectiveImages = useMemo(() => {
+        if (images?.backdrops?.length || images?.posters?.length || images?.logos?.length) {
+            return images;
+        }
+        if (movie?.images?.backdrops?.length || movie?.images?.posters?.length || movie?.images?.logos?.length) {
+            return movie.images;
+        }
+        return images || movie?.images || null;
+    }, [images, movie]);
+
+    const effectiveKeywords = useMemo(() => {
+        if (keywords?.length) {
+            return keywords;
+        }
+        if (movie?.keywords?.keywords?.length) {
+            return movie.keywords.keywords;
+        }
+        return keywords || movie?.keywords?.keywords || [];
+    }, [keywords, movie]);
+
+    const effectiveSimilar = useMemo(() => {
+        if (similar?.length) {
+            return similar;
+        }
+        if (movie?.similar?.results?.length) {
+            return movie.similar.results;
+        }
+        return similar || movie?.similar?.results || [];
+    }, [similar, movie]);
+
+    const effectiveRecommendations = useMemo(() => {
+        if (recommendations?.length) {
+            return recommendations;
+        }
+        if (movie?.recommendations?.results?.length) {
+            return movie.recommendations.results;
+        }
+        return recommendations || movie?.recommendations?.results || [];
+    }, [recommendations, movie]);
+
+    const certification = useMemo(() => {
+        const dates = releaseDates?.results || movie?.release_dates?.results;
+        if (!Array.isArray(dates)) return "";
+        const usRelease = dates.find((d) => d.iso_3166_1 === "US");
+        if (usRelease?.release_dates) {
+            const cert = usRelease.release_dates.find((r) => r.certification)?.certification;
+            if (cert) return cert;
+        }
+        const inRelease = dates.find((d) => d.iso_3166_1 === "IN");
+        if (inRelease?.release_dates) {
+            const cert = inRelease.release_dates.find((r) => r.certification)?.certification;
+            if (cert) return cert;
+        }
+        const gbRelease = dates.find((d) => d.iso_3166_1 === "GB");
+        if (gbRelease?.release_dates) {
+            const cert = gbRelease.release_dates.find((r) => r.certification)?.certification;
+            if (cert) return cert;
+        }
+        for (const country of dates) {
+            if (country.release_dates) {
+                const cert = country.release_dates.find((r) => r.certification)?.certification;
+                if (cert) return cert;
+            }
+        }
+        return "";
+    }, [releaseDates, movie]);
 
     /*
      * ------------------------------------------------
@@ -951,79 +1241,57 @@ function MovieDetails() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#070a0d] text-white">
-
+            <div className="min-h-screen bg-bg text-text antialiased">
                 <Navbar />
-
-                <div className="min-h-[70vh] flex items-center justify-center">
-                    <div className="text-[#00e054] text-lg font-bold">
-                        Loading movie...
+                <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
+                    <span className="material-symbols-outlined text-4xl text-accent animate-spin">
+                        progress_activity
+                    </span>
+                    <div className="label-caps">
+                        Loading Film Details…
                     </div>
                 </div>
-
                 <Footer />
-
             </div>
         );
     }
 
-    /*
-     * ------------------------------------------------
-     * ERROR
-     * ------------------------------------------------
-     */
-
-    if (
-        error ||
-        !movie
-    ) {
+    if (error || !movie) {
         return (
-            <div className="min-h-screen bg-[#070a0d] text-white">
-
+            <div className="min-h-screen bg-bg text-text antialiased">
                 <Navbar />
-
-                <div className="min-h-[70vh] flex flex-col items-center justify-center">
-
-                    <h1 className="text-2xl font-bold mb-3">
-                        Movie Not Found
+                <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+                    <span className="material-symbols-outlined text-5xl text-text-3 mb-3">
+                        movie_off
+                    </span>
+                    <h1 className="font-serif text-2xl font-semibold mb-2">
+                        Film Not Found
                     </h1>
-
-                    <p className="text-gray-400 mb-6">
-                        {error ||
-                            "Unable to load this movie."}
+                    <p className="text-text-3 mb-6 max-w-md text-sm">
+                        {error || "Unable to locate this film record."}
                     </p>
-
                     <Link
                         to="/movies"
-                        className="px-5 py-3 rounded-lg bg-[#00e054] text-[#070a0d] font-bold hover:bg-[#43fe6d] transition-colors"
+                        className="btn-primary text-sm py-2.5 px-6 no-underline inline-flex items-center gap-2"
                     >
-                        Back to Movies
+                        <span className="material-symbols-outlined text-sm">arrow_back</span>
+                        <span>Browse Films</span>
                     </Link>
-
                 </div>
-
                 <Footer />
-
             </div>
         );
     }
 
-    /*
-     * ------------------------------------------------
-     * MAIN PAGE
-     * ------------------------------------------------
-     */
-
     return (
-        <div className="min-h-screen bg-[#070a0d] text-white">
-
+        <div className="min-h-screen bg-bg text-text antialiased">
             <Navbar />
 
-            <div className="bg-[#0b0f13] border-b border-[#1d252d] px-4 py-4">
-                <div className="max-w-7xl mx-auto">
+            <div className="bg-surface/80 border-b border-border px-4 py-3 backdrop-blur-md">
+                <div className="max-w-[1200px] mx-auto">
                     <form
                         onSubmit={handleSearch}
-                        className="relative"
+                        className="relative flex flex-col gap-2 sm:block"
                     >
                         <input
                             type="text"
@@ -1031,17 +1299,17 @@ function MovieDetails() {
                             onChange={(event) =>
                                 setSearchQuery(event.target.value)
                             }
-                            placeholder="Search movies..."
-                            className="w-full bg-[#161c24] border border-[#303946] rounded-lg px-5 py-3 pl-12 text-white placeholder-gray-500 outline-none focus:border-[#00e054] transition-colors"
+                            placeholder="Search films by title, director, or cast…"
+                            className="mc-input pl-11 sm:pr-28 rounded-full text-sm"
                         />
 
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
-                search
-            </span>
+                        <span className="material-symbols-outlined absolute left-4 top-3.5 text-text-3 sm:top-1/2 sm:-translate-y-1/2 text-[18px]">
+                            search
+                        </span>
 
                         <button
                             type="submit"
-                            className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 rounded-md bg-[#00e054] text-[#070a0d] font-bold hover:bg-[#43fe6d] transition-colors"
+                            className="btn-primary sm:absolute sm:right-1.5 sm:top-1/2 sm:-translate-y-1/2 text-xs py-1.5 px-4"
                         >
                             Search
                         </button>
@@ -1051,6 +1319,7 @@ function MovieDetails() {
 
             <main>
 
+                {/* Hero Section */}
                 <MovieHero
                     movie={movie}
                     posterUrl={
@@ -1104,35 +1373,62 @@ function MovieDetails() {
                     }
                 />
 
-                <TrailerSection
+                {/* Trailers & Media Archive */}
+                <MovieVideosSection
+                    videos={effectiveVideos}
                     trailer={trailer}
                     movieTitle={movie.title}
                     sectionRef={trailerRef}
                 />
 
+                {/* Photos, Backdrops & Posters Gallery */}
+                <MoviePhotos
+                    images={effectiveImages}
+                    movieTitle={movie.title}
+                />
+
+                {/* Franchise / Movie Collection Spotlight */}
+                {movie.belongs_to_collection && (
+                    <MovieCollection
+                        collection={movie.belongs_to_collection}
+                    />
+                )}
+
+                {/* Streaming & Where to Watch Providers */}
                 <WatchProviders
                     watchProviders={
                         watchProviders
                     }
                 />
 
+                {/* Principal Cast Ensemble */}
                 <CastSection
                     cast={cast}
                 />
 
+                {/* Key Crew & Department Heads */}
                 <CrewSection
+                    crew={crew}
                     directors={directors}
                     producers={producers}
                     writers={writers}
                 />
 
+                {/* Film Specifications & Financial Details */}
                 <MovieInfo
                     movie={movie}
                     runtime={runtime}
                     budget={budget}
                     revenue={revenue}
+                    certification={certification}
                 />
 
+                {/* Story Themes & Taxonomy Keywords */}
+                <MovieKeywords
+                    keywords={effectiveKeywords}
+                />
+
+                {/* Community Reviews & TMDB Reviews */}
                 <ReviewSection
                     sectionRef={reviewRef}
                     tmdbReviews={
@@ -1143,10 +1439,10 @@ function MovieDetails() {
                     }
                 />
 
+                {/* Recommended & Thematically Similar Cinema */}
                 <RecommendationSection
-                    recommendations={
-                        recommendations
-                    }
+                    recommendations={effectiveRecommendations}
+                    similar={effectiveSimilar}
                 />
 
             </main>

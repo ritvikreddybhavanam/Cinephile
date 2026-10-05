@@ -5,68 +5,56 @@ function MovieCard({ movie }) {
     const [imageError, setImageError] = useState(false);
     const navigate = useNavigate();
 
-    const ratingColor =
-        Number(movie.rating) >= 8
-            ? "bg-[#00e054] text-[#070a0d]"
-            : "bg-[#070a0d]/80 text-[#f5c518]";
-
     const showPlaceholder = !movie.image || imageError;
 
-    const handleClick = () => {
-        navigate(`/movie/${movie.id}`);
-    };
+    const handleClick = () => navigate(`/movies/${movie.id}`);
 
     return (
         <article
             onClick={handleClick}
-            className="flex flex-col group cursor-pointer"
+            className="group flex flex-col cursor-pointer"
         >
-            <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-[#161c24] shadow-[0_12px_28px_-6px_rgba(0,0,0,0.75)] border border-[#212936]/60 transition-all duration-300 ease-out group-hover:-translate-y-[7px] group-hover:scale-[1.02] group-hover:shadow-[0_16px_30px_-6px_rgba(0,0,0,0.85),0_0_16px_-2px_rgba(0,224,84,0.3)]">
-
+            {/* Poster */}
+            <div className="poster-card">
                 {showPlaceholder ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-[#161c24] text-gray-500">
-                        <span className="text-5xl mb-3">🎬</span>
-
-                        <span className="text-xs font-semibold">
-                            No Image Available
-                        </span>
+                    <div className="flex h-full w-full flex-col items-center justify-center bg-surface text-text-3 p-4 text-center">
+                        <span className="text-3xl mb-2 opacity-40">▣</span>
+                        <span className="text-xs font-medium">{movie.title}</span>
                     </div>
                 ) : (
                     <img
                         src={movie.image}
-                        alt={`${movie.title} Movie Poster`}
+                        alt={`${movie.title} poster`}
                         loading="lazy"
                         onError={() => setImageError(true)}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                     />
                 )}
 
-                <div
-                    className={`absolute top-2 left-2 px-1.5 py-0.5 rounded text-[10px] font-black backdrop-blur-sm border border-[#212936] ${ratingColor}`}
-                >
+                {/* Rating badge */}
+                <div className="absolute top-2 left-2 badge badge-accent backdrop-blur-sm">
                     ★ {movie.rating}
                 </div>
 
-                <div className="absolute inset-0 bg-[#070a0d]/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                {/* Hover overlay */}
+                <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-bg/90 via-bg/50 to-transparent p-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                     <button
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            handleClick();
-                        }}
-                        className="cursor-pointer w-full py-2 bg-[#00e054] text-[#070a0d] text-xs font-bold rounded-lg shadow-[0_0_25px_-5px_rgba(0,224,84,0.35)]"
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); handleClick(); }}
+                        className="btn-primary w-full text-xs py-2 rounded-lg"
                     >
-                        Quick Details
+                        View Details
                     </button>
                 </div>
             </div>
 
+            {/* Meta */}
             <div className="mt-2.5 px-0.5">
-                <h3 className="font-bold text-sm text-white group-hover:text-[#00e054] transition-colors truncate">
+                <h3 className="truncate text-sm font-medium text-text transition-colors group-hover:text-accent">
                     {movie.title}
                 </h3>
-
-                <p className="text-[11px] text-gray-400 truncate mt-0.5 font-medium">
-                    {movie.genre} • {movie.year}
+                <p className="mt-0.5 truncate text-[11px] text-text-3 font-medium">
+                    {movie.genre} · {movie.year}
                 </p>
             </div>
         </article>
