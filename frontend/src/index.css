@@ -185,179 +185,179 @@
 :root,
 html.dark,
 [data-theme="dark"] {
-    /* Page & surface backgrounds */
-    --color-bg:                         #0B0C10;
-    --color-surface:                    #14161C;
-    --color-surface-2:                  #1B1E26;
+    /* Flat Design Dark — Midnight Blue & Turquoise (Zero Shadows) */
+    --color-bg:                         #1A252F;
+    --color-surface:                    #2C3E50;
+    --color-surface-2:                  #34495E;
 
-    /* Borders */
-    --color-border:                     #262A34;
+    /* Crisp solid 2D borders */
+    --color-border:                     #415B76;
 
     /* Text hierarchy */
-    --color-text:                       #ECE8E1;
-    --color-text-2:                     #A6A29A;
-    --color-text-3:                     #6E6B65;
+    --color-text:                       #ECF0F1;
+    --color-text-2:                     #BDC3C7;
+    --color-text-3:                     #95A5A6;
 
-    /* Accent — champagne gold */
-    --color-accent:                     #C9A86A;
-    --color-accent-hover:               #DDBF85;
-    --color-accent-soft:                rgba(201,168,106,0.12);
+    /* Accent — Iconic Flat Turquoise */
+    --color-accent:                     #1ABC9C;
+    --color-accent-hover:               #16A085;
+    --color-accent-soft:                rgba(26, 188, 156, 0.16);
 
     /* Semantic */
-    --color-wine:                       #7C3A4B;
-    --color-success:                    #7FA88C;
-    --color-error:                      #C4646F;
+    --color-wine:                       #E74C3C;
+    --color-success:                    #2ECC71;
+    --color-error:                      #E74C3C;
 
     /* Button specific */
-    --color-btn-primary-text:           #0B0C10;
+    --color-btn-primary-text:           #FFFFFF;
 
-    /* Shadows */
-    --shadow-card:                      0 8px 30px rgba(0,0,0,0.45);
-    --shadow-card-hover:                0 12px 40px rgba(0,0,0,0.6);
-    --shadow-elevated:                  0 20px 60px rgba(0,0,0,0.7);
+    /* Pure 2D Flat Design — No Drop Shadows */
+    --shadow-card:                      none;
+    --shadow-card-hover:                0 0 0 2px #1ABC9C;
+    --shadow-elevated:                  none;
 
     /* Legacy aliases */
-    --color-background:                 #0B0C10;
-    --color-surface-dim:                #0B0C10;
-    --color-on-background:              #ECE8E1;
-    --color-on-surface:                 #ECE8E1;
-    --color-on-surface-variant:         #A6A29A;
-    --color-surface-container:          #1B1E26;
-    --color-surface-container-low:      #14161C;
-    --color-surface-container-high:     #22263A;
-    --color-surface-container-highest:  #262A34;
-    --color-surface-container-lowest:   #0B0C10;
-    --color-surface-variant:            #1B1E26;
-    --color-surface-bright:             #22263A;
-    --color-surface-tint:               #C9A86A;
-    --color-surface-deep:               #0B0C10;
-    --color-surface-muted:              #14161C;
-    --color-outline:                    #262A34;
-    --color-outline-variant:            #262A34;
-    --color-border-subtle:              #262A34;
-    --color-text-muted:                 #6E6B65;
-    --color-text-dim:                   #A6A29A;
-    --color-text-main:                  #ECE8E1;
-    --color-rating-gold:                #C9A86A;
-    --color-rating-star:                #C9A86A;
-    --color-inverse-surface:            #ECE8E1;
-    --color-inverse-on-surface:         #14161C;
-    --color-inverse-primary:            #0B0C10;
-    --color-primary:                    #C9A86A;
-    --color-on-primary:                 #0B0C10;
-    --color-primary-container:          rgba(201,168,106,0.15);
-    --color-on-primary-container:       #C9A86A;
-    --color-primary-fixed:              #C9A86A;
-    --color-primary-fixed-dim:          #A68A52;
-    --color-on-primary-fixed:           #0B0C10;
-    --color-on-primary-fixed-variant:   #0B0C10;
-    --color-secondary:                  #A6A29A;
-    --color-on-secondary:               #0B0C10;
-    --color-secondary-container:        #1B1E26;
-    --color-on-secondary-container:     #ECE8E1;
-    --color-secondary-fixed:            #A6A29A;
-    --color-secondary-fixed-dim:        #6E6B65;
-    --color-on-secondary-fixed:         #ECE8E1;
-    --color-on-secondary-fixed-variant: #ECE8E1;
-    --color-tertiary:                   #7FA88C;
-    --color-on-tertiary:                #0B0C10;
-    --color-tertiary-container:         rgba(127,168,140,0.15);
-    --color-on-tertiary-container:      #7FA88C;
-    --color-tertiary-fixed:             #7FA88C;
-    --color-tertiary-fixed-dim:         #5A8A6A;
-    --color-on-tertiary-fixed:          #0B0C10;
-    --color-on-tertiary-fixed-variant:  #0B0C10;
-    --color-error-container:            rgba(196,100,111,0.15);
-    --color-on-error-container:         #C4646F;
+    --color-background:                 #1A252F;
+    --color-surface-dim:                #151E27;
+    --color-on-background:              #ECF0F1;
+    --color-on-surface:                 #ECF0F1;
+    --color-on-surface-variant:         #BDC3C7;
+    --color-surface-container:          #34495E;
+    --color-surface-container-low:      #2C3E50;
+    --color-surface-container-high:     #3D566E;
+    --color-surface-container-highest:  #415B76;
+    --color-surface-container-lowest:   #1A252F;
+    --color-surface-variant:            #34495E;
+    --color-surface-bright:             #3D566E;
+    --color-surface-tint:               #1ABC9C;
+    --color-surface-deep:               #1A252F;
+    --color-surface-muted:              #2C3E50;
+    --color-outline:                    #415B76;
+    --color-outline-variant:            #415B76;
+    --color-border-subtle:              #415B76;
+    --color-text-muted:                 #95A5A6;
+    --color-text-dim:                   #BDC3C7;
+    --color-text-main:                  #ECF0F1;
+    --color-rating-gold:                #F1C40F;
+    --color-rating-star:                #F1C40F;
+    --color-inverse-surface:            #ECF0F1;
+    --color-inverse-on-surface:         #2C3E50;
+    --color-inverse-primary:            #1A252F;
+    --color-primary:                    #1ABC9C;
+    --color-on-primary:                 #FFFFFF;
+    --color-primary-container:          rgba(26, 188, 156, 0.16);
+    --color-on-primary-container:       #1ABC9C;
+    --color-primary-fixed:              #1ABC9C;
+    --color-primary-fixed-dim:          #16A085;
+    --color-on-primary-fixed:           #FFFFFF;
+    --color-on-primary-fixed-variant:   #FFFFFF;
+    --color-secondary:                  #BDC3C7;
+    --color-on-secondary:               #1A252F;
+    --color-secondary-container:        #34495E;
+    --color-on-secondary-container:     #ECF0F1;
+    --color-secondary-fixed:            #BDC3C7;
+    --color-secondary-fixed-dim:        #95A5A6;
+    --color-on-secondary-fixed:         #ECF0F1;
+    --color-on-secondary-fixed-variant: #ECF0F1;
+    --color-tertiary:                   #2ECC71;
+    --color-on-tertiary:                #FFFFFF;
+    --color-tertiary-container:         rgba(46, 204, 113, 0.16);
+    --color-on-tertiary-container:      #2ECC71;
+    --color-tertiary-fixed:             #2ECC71;
+    --color-tertiary-fixed-dim:         #27AE60;
+    --color-on-tertiary-fixed:          #FFFFFF;
+    --color-on-tertiary-fixed-variant:  #FFFFFF;
+    --color-error-container:            rgba(231, 76, 60, 0.16);
+    --color-on-error-container:         #E74C3C;
 }
 
 html.light,
 [data-theme="light"],
 .light {
-    /* Page & surface backgrounds — archival warm ivory */
-    --color-bg:                         #F8F6F0;
+    /* Flat Design Light — Clouds & Green Sea */
+    --color-bg:                         #ECF0F1;
     --color-surface:                    #FFFFFF;
-    --color-surface-2:                  #F0ECE1;
+    --color-surface-2:                  #E0E6E8;
 
-    /* Borders */
-    --color-border:                     #E2DDD3;
+    /* Crisp solid 2D borders */
+    --color-border:                     #BDC3C7;
 
-    /* Text hierarchy — ink slate */
-    --color-text:                       #191816;
-    --color-text-2:                     #545048;
-    --color-text-3:                     #8C867A;
+    /* Text hierarchy */
+    --color-text:                       #2C3E50;
+    --color-text-2:                     #7F8C8D;
+    --color-text-3:                     #95A5A6;
 
-    /* Accent — warm bronze gold with high contrast */
-    --color-accent:                     #B38628;
-    --color-accent-hover:               #996F1D;
-    --color-accent-soft:                rgba(179, 134, 40, 0.12);
+    /* Accent — Flat Green Sea */
+    --color-accent:                     #16A085;
+    --color-accent-hover:               #117A65;
+    --color-accent-soft:                rgba(22, 160, 133, 0.14);
 
     /* Semantic */
-    --color-wine:                       #872E44;
-    --color-success:                    #2E7D52;
-    --color-error:                      #C23847;
+    --color-wine:                       #C0392B;
+    --color-success:                    #27AE60;
+    --color-error:                      #C0392B;
 
     /* Button specific */
     --color-btn-primary-text:           #FFFFFF;
 
-    /* Shadows */
-    --shadow-card:                      0 4px 20px rgba(28, 25, 23, 0.06), 0 1px 3px rgba(28, 25, 23, 0.04);
-    --shadow-card-hover:                0 10px 30px rgba(28, 25, 23, 0.12), 0 0 0 1px rgba(179, 134, 40, 0.35);
-    --shadow-elevated:                  0 16px 40px rgba(28, 25, 23, 0.12);
+    /* Pure 2D Flat Design — No Drop Shadows */
+    --shadow-card:                      none;
+    --shadow-card-hover:                0 0 0 2px #16A085;
+    --shadow-elevated:                  none;
 
     /* Legacy aliases */
-    --color-background:                 #F8F6F0;
-    --color-surface-dim:                #F2EFE8;
-    --color-on-background:              #191816;
-    --color-on-surface:                 #191816;
-    --color-on-surface-variant:         #545048;
-    --color-surface-container:          #F0ECE1;
+    --color-background:                 #ECF0F1;
+    --color-surface-dim:                #E0E6E8;
+    --color-on-background:              #2C3E50;
+    --color-on-surface:                 #2C3E50;
+    --color-on-surface-variant:         #7F8C8D;
+    --color-surface-container:          #E0E6E8;
     --color-surface-container-low:      #FFFFFF;
-    --color-surface-container-high:     #E8E3D7;
-    --color-surface-container-highest:  #E0DACD;
-    --color-surface-container-lowest:   #FAF8F4;
-    --color-surface-variant:            #F0ECE1;
+    --color-surface-container-high:     #D5DBDB;
+    --color-surface-container-highest:  #BDC3C7;
+    --color-surface-container-lowest:   #ECF0F1;
+    --color-surface-variant:            #E0E6E8;
     --color-surface-bright:             #FFFFFF;
-    --color-surface-tint:               #B38628;
-    --color-surface-deep:               #EDE8DE;
-    --color-surface-muted:              #F5F2EA;
-    --color-outline:                    #E2DDD3;
-    --color-outline-variant:            #D5CFC3;
-    --color-border-subtle:              #E2DDD3;
-    --color-text-muted:                 #8C867A;
-    --color-text-dim:                   #545048;
-    --color-text-main:                  #191816;
-    --color-rating-gold:                #B38628;
-    --color-rating-star:                #B38628;
-    --color-inverse-surface:            #14161C;
-    --color-inverse-on-surface:         #ECE8E1;
+    --color-surface-tint:               #16A085;
+    --color-surface-deep:               #D5DBDB;
+    --color-surface-muted:              #E0E6E8;
+    --color-outline:                    #BDC3C7;
+    --color-outline-variant:            #BDC3C7;
+    --color-border-subtle:              #BDC3C7;
+    --color-text-muted:                 #95A5A6;
+    --color-text-dim:                   #7F8C8D;
+    --color-text-main:                  #2C3E50;
+    --color-rating-gold:                #F39C12;
+    --color-rating-star:                #F39C12;
+    --color-inverse-surface:            #2C3E50;
+    --color-inverse-on-surface:         #ECF0F1;
     --color-inverse-primary:            #FFFFFF;
-    --color-primary:                    #B38628;
+    --color-primary:                    #16A085;
     --color-on-primary:                 #FFFFFF;
-    --color-primary-container:          rgba(179, 134, 40, 0.12);
-    --color-on-primary-container:       #B38628;
-    --color-primary-fixed:              #B38628;
-    --color-primary-fixed-dim:          #996F1D;
+    --color-primary-container:          rgba(22, 160, 133, 0.14);
+    --color-on-primary-container:       #16A085;
+    --color-primary-fixed:              #16A085;
+    --color-primary-fixed-dim:          #117A65;
     --color-on-primary-fixed:           #FFFFFF;
     --color-on-primary-fixed-variant:   #FFFFFF;
-    --color-secondary:                  #545048;
+    --color-secondary:                  #7F8C8D;
     --color-on-secondary:               #FFFFFF;
-    --color-secondary-container:        #F0ECE1;
-    --color-on-secondary-container:     #191816;
-    --color-secondary-fixed:            #545048;
-    --color-secondary-fixed-dim:        #8C867A;
-    --color-on-secondary-fixed:         #191816;
-    --color-on-secondary-fixed-variant: #191816;
-    --color-tertiary:                   #2E7D52;
+    --color-secondary-container:        #E0E6E8;
+    --color-on-secondary-container:     #2C3E50;
+    --color-secondary-fixed:            #7F8C8D;
+    --color-secondary-fixed-dim:        #95A5A6;
+    --color-on-secondary-fixed:         #2C3E50;
+    --color-on-secondary-fixed-variant: #2C3E50;
+    --color-tertiary:                   #27AE60;
     --color-on-tertiary:                #FFFFFF;
-    --color-tertiary-container:         rgba(46, 125, 82, 0.12);
-    --color-on-tertiary-container:      #2E7D52;
-    --color-tertiary-fixed:             #2E7D52;
-    --color-tertiary-fixed-dim:         #22603E;
+    --color-tertiary-container:         rgba(39, 174, 96, 0.14);
+    --color-on-tertiary-container:      #27AE60;
+    --color-tertiary-fixed:             #27AE60;
+    --color-tertiary-fixed-dim:         #1E8449;
     --color-on-tertiary-fixed:          #FFFFFF;
     --color-on-tertiary-fixed-variant:  #FFFFFF;
-    --color-error-container:            rgba(194, 56, 71, 0.12);
-    --color-on-error-container:         #C23847;
+    --color-error-container:            rgba(192, 57, 43, 0.14);
+    --color-on-error-container:         #C0392B;
 }
 
 /* ============================================================
