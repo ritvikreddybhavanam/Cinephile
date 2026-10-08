@@ -23,6 +23,17 @@ public class Review {
     @Column(name = "movie_id", nullable = false)
     private Long movieId;
 
+    @Column(length = 255)
+    private String movieTitle;
+
+    @Column(length = 500)
+    private String poster;
+
+    private Integer year;
+
+    @Column(length = 100)
+    private String genre;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -80,6 +91,38 @@ public class Review {
 
     public void setMovieId(Long movieId) {
         this.movieId = movieId;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public User getUser() {

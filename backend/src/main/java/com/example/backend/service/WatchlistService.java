@@ -24,14 +24,14 @@ public class WatchlistService {
     }
 
     public List<Watchlist> getWatchlist(String email) {
+        if (email == null || email.isBlank()) {
+            return List.of();
+        }
 
-        User user = userRepository
+        return userRepository
                 .findByEmailaddress(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found")
-                );
-
-        return watchlistRepository.findByUser(user);
+                .map(watchlistRepository::findByUser)
+                .orElse(List.of());
     }
 
     public Watchlist addToWatchlist(
@@ -86,15 +86,13 @@ public class WatchlistService {
             String email,
             Long movieId) {
 
-        User user = userRepository
-                .findByEmailaddress(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found")
-                );
+        if (email == null || email.isBlank()) {
+            return false;
+        }
 
-        return watchlistRepository.existsByUserAndMovieId(
-                user,
-                movieId
-        );
+        return userRepository
+                .findByEmailaddress(email)
+                .map(user -> watchlistRepository.existsByUserAndMovieId(user, movieId))
+                .orElse(false);
     }
 }

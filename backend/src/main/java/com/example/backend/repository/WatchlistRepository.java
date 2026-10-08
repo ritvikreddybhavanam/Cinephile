@@ -26,4 +26,6 @@ public interface WatchlistRepository
             User user,
             Long movieId
     );
+
+    long countByUser(User user);
 }

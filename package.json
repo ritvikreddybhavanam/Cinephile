@@ -5,9 +5,13 @@
     "frontend": "npm --prefix frontend run dev",
     "backend": "cd backend && mvnw spring-boot:run",
     "ml": "python -m uvicorn api.app:app --app-dir machine_learning --reload --port 8000",
-    "dev": "concurrently -n \"frontend,backend,ml\" -c \"cyan,magenta,yellow\" \"npm run frontend\" \"npm run backend\" \"npm run ml\""
+
+    "frontend:wait": "wait-on tcp:localhost:8080 && npm run frontend",
+
+    "dev": "concurrently -n \"backend,frontend,ml\" -c \"magenta,cyan,yellow\" \"npm run backend\" \"npm run frontend:wait\" \"npm run ml\""
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "wait-on": "^8.0.1"
   }
 }

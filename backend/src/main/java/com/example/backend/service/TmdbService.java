@@ -169,7 +169,7 @@ public class TmdbService {
             String rating,
             String language
     ) {
-        return getMovies(page, sortBy, year, genre, rating, language, null, null);
+        return getMovies(page, sortBy, year, genre, rating, language, null, null, null, null, null, null);
     }
 
     public String getMovies(
@@ -182,7 +182,24 @@ public class TmdbService {
             String fromDate,
             String toDate
     ) {
-        String cacheKey = "movies_" + page + "_" + sortBy + "_" + year + "_" + genre + "_" + rating + "_" + language + "_" + fromDate + "_" + toDate;
+        return getMovies(page, sortBy, year, genre, rating, language, fromDate, toDate, null, null, null, null);
+    }
+
+    public String getMovies(
+            int page,
+            String sortBy,
+            String year,
+            String genre,
+            String rating,
+            String language,
+            String fromDate,
+            String toDate,
+            String withWatchProviders,
+            String watchRegion,
+            Integer runtimeLte,
+            Integer runtimeGte
+    ) {
+        String cacheKey = "movies_" + page + "_" + sortBy + "_" + year + "_" + genre + "_" + rating + "_" + language + "_" + fromDate + "_" + toDate + "_" + withWatchProviders + "_" + watchRegion + "_" + runtimeLte + "_" + runtimeGte;
 
         return getFromTmdb(cacheKey, 1800, () -> {
             StringBuilder uri = new StringBuilder(
@@ -217,6 +234,23 @@ public class TmdbService {
 
             if (toDate != null && !toDate.isBlank()) {
                 uri.append("&primary_release_date.lte=").append(toDate);
+            }
+
+            if (withWatchProviders != null && !withWatchProviders.isBlank()) {
+                uri.append("&with_watch_providers=").append(withWatchProviders);
+                if (watchRegion != null && !watchRegion.isBlank()) {
+                    uri.append("&watch_region=").append(watchRegion);
+                } else {
+                    uri.append("&watch_region=US");
+                }
+            }
+
+            if (runtimeLte != null && runtimeLte > 0) {
+                uri.append("&with_runtime.lte=").append(runtimeLte);
+            }
+
+            if (runtimeGte != null && runtimeGte > 0) {
+                uri.append("&with_runtime.gte=").append(runtimeGte);
             }
 
             return restClient.get()

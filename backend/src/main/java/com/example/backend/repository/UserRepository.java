@@ -13,7 +13,19 @@ public interface UserRepository
             String emailaddress
     );
 
+    Optional<User> findByEmailaddressIgnoreCase(
+            String emailaddress
+    );
+
+    Optional<User> findByUsernameIgnoreCase(
+            String username
+    );
+
     boolean existsByEmailaddress(
+            String emailaddress
+    );
+
+    boolean existsByEmailaddressIgnoreCase(
             String emailaddress
     );
 }

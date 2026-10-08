@@ -64,28 +64,27 @@ public class LikedMovieService {
     }
 
     public List<LikedMovie> getLikedMovies(String emailaddress) {
-        User user = userRepository
-                .findByEmailaddress(emailaddress)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found")
-                );
+        if (emailaddress == null || emailaddress.isBlank()) {
+            return List.of();
+        }
 
-        return likedMovieRepository.findByUserOrderByLikedAtDesc(user);
+        return userRepository
+                .findByEmailaddress(emailaddress)
+                .map(likedMovieRepository::findByUserOrderByLikedAtDesc)
+                .orElse(List.of());
     }
 
     public boolean isMovieLiked(
             String emailaddress,
             Long tmdbMovieId
     ) {
-        User user = userRepository
-                .findByEmailaddress(emailaddress)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found")
-                );
+        if (emailaddress == null || emailaddress.isBlank()) {
+            return false;
+        }
 
-        return likedMovieRepository.existsByUserAndTmdbMovieId(
-                user,
-                tmdbMovieId
-        );
+        return userRepository
+                .findByEmailaddress(emailaddress)
+                .map(user -> likedMovieRepository.existsByUserAndTmdbMovieId(user, tmdbMovieId))
+                .orElse(false);
     }
 }

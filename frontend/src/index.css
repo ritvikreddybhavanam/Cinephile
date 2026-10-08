@@ -797,18 +797,18 @@ img, video, iframe, canvas, svg {
 
 html.light .glass-overlay,
 .light .glass-overlay {
-    background: rgba(248, 246, 240, 0.85);
+    background: rgba(255, 255, 255, 0.85);
 }
 
 .navbar-blur {
-    background: rgba(11, 12, 16, 0.85);
+    background: rgba(9, 13, 22, 0.85);
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
 }
 
 html.light .navbar-blur,
 .light .navbar-blur {
-    background: rgba(248, 246, 240, 0.92);
+    background: rgba(248, 250, 252, 0.92);
 }
 
 
@@ -835,9 +835,9 @@ html.light .navbar-blur,
 .hero-gradient {
     background: linear-gradient(
         to top,
-        #0B0C10 5%,
-        rgba(11, 12, 16, 0.8) 40%,
-        rgba(11, 12, 16, 0.4) 70%,
+        #090D16 5%,
+        rgba(9, 13, 22, 0.8) 40%,
+        rgba(9, 13, 22, 0.4) 70%,
         transparent 100%
     );
 }
@@ -846,9 +846,9 @@ html.light .hero-gradient,
 .light .hero-gradient {
     background: linear-gradient(
         to top,
-        #F8F6F0 5%,
-        rgba(248, 246, 240, 0.88) 40%,
-        rgba(248, 246, 240, 0.45) 70%,
+        #F8FAFC 5%,
+        rgba(248, 250, 252, 0.88) 40%,
+        rgba(248, 250, 252, 0.45) 70%,
         transparent 100%
     );
 }
@@ -856,9 +856,9 @@ html.light .hero-gradient,
 .hero-gradient-side {
     background: linear-gradient(
         to right,
-        #0B0C10 0%,
-        rgba(11, 12, 16, 0.85) 35%,
-        rgba(11, 12, 16, 0.3) 65%,
+        #090D16 0%,
+        rgba(9, 13, 22, 0.85) 35%,
+        rgba(9, 13, 22, 0.3) 65%,
         transparent 100%
     );
 }
@@ -867,9 +867,9 @@ html.light .hero-gradient-side,
 .light .hero-gradient-side {
     background: linear-gradient(
         to right,
-        #F8F6F0 0%,
-        rgba(248, 246, 240, 0.92) 35%,
-        rgba(248, 246, 240, 0.4) 65%,
+        #F8FAFC 0%,
+        rgba(248, 250, 252, 0.92) 35%,
+        rgba(248, 250, 252, 0.4) 65%,
         transparent 100%
     );
 }

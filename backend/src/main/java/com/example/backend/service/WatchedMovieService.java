@@ -29,17 +29,14 @@ public class WatchedMovieService {
     public List<WatchedMovie> getWatchedMovies(
             String email
     ) {
+        if (email == null || email.isBlank()) {
+            return List.of();
+        }
 
-        User user = userRepository
+        return userRepository
                 .findByEmailaddress(email)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        return watchedMovieRepository
-                .findByUserOrderByWatchedAtDesc(user);
+                .map(watchedMovieRepository::findByUserOrderByWatchedAtDesc)
+                .orElse(List.of());
     }
 
     public WatchedMovie addWatchedMovie(
@@ -112,19 +109,13 @@ public class WatchedMovieService {
             String email,
             Long movieId
     ) {
+        if (email == null || email.isBlank()) {
+            return false;
+        }
 
-        User user = userRepository
+        return userRepository
                 .findByEmailaddress(email)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        return watchedMovieRepository
-                .existsByUserAndMovieId(
-                        user,
-                        movieId
-                );
+                .map(user -> watchedMovieRepository.existsByUserAndMovieId(user, movieId))
+                .orElse(false);
     }
 }

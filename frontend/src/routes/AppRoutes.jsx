@@ -48,6 +48,15 @@ import People from "../pages/user/people/People.jsx";
 import MoviesLanguage from "../pages/user/movies/MoviesLanguage.jsx";
 import LanguageDetails from "../pages/user/movies/LanguageDetails.jsx";
 
+// Film Diary & Data Migration
+import Diary from "../pages/user/diary/Diary.jsx";
+import CuratedLists from "../pages/user/lists/CuratedLists.jsx";
+import ListDetails from "../pages/user/lists/ListDetails.jsx";
+import ActivityFeed from "../pages/user/social/ActivityFeed.jsx";
+import NotificationsPage from "../pages/user/notifications/NotificationsPage.jsx";
+import Profile from "../pages/user/profile/Profile.jsx";
+import DataMigration from "../pages/user/settings/DataMigration.jsx";
+
 function AppRoutes() {
     return (
         <Routes>
@@ -222,6 +231,98 @@ function AppRoutes() {
                 }
             />
 
+
+            {/* ==================== FILM DIARY & LISTS ==================== */}
+            <Route
+                path="/diary"
+                element={
+                    <PrivateRoute>
+                        <Diary />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/lists"
+                element={
+                    <PrivateRoute>
+                        <CuratedLists />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/lists/:id"
+                element={
+                    <PrivateRoute>
+                        <ListDetails />
+                    </PrivateRoute>
+                }
+            />
+
+            {/* ==================== SOCIAL & COMMUNITY ==================== */}
+            <Route
+                path="/social"
+                element={
+                    <PrivateRoute>
+                        <ActivityFeed />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/notifications"
+                element={
+                    <PrivateRoute>
+                        <NotificationsPage />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/profile"
+                element={
+                    <PrivateRoute>
+                        <Profile />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/profile/:username"
+                element={
+                    <PrivateRoute>
+                        <Profile />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/settings/profile"
+                element={
+                    <PrivateRoute>
+                        <Profile />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/data-migration"
+                element={
+                    <PrivateRoute>
+                        <DataMigration />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/import-export"
+                element={
+                    <PrivateRoute>
+                        <DataMigration />
+                    </PrivateRoute>
+                }
+            />
 
             {/* ==================== MORE ==================== */}
 

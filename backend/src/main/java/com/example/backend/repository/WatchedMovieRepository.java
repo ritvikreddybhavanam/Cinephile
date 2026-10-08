@@ -28,4 +28,6 @@ public interface WatchedMovieRepository
             User user,
             Long movieId
     );
+
+    long countByUser(User user);
 }

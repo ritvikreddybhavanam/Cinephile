@@ -107,6 +107,8 @@ function Movies() {
     const [year, setYear] = useState("Any Year");
     const [rating, setRating] = useState("All Ratings");
     const [sortBy, setSortBy] = useState("Newest");
+    const [providerFilter, setProviderFilter] = useState("");
+    const [runtimeFilter, setRuntimeFilter] = useState("all");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -221,13 +223,28 @@ function Movies() {
                             ) * 2
                             : "";
 
+                    let runtimeLte = undefined;
+                    let runtimeGte = undefined;
+                    if (runtimeFilter === "under90") {
+                        runtimeLte = 90;
+                    } else if (runtimeFilter === "90to120") {
+                        runtimeGte = 90;
+                        runtimeLte = 120;
+                    } else if (runtimeFilter === "over120") {
+                        runtimeGte = 120;
+                    }
+
                     data = await getMovies({
                         page: currentPage,
                         sortBy: tmdbSort,
                         year: selectedYear,
                         genre: selectedGenre,
                         rating: selectedRating,
-                        language
+                        language,
+                        withWatchProviders: providerFilter || undefined,
+                        watchRegion: "US",
+                        runtimeLte,
+                        runtimeGte
                     });
                 }
 
@@ -302,7 +319,9 @@ function Movies() {
         rating,
         sortBy,
         currentPage,
-        language
+        language,
+        providerFilter,
+        runtimeFilter
     ]);
 
     /*
@@ -499,6 +518,32 @@ function Movies() {
                             <option>4+ Stars</option>
                             <option>3+ Stars</option>
                             <option>2+ Stars</option>
+                        </select>
+
+                        <select
+                            value={providerFilter}
+                            onChange={(e) => { setProviderFilter(e.target.value); setCurrentPage(1); }}
+                            className={selectClass}
+                            aria-label="Stream On"
+                        >
+                            <option value="">All Streaming</option>
+                            <option value="8">Netflix</option>
+                            <option value="9">Amazon Prime</option>
+                            <option value="337">Disney+</option>
+                            <option value="350">Apple TV+</option>
+                            <option value="1899">Max</option>
+                        </select>
+
+                        <select
+                            value={runtimeFilter}
+                            onChange={(e) => { setRuntimeFilter(e.target.value); setCurrentPage(1); }}
+                            className={selectClass}
+                            aria-label="Runtime"
+                        >
+                            <option value="all">Any Runtime</option>
+                            <option value="under90">&lt; 90 mins</option>
+                            <option value="90to120">90 - 120 mins</option>
+                            <option value="over120">&gt; 120 mins</option>
                         </select>
 
                         <div className="hidden sm:block h-6 w-px bg-border" />

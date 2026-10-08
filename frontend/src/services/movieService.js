@@ -23,7 +23,11 @@ export const getMovies = async ({
                                     rating = "",
                                     language = "",
                                     fromDate = "",
-                                    toDate = ""
+                                    toDate = "",
+                                    withWatchProviders = "",
+                                    watchRegion = "",
+                                    runtimeLte = "",
+                                    runtimeGte = ""
                                 } = {}) => {
     const response = await api.get("/tmdb/movies", {
         params: {
@@ -34,7 +38,11 @@ export const getMovies = async ({
             rating: rating || undefined,
             language: language || undefined,
             fromDate: fromDate || undefined,
-            toDate: toDate || undefined
+            toDate: toDate || undefined,
+            withWatchProviders: withWatchProviders || undefined,
+            watchRegion: watchRegion || undefined,
+            runtimeLte: runtimeLte || undefined,
+            runtimeGte: runtimeGte || undefined
         }
     });
 

@@ -43,7 +43,11 @@ public class TmdbController {
             @RequestParam(required = false) String rating,
             @RequestParam(required = false) String language,
             @RequestParam(required = false) String fromDate,
-            @RequestParam(required = false) String toDate
+            @RequestParam(required = false) String toDate,
+            @RequestParam(required = false) String withWatchProviders,
+            @RequestParam(required = false) String watchRegion,
+            @RequestParam(required = false) Integer runtimeLte,
+            @RequestParam(required = false) Integer runtimeGte
     ) {
         return ResponseEntity.ok(
                 tmdbService.getMovies(
@@ -54,7 +58,11 @@ public class TmdbController {
                         rating,
                         language,
                         fromDate,
-                        toDate
+                        toDate,
+                        withWatchProviders,
+                        watchRegion,
+                        runtimeLte,
+                        runtimeGte
                 )
         );
     }

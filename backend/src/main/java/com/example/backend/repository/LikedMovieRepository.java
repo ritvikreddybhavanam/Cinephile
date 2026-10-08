@@ -25,4 +25,6 @@ public interface LikedMovieRepository extends JpaRepository<LikedMovie, Long> {
             User user,
             Long tmdbMovieId
     );
+
+    long countByUser(User user);
 }

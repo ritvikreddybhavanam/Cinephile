@@ -114,6 +114,30 @@ public class SecurityConfig {
                                 "/api/watched/**"
                         ).authenticated()
 
+                        .requestMatchers(
+                                "/api/diary/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/lists/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/social/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/notifications/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/users/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/data/**"
+                        ).authenticated()
+
                         .anyRequest().authenticated()
                 )
 
