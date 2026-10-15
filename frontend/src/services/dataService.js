@@ -1,4 +1,4 @@
-import api from "./api";
+import api, { API_BASE_URL } from "./api";
 
 /**
  * Upload single or multiple CSV files or ZIP archive (Letterboxd / IMDb / Generic)
@@ -44,7 +44,7 @@ export const importBatchRows = async (rows) => {
  */
 export const downloadCsv = (endpoint, filename) => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:8080/api/data/export/${endpoint}`, {
+    fetch(`${API_BASE_URL}/data/export/${endpoint}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`

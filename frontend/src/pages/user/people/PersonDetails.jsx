@@ -77,16 +77,16 @@ function PersonDetails() {
 
     if (loading) {
         return (
-            <>
+            <div className="bg-bg text-text min-h-screen font-sans antialiased">
                 <Navbar />
 
-                <main className="min-h-screen bg-[#0B0D0F] pt-24 flex items-center justify-center">
+                <main className="min-h-[70vh] pt-24 flex items-center justify-center">
 
                     <div className="flex flex-col items-center gap-4">
 
-                        <div className="w-10 h-10 border-4 border-[#2C3440] border-t-[#C9A86A] rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-4 border-border border-t-accent rounded-full animate-spin" />
 
-                        <p className="text-[#99AABB]">
+                        <p className="text-text-3">
                             Loading person from TMDB...
                         </p>
 
@@ -95,28 +95,28 @@ function PersonDetails() {
                 </main>
 
                 <Footer />
-            </>
+            </div>
         );
     }
 
     if (error || !person) {
         return (
-            <>
+            <div className="bg-bg text-text min-h-screen font-sans antialiased">
                 <Navbar />
 
-                <main className="min-h-screen bg-[#0B0D0F] pt-24 flex items-center justify-center">
+                <main className="min-h-[70vh] pt-24 flex items-center justify-center">
 
                     <div className="text-center">
 
-                        <span className="material-symbols-outlined text-5xl text-[#99AABB]">
+                        <span className="material-symbols-outlined text-5xl text-text-3">
                             person_off
                         </span>
 
-                        <h1 className="text-2xl font-bold text-white mt-4">
+                        <h1 className="text-2xl font-bold text-text mt-4">
                             Person Not Found
                         </h1>
 
-                        <p className="text-[#99AABB] mt-2">
+                        <p className="text-text-3 mt-2">
                             {error || "No TMDB data was found."}
                         </p>
 
@@ -125,7 +125,7 @@ function PersonDetails() {
                 </main>
 
                 <Footer />
-            </>
+            </div>
         );
     }
 
@@ -135,7 +135,7 @@ function PersonDetails() {
 
             <main className="w-full">
                 <div className="relative w-full overflow-hidden">
-                    <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-8 md:py-12 relative z-10">
+                    <div className="page-container py-8 md:py-12 relative z-10">
 
                         <PersonHero person={person} />
 
@@ -175,6 +175,7 @@ function PersonDetails() {
 
                             <Filmography
                                 credits={credits}
+                                personName={person?.name}
                             />
 
                             <PersonSidebar

@@ -89,13 +89,21 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
+                                "/api/reviews/my"
+                        ).authenticated()
+
+                        .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/reviews/movie/**",
-                                "/api/reviews/*"
+                                "/api/reviews/**"
                         ).permitAll()
 
                         .requestMatchers(
-                                "/api/reviews/my"
+                                HttpMethod.GET,
+                                "/api/content-guide/**"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/api/content-guide/**"
                         ).authenticated()
 
                         .requestMatchers(
@@ -119,8 +127,27 @@ public class SecurityConfig {
                         ).authenticated()
 
                         .requestMatchers(
+                                "/api/lists/my",
+                                "/api/lists/my/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/lists/public",
+                                "/api/lists/*"
+                        ).permitAll()
+
+                        .requestMatchers(
                                 "/api/lists/**"
                         ).authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/social/followers/**",
+                                "/api/social/following/**",
+                                "/api/social/is-following/**",
+                                "/api/social/counts/**"
+                        ).permitAll()
 
                         .requestMatchers(
                                 "/api/social/**"
@@ -131,11 +158,24 @@ public class SecurityConfig {
                         ).authenticated()
 
                         .requestMatchers(
+                                "/api/users/profile"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/users/*"
+                        ).permitAll()
+
+                        .requestMatchers(
                                 "/api/users/**"
                         ).authenticated()
 
                         .requestMatchers(
                                 "/api/data/**"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/api/cinematch/**"
                         ).authenticated()
 
                         .anyRequest().authenticated()
@@ -155,12 +195,20 @@ public class SecurityConfig {
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
-        configuration.setAllowedOrigins(
+        configuration.setAllowedOriginPatterns(
                 List.of(
-                        "http://localhost:5173",
-                        "http://127.0.0.1:5173",
-                        "http://localhost:3000",
-                        "http://127.0.0.1:3000"
+                        "http://localhost:[*]",
+                        "http://127.0.0.1:[*]",
+                        "http://10.250.9.30:[*]",
+                        "http://10.*:[*]",
+                        "http://192.168.*:[*]",
+                        "http://172.*:[*]",
+                        "https://*.app.github.dev",
+                        "https://*.devtunnels.ms",
+                        "https://*.githubpreview.dev",
+                        "https://*.visualstudio.com",
+                        "https://*.tunnels.ms",
+                        "*"
                 )
         );
 
@@ -179,7 +227,15 @@ public class SecurityConfig {
                 List.of("*")
         );
 
+        configuration.setExposedHeaders(
+                List.of(
+                        "Authorization",
+                        "Content-Disposition"
+                )
+        );
+
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();

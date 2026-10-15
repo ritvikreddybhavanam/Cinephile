@@ -144,7 +144,7 @@ function ListDetails() {
         return (
             <div className="min-h-screen bg-bg text-text antialiased font-sans">
                 <Navbar />
-                <main className="mx-auto max-w-[1200px] px-4 py-20 text-center">
+                <main className="page-container py-20 text-center">
                     <p className="text-red-400 mb-4">{error || "List not found."}</p>
                     <Link to="/lists" className="btn-primary py-2 px-5 text-xs">
                         ← Back to Curated Lists
@@ -159,7 +159,7 @@ function ListDetails() {
         <div className="min-h-screen bg-bg text-text antialiased font-sans">
             <Navbar />
 
-            <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-8 sm:py-12">
+            <main className="flex-1 page-container py-8 sm:py-12">
                 {/* Back Link */}
                 <div className="mb-6">
                     <Link
@@ -329,7 +329,7 @@ function ListDetails() {
                     </div>
 
                     {list.items && list.items.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                        <div className="movie-grid-fluid">
                             {list.items.map((item) => (
                                 <div
                                     key={item.id}

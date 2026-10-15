@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/lists")
-@CrossOrigin(origins = "http://localhost:5173")
 public class MovieListController {
 
     private final MovieListService movieListService;

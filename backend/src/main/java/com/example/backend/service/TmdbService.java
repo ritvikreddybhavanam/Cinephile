@@ -201,63 +201,52 @@ public class TmdbService {
     ) {
         String cacheKey = "movies_" + page + "_" + sortBy + "_" + year + "_" + genre + "_" + rating + "_" + language + "_" + fromDate + "_" + toDate + "_" + withWatchProviders + "_" + watchRegion + "_" + runtimeLte + "_" + runtimeGte;
 
-        return getFromTmdb(cacheKey, 1800, () -> {
-            StringBuilder uri = new StringBuilder(
-                    "/discover/movie?language=en-US" +
-                            "&include_adult=false" +
-                            "&page=" + page
-            );
+        return getFromTmdb(cacheKey, 1800, () ->
+                restClient.get()
+                        .uri(uriBuilder -> {
+                            uriBuilder.path("/discover/movie")
+                                    .queryParam("language", "en-US")
+                                    .queryParam("include_adult", false)
+                                    .queryParam("page", page);
 
-            if (sortBy != null && !sortBy.isBlank()) {
-                uri.append("&sort_by=").append(sortBy);
-            }
-
-            if (year != null && !year.isBlank()) {
-                uri.append("&primary_release_year=").append(year);
-            }
-
-            if (genre != null && !genre.isBlank()) {
-                uri.append("&with_genres=").append(genre);
-            }
-
-            if (rating != null && !rating.isBlank()) {
-                uri.append("&vote_average.gte=").append(rating);
-            }
-
-            if (language != null && !language.isBlank()) {
-                uri.append("&with_original_language=").append(language);
-            }
-
-            if (fromDate != null && !fromDate.isBlank()) {
-                uri.append("&primary_release_date.gte=").append(fromDate);
-            }
-
-            if (toDate != null && !toDate.isBlank()) {
-                uri.append("&primary_release_date.lte=").append(toDate);
-            }
-
-            if (withWatchProviders != null && !withWatchProviders.isBlank()) {
-                uri.append("&with_watch_providers=").append(withWatchProviders);
-                if (watchRegion != null && !watchRegion.isBlank()) {
-                    uri.append("&watch_region=").append(watchRegion);
-                } else {
-                    uri.append("&watch_region=US");
-                }
-            }
-
-            if (runtimeLte != null && runtimeLte > 0) {
-                uri.append("&with_runtime.lte=").append(runtimeLte);
-            }
-
-            if (runtimeGte != null && runtimeGte > 0) {
-                uri.append("&with_runtime.gte=").append(runtimeGte);
-            }
-
-            return restClient.get()
-                    .uri(uri.toString())
-                    .retrieve()
-                    .body(String.class);
-        }, FALLBACK_MOVIES);
+                            if (sortBy != null && !sortBy.isBlank()) {
+                                uriBuilder.queryParam("sort_by", sortBy);
+                            }
+                            if (year != null && !year.isBlank()) {
+                                uriBuilder.queryParam("primary_release_year", year);
+                            }
+                            if (genre != null && !genre.isBlank()) {
+                                uriBuilder.queryParam("with_genres", genre);
+                            }
+                            if (rating != null && !rating.isBlank()) {
+                                uriBuilder.queryParam("vote_average.gte", rating);
+                            }
+                            if (language != null && !language.isBlank()) {
+                                uriBuilder.queryParam("with_original_language", language);
+                            }
+                            if (fromDate != null && !fromDate.isBlank()) {
+                                uriBuilder.queryParam("primary_release_date.gte", fromDate);
+                            }
+                            if (toDate != null && !toDate.isBlank()) {
+                                uriBuilder.queryParam("primary_release_date.lte", toDate);
+                            }
+                            if (withWatchProviders != null && !withWatchProviders.isBlank()) {
+                                uriBuilder.queryParam("with_watch_providers", withWatchProviders);
+                                uriBuilder.queryParam("watch_region", (watchRegion != null && !watchRegion.isBlank()) ? watchRegion : "IN");
+                                uriBuilder.queryParam("with_watch_monetization_types", "flatrate|free|ads");
+                            }
+                            if (runtimeLte != null && runtimeLte > 0) {
+                                uriBuilder.queryParam("with_runtime.lte", runtimeLte);
+                            }
+                            if (runtimeGte != null && runtimeGte > 0) {
+                                uriBuilder.queryParam("with_runtime.gte", runtimeGte);
+                            }
+                            return uriBuilder.build();
+                        })
+                        .retrieve()
+                        .body(String.class),
+                FALLBACK_MOVIES
+        );
     }
 
     public String searchMovies(String query, int page) {

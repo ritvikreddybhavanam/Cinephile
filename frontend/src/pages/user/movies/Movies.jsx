@@ -403,19 +403,18 @@ function Movies() {
                             'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAlPaQqpfUyqJtfB9ZKwhbux_Kh06bu-aHHvG9_YsDRz1zpLii3e5H8Ra4OBhT0Mj4LUh-6Nj-S0pBhJrceqA5_SahR3JMwKXkh7zGlPDs9Rwyp2kWnBpEnaBj2zb35xrJHf9G7j-GCuF_5bUt3LgkLulyuMI7m8KmGWUi3ZtKzsfRN3YK_d7RVCEwJjxyVLD85zUP9tzIS4VAG9fkZ3HxyTudH6kR5d2ABcktouWHbA7mXcOCqefk")'
                     }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-bg/40 to-bg" />
-                <div className="relative z-10 max-w-3xl">
+                <div className="relative z-10 max-w-3xl page-container">
                     <p className="label-caps mb-3">Film Discovery</p>
-                    <h1 className="mb-3 font-serif text-3xl font-semibold leading-tight text-text sm:text-4xl md:text-5xl">
+                    <h1 className="mb-3 font-serif text-fluid-title font-semibold text-text">
                         Films
                     </h1>
-                    <p className="text-sm sm:text-base leading-6 text-text-3">
+                    <p className="text-fluid-body text-text-3">
                         Discover films, explore genres, languages, and find your next favourite.
                     </p>
                 </div>
             </section>
 
-            <main className="mx-auto w-full max-w-[1200px] px-4 pb-16 pt-6 sm:px-6 md:px-8 lg:px-12">
+            <main className="page-container pb-16 pt-6">
 
                 {language && (
                     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-xs text-text">
@@ -566,7 +565,7 @@ function Movies() {
 
                 {/* Content */}
                 {loading ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                    <div className="movie-grid-fluid">
                         {Array.from({ length: 12 }).map((_, i) => (
                             <div key={i} className="flex flex-col gap-2">
                                 <div className="aspect-[2/3] w-full skeleton rounded-lg" />
@@ -582,7 +581,7 @@ function Movies() {
                         <p className="text-sm text-text-3">{error}</p>
                     </div>
                 ) : displayedMovies.length > 0 ? (
-                    <div className="mb-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                    <div className="mb-8 movie-grid-fluid">
                         {displayedMovies.map((movie) => (
                             <Link
                                 key={movie.id}

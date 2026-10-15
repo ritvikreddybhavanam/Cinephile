@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/liked-movies")
-@CrossOrigin(origins = "http://localhost:5173")
 public class LikedMovieController {
 
     private final LikedMovieService likedMovieService;

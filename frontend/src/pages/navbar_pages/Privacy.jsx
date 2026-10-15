@@ -49,7 +49,7 @@ const Privacy = () => {
                     <div className="relative w-full overflow-hidden">
                         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-                        <div className="max-w-6xl mx-auto px-margin-sm md:px-margin-md py-12 lg:py-20 w-full relative z-10">
+                        <div className="page-container py-12 lg:py-20 w-full relative z-10">
 
                             {/* Breadcrumb */}
                             <div className="flex items-center gap-3 mb-6">

@@ -33,7 +33,9 @@ function WriteReview() {
     const [viewingFormat, setViewingFormat] = useState("imax");
     const [rewatch, setRewatch] = useState(false);
     const [spoilers, setSpoilers] = useState(false);
+    const [spoilerTypes, setSpoilerTypes] = useState([]); // ['MINOR_PLOT', 'MAJOR_PLOT', 'CHARACTER_DEATH', 'ENDING', 'MAJOR_TWIST', 'POST_CREDITS']
     const [visibility, setVisibility] = useState("public");
+    const [reviewIntent, setReviewIntent] = useState("general"); // 'deep_analysis' | 'technical_craft' | 'general' | 'quick_take' | 'humor'
 
     const wordCount = reviewText.trim()
         ? reviewText.trim().split(/\s+/).length
@@ -126,7 +128,9 @@ function WriteReview() {
                 viewingFormat,
                 rewatch,
                 spoilers,
-                visibility
+                spoilerTypes: spoilers && spoilerTypes.length > 0 ? spoilerTypes.join(",") : null,
+                visibility,
+                reviewIntent
             };
 
             await createReview(review);
@@ -147,16 +151,16 @@ function WriteReview() {
 
     if (movieLoading) {
         return (
-            <div className="min-h-screen bg-[#101418] text-[#e0e3e8]">
+            <div className="min-h-screen bg-bg text-text">
                 <Navbar />
 
                 <main className="flex min-h-[80vh] items-center justify-center">
                     <div className="flex flex-col items-center gap-4">
-                        <span className="material-symbols-outlined animate-spin text-4xl text-[#C9A86A]">
+                        <span className="material-symbols-outlined animate-spin text-4xl text-accent">
                             progress_activity
                         </span>
 
-                        <p className="text-sm text-[#99AABB]">
+                        <p className="text-sm text-text-3">
                             Loading movie details...
                         </p>
                     </div>
@@ -169,27 +173,27 @@ function WriteReview() {
 
     if (!movie) {
         return (
-            <div className="min-h-screen bg-[#101418] text-[#e0e3e8]">
+            <div className="min-h-screen bg-bg text-text">
                 <Navbar />
 
                 <main className="flex min-h-[80vh] items-center justify-center px-4">
-                    <div className="rounded-xl bg-[#181c20] p-8 text-center shadow-xl">
-                        <span className="material-symbols-outlined mb-3 text-5xl text-[#ffb4ab]">
+                    <div className="rounded-xl bg-surface border border-border p-8 text-center shadow-xl">
+                        <span className="material-symbols-outlined mb-3 text-5xl text-rose-400">
                             error
                         </span>
 
-                        <h2 className="text-xl font-bold text-white">
+                        <h2 className="text-xl font-bold text-text">
                             Movie Not Found
                         </h2>
 
-                        <p className="mt-2 text-sm text-[#99AABB]">
+                        <p className="mt-2 text-sm text-text-3">
                             We could not load the movie details.
                         </p>
 
                         <button
                             type="button"
                             onClick={() => navigate(-1)}
-                            className="mt-5 rounded-lg bg-[#C9A86A] px-5 py-2.5 text-sm font-bold text-[#0B0C10] transition-colors hover:bg-[#C9A86A]"
+                            className="mt-5 btn-primary px-5 py-2.5 text-sm cursor-pointer"
                         >
                             Go Back
                         </button>
@@ -240,13 +244,13 @@ function WriteReview() {
             : "Not available";
 
     return (
-        <div className="min-h-screen bg-[#101418] text-[#e0e3e8]">
+        <div className="min-h-screen bg-bg text-text">
             <Navbar />
 
-            <main className="w-full bg-[#101418] pt-16">
+            <main className="w-full bg-bg pt-16">
                 <div className="flex w-full flex-col">
 
-                    <section className="relative -mt-16 w-full overflow-hidden bg-[#0b0f12]">
+                    <section className="relative -mt-16 w-full overflow-hidden bg-surface-2">
                         <div className="absolute inset-0 z-0">
                             <div
                                 className="h-full w-full scale-105 bg-cover bg-center opacity-30 blur-sm"
@@ -261,11 +265,11 @@ function WriteReview() {
                             <div className="absolute inset-0 bg-gradient-to-b from-[#101418]/60 via-[#0b0f12]/85 to-[#0b0f12]" />
                         </div>
 
-                        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 pb-8 pt-20 sm:pt-28 md:px-10">
+                        <div className="relative z-10 page-container pb-8 pt-20 sm:pt-28">
 
                             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                                 <div>
-                                    <h1 className="mt-1 text-2xl sm:text-3xl font-bold leading-tight tracking-tight text-white md:text-[32px]">
+                                    <h1 className="mt-1 font-serif text-fluid-title font-bold text-white tracking-tight">
                                         Draft Your Critical Review
                                     </h1>
 
@@ -397,7 +401,7 @@ function WriteReview() {
                         </div>
                     </section>
 
-                    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-10">
+                    <div className="page-container py-8">
 
                         <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
 
@@ -468,6 +472,87 @@ function WriteReview() {
                                     </div>
                                 </div>
 
+                                {/* Review Intent Selection */}
+                                <div className="rounded-xl bg-[#181c20] p-5 shadow-sm md:p-6">
+                                    <div className="mb-3">
+                                        <div className="flex items-center justify-between">
+                                            <label className="block text-xs uppercase tracking-wider text-[#99AABB] font-semibold">
+                                                Review Intent / Purpose <span className="text-[#C9A86A]">*</span>
+                                            </label>
+                                            <span className="text-[11px] text-[#99AABB]">
+                                                Helps readers find the exact perspective they want
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-[#99AABB] mt-1">
+                                            Declare the style and core focus of your critique:
+                                        </p>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                                        {[
+                                            {
+                                                id: "deep_analysis",
+                                                icon: "school",
+                                                emoji: "🎓",
+                                                title: "Deep Analysis",
+                                                desc: "Themes, characters, subtext & essay-style criticism"
+                                            },
+                                            {
+                                                id: "technical_craft",
+                                                icon: "movie_filter",
+                                                emoji: "🎥",
+                                                title: "Technical & Craft",
+                                                desc: "Cinematography, directing, editing, sound & score"
+                                            },
+                                            {
+                                                id: "general",
+                                                icon: "lightbulb",
+                                                emoji: "💡",
+                                                title: "General Critique",
+                                                desc: "Balanced review, overview & overall verdict"
+                                            },
+                                            {
+                                                id: "quick_take",
+                                                icon: "bolt",
+                                                emoji: "⚡",
+                                                title: "Quick Take",
+                                                desc: "Short personal reaction or immediate impression"
+                                            },
+                                            {
+                                                id: "humor",
+                                                icon: "sentiment_very_satisfied",
+                                                emoji: "😂",
+                                                title: "Humor",
+                                                desc: "Jokes, memes & lighthearted funny reactions"
+                                            }
+                                        ].map((intent) => {
+                                            const isSelected = reviewIntent === intent.id;
+                                            return (
+                                                <button
+                                                    key={intent.id}
+                                                    type="button"
+                                                    onClick={() => setReviewIntent(intent.id)}
+                                                    className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
+                                                        isSelected
+                                                            ? "bg-[#C9A86A]/10 border-[#C9A86A] ring-1 ring-[#C9A86A] text-white shadow-md"
+                                                            : "bg-[#0B0D0F] border-[#22272b] text-[#99AABB] hover:border-[#363a3e] hover:text-[#e0e3e8]"
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center gap-2 mb-1.5">
+                                                        <span className="text-base">{intent.emoji}</span>
+                                                        <span className={`text-xs font-semibold ${isSelected ? "text-[#C9A86A]" : "text-[#e0e3e8]"}`}>
+                                                            {intent.title}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-[11px] leading-relaxed opacity-80">
+                                                        {intent.desc}
+                                                    </p>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
                                 <div className="flex flex-col gap-5 rounded-xl bg-[#181c20] p-5 shadow-sm md:p-6">
 
                                     <div>
@@ -530,19 +615,22 @@ function WriteReview() {
 
                                                 <button
                                                     type="button"
-                                                    onClick={() =>
-                                                        setSpoilers(
-                                                            !spoilers
-                                                        )
-                                                    }
-                                                    className="flex items-center gap-1 rounded p-1.5 text-xs tracking-wider text-[#bacbb6] transition-colors hover:bg-[#1c2024] hover:text-white"
+                                                    onClick={() => {
+                                                        const insertText = "[spoiler:Ending]Your hidden spoiler text here[/spoiler]";
+                                                        setReviewText((prev) => prev ? `${prev} ${insertText}` : insertText);
+                                                        setSpoilers(true);
+                                                        if (!spoilerTypes.includes("ENDING")) {
+                                                            setSpoilerTypes((prev) => [...prev, "ENDING"]);
+                                                        }
+                                                    }}
+                                                    className="flex items-center gap-1 rounded p-1.5 text-xs tracking-wider text-[#C9A86A] transition-colors hover:bg-[#1c2024] cursor-pointer"
+                                                    title="Insert inline spoiler block: [spoiler:Category]Text[/spoiler]"
                                                 >
                                                     <span className="material-symbols-outlined text-[18px]">
-                                                        visibility_off
+                                                        lock
                                                     </span>
-
-                                                    <span className="hidden sm:inline">
-                                                        Spoiler Tag
+                                                    <span className="hidden sm:inline font-semibold">
+                                                        + Inline Spoiler
                                                     </span>
                                                 </button>
                                             </div>
@@ -794,11 +882,11 @@ function WriteReview() {
                                                 <input
                                                     type="checkbox"
                                                     checked={spoilers}
-                                                    onChange={(e) =>
-                                                        setSpoilers(
-                                                            e.target.checked
-                                                        )
-                                                    }
+                                                    onChange={(e) => {
+                                                        const val = e.target.checked;
+                                                        setSpoilers(val);
+                                                        if (!val) setSpoilerTypes([]);
+                                                    }}
                                                     className="peer sr-only"
                                                 />
 
@@ -807,9 +895,47 @@ function WriteReview() {
                                         </div>
 
                                         <p className="text-[13px] leading-[18px] text-[#99AABB]">
-                                            Applies a spoiler shield blur to protect community
-                                            readers until toggled open.
+                                            Protects community readers with granular warnings and inline revelation.
                                         </p>
+
+                                        {spoilers && (
+                                            <div className="mt-3 pt-3 border-t border-[#22272b] flex flex-col gap-2">
+                                                <label className="text-xs uppercase tracking-wider text-[#C9A86A] font-semibold">
+                                                    Spoiler Categories (Select all that apply):
+                                                </label>
+                                                <div className="grid grid-cols-1 gap-1.5">
+                                                    {[
+                                                        { id: "MINOR_PLOT", label: "⚠️ Minor Plot Details" },
+                                                        { id: "MAJOR_PLOT", label: "⚠️ Major Plot Details" },
+                                                        { id: "CHARACTER_DEATH", label: "⚠️ Character Death" },
+                                                        { id: "ENDING", label: "⚠️ Ending" },
+                                                        { id: "MAJOR_TWIST", label: "⚠️ Major Twist" },
+                                                        { id: "POST_CREDITS", label: "⚠️ Post-Credits Scene" },
+                                                    ].map((t) => {
+                                                        const checked = spoilerTypes.includes(t.id);
+                                                        return (
+                                                            <button
+                                                                key={t.id}
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setSpoilerTypes((prev) =>
+                                                                        checked ? prev.filter((x) => x !== t.id) : [...prev, t.id]
+                                                                    );
+                                                                }}
+                                                                className={`text-left px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer flex items-center justify-between ${
+                                                                    checked
+                                                                        ? "bg-amber-500/15 border-amber-500/50 text-amber-300"
+                                                                        : "bg-[#181c20] border-[#262a2f] text-[#99AABB] hover:text-white"
+                                                                }`}
+                                                            >
+                                                                <span>{t.label}</span>
+                                                                {checked && <span className="material-symbols-outlined text-[14px]">check</span>}
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div>

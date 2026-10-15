@@ -159,12 +159,12 @@ export default function Diary() {
         <div className="min-h-screen bg-bg text-text antialiased font-sans flex flex-col relative">
             <Navbar />
 
-            <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-8 sm:py-12">
+            <main className="page-container flex-1 py-8 sm:py-12">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
                         <span className="label-caps mb-1">Personal Film Journal</span>
-                        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-text">
+                        <h1 className="font-serif text-fluid-title font-bold text-text">
                             Film Diary
                         </h1>
                         <p className="text-xs sm:text-sm text-text-3 mt-1">
@@ -482,6 +482,33 @@ export default function Diary() {
                 {/* TAB 2: YEAR IN REVIEW / STATS */}
                 {viewMode === "stats" && (
                     <div className="space-y-8 animate-fade-in">
+                        {/* Wrapped Promotion Banner */}
+                        <div className="relative overflow-hidden rounded-2xl border border-accent/30 bg-gradient-to-r from-accent/15 via-surface to-accent/10 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-elevated">
+                            <div className="space-y-1 z-10">
+                                <div className="flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-accent text-2xl animate-spin-slow">auto_awesome</span>
+                                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-accent">
+                                        Experience Cinephile Wrapped
+                                    </span>
+                                </div>
+                                <h2 className="text-xl sm:text-2xl font-serif font-bold text-text">
+                                    Your {selectedYear} Cinema Retrospective
+                                </h2>
+                                <p className="text-xs sm:text-sm text-text-2 max-w-xl">
+                                    Explore your cinematic persona, decade distribution charts, format breakdowns, and generate shareable story cards.
+                                </p>
+                            </div>
+                            <Link
+                                to={`/wrapped?year=${selectedYear}`}
+                                className="z-10 btn-primary py-2.5 px-5 flex items-center gap-2 text-xs font-bold shrink-0 shadow-lg"
+                            >
+                                <span className="material-symbols-outlined text-base">play_circle</span>
+                                <span>Launch {selectedYear} Wrapped</span>
+                            </Link>
+                            {/* Decorative background glow */}
+                            <div className="absolute right-0 top-0 -mr-16 -mt-16 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+                        </div>
+
                         {statsLoading ? (
                             <div className="flex min-h-[40vh] items-center justify-center">
                                 <div className="flex flex-col items-center gap-3">
@@ -492,7 +519,7 @@ export default function Diary() {
                         ) : stats ? (
                             <>
                                 {/* Stats Highlights Grid */}
-                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                <div className="stat-grid-fluid gap-4">
                                     <div className="rounded-2xl border border-border bg-surface p-5 text-center shadow-sm">
                                         <span className="material-symbols-outlined text-2xl text-accent mb-1">movie</span>
                                         <span className="block text-3xl font-serif font-bold text-text">

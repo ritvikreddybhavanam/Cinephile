@@ -55,7 +55,7 @@ const TermsOfService = () => {
                     <section className="relative w-full overflow-hidden bg-surface py-16 md:py-24">
                         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-                        <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md relative z-10">
+                        <div className="page-container relative z-10">
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12">
                                 <div className="max-w-3xl flex flex-col gap-4">
                                     <div className="inline-flex items-center gap-2.5 self-start bg-surface-container px-3.5 py-1.5 rounded-full">
@@ -165,7 +165,7 @@ const TermsOfService = () => {
 
                     {/* Content */}
                     <section className="w-full bg-surface py-10">
-                        <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
+                        <div className="page-container">
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
                                 {/* Sidebar */}

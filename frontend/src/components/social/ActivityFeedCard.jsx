@@ -1,4 +1,9 @@
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
+import { toggleReviewLike } from "../../services/reviewService";
+import ReviewCommentsSection from "../review/ReviewCommentsSection";
 
 function formatRelativeTime(dateString) {
     if (!dateString) return "Recently";
@@ -20,7 +25,11 @@ function formatRelativeTime(dateString) {
 export default function ActivityFeedCard({ item }) {
     if (!item) return null;
 
+    const { token } = useContext(AuthContext);
+    const { error } = useToast();
+
     const {
+        id: rawId,
         type,
         timestamp,
         userId,
@@ -41,6 +50,43 @@ export default function ActivityFeedCard({ item }) {
         listDescription,
         listItemCount
     } = item;
+
+    const reviewId = type === "REVIEW" && rawId ? Number(rawId.replace("review-", "")) : null;
+
+    // Instagram-style likes & comments states for reviews
+    const [isLiked, setIsLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(0);
+    const [likeLoading, setLikeLoading] = useState(false);
+    const [showComments, setShowComments] = useState(false);
+    const [commentsCount, setCommentsCount] = useState(0);
+
+    const handleToggleLike = async () => {
+        if (!reviewId) return;
+        if (!token) {
+            error("Please log in to like this review");
+            return;
+        }
+
+        try {
+            setLikeLoading(true);
+            const prevLiked = isLiked;
+            const prevCount = likesCount;
+
+            setIsLiked(!prevLiked);
+            setLikesCount(prevLiked ? Math.max(0, prevCount - 1) : prevCount + 1);
+
+            const res = await toggleReviewLike(reviewId);
+            if (res && res.liked !== undefined) {
+                setIsLiked(res.liked);
+                setLikesCount(res.likesCount);
+            }
+        } catch (err) {
+            console.error("Failed to like review:", err);
+            error("Failed to update like status");
+        } finally {
+            setLikeLoading(false);
+        }
+    };
 
     const posterUrl = moviePoster
         ? moviePoster.startsWith("http")
@@ -194,6 +240,61 @@ export default function ActivityFeedCard({ item }) {
                             </p>
                         )}
                     </div>
+                </div>
+            )}
+
+            {/* Instagram-Style Actions Bar for Reviews */}
+            {type === "REVIEW" && reviewId && (
+                <div className="mt-4 pt-3 border-t border-border/60">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <button
+                                type="button"
+                                onClick={handleToggleLike}
+                                disabled={likeLoading}
+                                className={`flex items-center gap-1.5 text-xs font-semibold transition-colors cursor-pointer ${
+                                    isLiked ? "text-rose-500" : "text-text-3 hover:text-rose-400"
+                                }`}
+                            >
+                                <span className={`material-symbols-outlined text-[18px] ${isLiked ? "font-bold fill-current" : ""}`}>
+                                    favorite
+                                </span>
+                                <span>{likesCount > 0 ? likesCount : ""}</span>
+                                <span className="text-[11px]">{isLiked ? "Liked" : "Like"}</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowComments((prev) => !prev)}
+                                className={`flex items-center gap-1.5 text-xs font-semibold transition-colors cursor-pointer ${
+                                    showComments ? "text-accent" : "text-text-3 hover:text-accent"
+                                }`}
+                            >
+                                <span className="material-symbols-outlined text-[18px]">
+                                    chat_bubble
+                                </span>
+                                <span>{commentsCount > 0 ? commentsCount : ""}</span>
+                                <span className="text-[11px]">Comments</span>
+                            </button>
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => setShowComments((prev) => !prev)}
+                            className="text-[11px] text-text-3 hover:text-accent transition-colors cursor-pointer"
+                        >
+                            {showComments ? "Hide discussion" : "Discuss review"}
+                        </button>
+                    </div>
+
+                    {showComments && (
+                        <ReviewCommentsSection
+                            reviewId={reviewId}
+                            reviewAuthorId={userId}
+                            commentsCount={commentsCount}
+                            onCommentsCountChange={setCommentsCount}
+                        />
+                    )}
                 </div>
             )}
         </article>

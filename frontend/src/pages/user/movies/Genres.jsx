@@ -205,13 +205,13 @@ export default function Genres() {
         <div className="min-h-screen bg-bg text-text font-sans antialiased">
             <Navbar />
 
-            <main className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8">
+            <main className="page-container py-8 sm:py-10 space-y-8">
 
                 <section className="space-y-4">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">Catalog Index</p>
-                            <h1 className="section-title text-3xl sm:text-4xl">
+                            <h1 className="section-title text-fluid-title">
                                 Film Genres
                             </h1>
                             <p className="text-xs sm:text-sm text-text-3 mt-1">
@@ -229,7 +229,7 @@ export default function Genres() {
                             onClick={() => handleGenre(null)}
                             className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full transition-all text-xs font-semibold ${
                                 activeGenre === null
-                                    ? "bg-accent text-bg shadow-[0_4px_16px_rgba(201,168,106,0.25)]"
+                                    ? "bg-accent text-white shadow-md shadow-accent/25"
                                     : "bg-surface hover:bg-surface-2 text-text-2 border border-border"
                             }`}
                         >
@@ -247,7 +247,7 @@ export default function Genres() {
                                     onClick={() => handleGenre(genre)}
                                     className={`shrink-0 whitespace-nowrap px-4 py-2 rounded-full transition-all text-xs font-semibold ${
                                         activeGenre?.id === genre.id
-                                            ? "bg-accent text-bg shadow-[0_4px_16px_rgba(201,168,106,0.25)]"
+                                            ? "bg-accent text-white shadow-md shadow-accent/25"
                                             : "bg-surface hover:bg-surface-2 text-text-2 border border-border"
                                     }`}
                                 >
@@ -292,7 +292,7 @@ export default function Genres() {
                 <section className="space-y-6">
 
                     {loading && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                        <div className="movie-grid-fluid">
                             {Array.from({ length: 12 }).map((_, i) => (
                                 <div key={i} className="flex flex-col gap-2">
                                     <div className="aspect-[2/3] w-full skeleton rounded-lg" />
@@ -326,7 +326,7 @@ export default function Genres() {
                     )}
 
                     {!loading && !error && movies.length > 0 && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+                        <div className="movie-grid-fluid">
                             {movies.map((movie) => (
                                 <Link
                                     key={`${movie.id}-${movie.title}`}

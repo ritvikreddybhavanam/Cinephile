@@ -104,12 +104,12 @@ function CuratedLists() {
         <div className="min-h-screen bg-bg text-text antialiased font-sans flex flex-col relative">
             <Navbar />
 
-            <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-8 sm:py-12">
+            <main className="flex-1 page-container py-8 sm:py-12">
                 {/* Heading */}
                 <div className="section-header mb-8 flex items-center justify-between">
                     <div>
                         <p className="label-caps mb-1">Collections</p>
-                        <h1 className="section-title text-3xl sm:text-4xl">
+                        <h1 className="section-title text-fluid-title">
                             Curated Lists
                         </h1>
                     </div>
@@ -127,13 +127,13 @@ function CuratedLists() {
 
                 {/* Lists Display */}
                 {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="card-grid-fluid">
                         {Array.from({ length: 6 }).map((_, i) => (
                             <div key={i} className="h-56 skeleton rounded-2xl" />
                         ))}
                     </div>
                 ) : lists.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="card-grid-fluid">
                         {lists.map((list) => {
                             const posters = (list.items || [])
                                 .slice(0, 4)

@@ -70,10 +70,8 @@ public class UserService {
         if (request.getUsername() != null) {
             String trimmedUsername = request.getUsername().trim();
             if (!trimmedUsername.isEmpty() && !trimmedUsername.equalsIgnoreCase(user.getUsername())) {
-                // Check if already taken by someone else
-                userRepository.findAll().stream()
-                        .filter(u -> !u.getId().equals(user.getId()) && trimmedUsername.equalsIgnoreCase(u.getUsername()))
-                        .findFirst()
+                userRepository.findByUsernameIgnoreCase(trimmedUsername)
+                        .filter(u -> !u.getId().equals(user.getId()))
                         .ifPresent(u -> {
                             throw new RuntimeException("Username '" + trimmedUsername + "' is already taken.");
                         });

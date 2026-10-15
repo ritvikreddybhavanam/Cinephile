@@ -492,7 +492,7 @@ function Profile() {
                     <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-transparent to-bg/90" />
 
                     {/* Content Container */}
-                    <div className="relative mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 pt-28 sm:pt-36 pb-8">
+                    <div className="relative page-container pt-28 sm:pt-36 pb-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
 
                             {/* Avatar & Core Identity */}
@@ -692,7 +692,7 @@ function Profile() {
 
                 {/* STATS BAR */}
                 <section className="border-y border-border bg-surface/50">
-                    <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 py-4">
+                    <div className="page-container py-4">
                         <div className="grid grid-cols-2 gap-4 sm:grid-cols-8 text-center divide-y sm:divide-y-0 sm:divide-x divide-border">
                             <div className="pt-2 sm:pt-0">
                                 <span className="block text-2xl font-serif font-bold text-text">
@@ -780,7 +780,7 @@ function Profile() {
                 </section>
 
                 {/* MAIN CONTAINER */}
-                <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 py-8">
+                <div className="page-container py-8">
 
                     {/* FAVORITE 4 SHOWCASE (Letterboxd Hallmark) */}
                     <section className="mb-10 rounded-2xl border border-border bg-surface p-6 shadow-sm">
@@ -811,7 +811,7 @@ function Profile() {
                                 <div className="h-7 w-7 animate-spin rounded-full border-2 border-border border-t-accent" />
                             </div>
                         ) : favoriteMovies.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div className="movie-grid-fluid gap-4">
                                 {favoriteMovies.map((movie) => (
                                     <Link
                                         key={movie.id}
@@ -986,7 +986,7 @@ function Profile() {
                                     </div>
 
                                     {watchedList.length > 0 ? (
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                        <div className="movie-grid-fluid gap-3">
                                             {watchedList.slice(0, 4).map((movie) => (
                                                 <Link
                                                     key={movie.id}
@@ -1195,7 +1195,7 @@ function Profile() {
                             </div>
 
                             {watchedList.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                                <div className="movie-grid-fluid gap-4">
                                     {watchedList.map((movie) => (
                                         <Link
                                             key={movie.id}
@@ -1355,7 +1355,7 @@ function Profile() {
                                 Saved Watchlist ({watchlist.length})
                             </h3>
                             {watchlist.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                                <div className="movie-grid-fluid gap-4">
                                     {watchlist.map((movie) => (
                                         <Link
                                             key={movie.id}
@@ -1399,7 +1399,7 @@ function Profile() {
                                 Liked Films ({likedList.length})
                             </h3>
                             {likedList.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                                <div className="movie-grid-fluid gap-4">
                                     {likedList.map((movie, idx) => {
                                         const movieId = movie.tmdbMovieId || movie.movieId || movie.id;
                                         const poster = movie.poster_path || movie.poster;

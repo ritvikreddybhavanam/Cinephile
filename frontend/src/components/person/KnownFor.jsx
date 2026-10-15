@@ -39,7 +39,7 @@ function KnownFor({ credits }) {
 
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            <div className="movie-grid-fluid gap-5">
 
                 {movies.map((movie) => (
                     <div

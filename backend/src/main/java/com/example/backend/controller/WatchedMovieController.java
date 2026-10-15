@@ -11,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/watched")
-@CrossOrigin(origins = "http://localhost:5173")
 public class WatchedMovieController {
 
     private final WatchedMovieService watchedMovieService;

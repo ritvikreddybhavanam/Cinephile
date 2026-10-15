@@ -226,3 +226,26 @@ export const getLanguages = async () => {
     const response = await api.get("/tmdb/languages");
     return response.data;
 };
+
+export const getWatchedMovies = async () => {
+    const response = await api.get("/watched");
+    return response.data;
+};
+
+export const addWatchedMovie = async (movieData) => {
+    const response = await api.post("/watched", movieData);
+    return response.data;
+};
+
+export const removeWatchedMovie = async (movieId) => {
+    const response = await api.delete(`/watched/${movieId}`);
+    return response.data;
+};
+
+export {
+    toggleReviewLike,
+    getReviewLikes,
+    getReviewComments,
+    addReviewComment,
+    deleteReviewComment
+} from "./reviewService.js";

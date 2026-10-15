@@ -9,7 +9,7 @@ const AboutUs = () => {
       <main className="w-full bg-surface min-h-[calc(100vh-280px)]">
 
         {/* Hero Section */}
-        <section className="relative max-w-[1200px] mx-auto px-margin-sm md:px-margin-md pt-12 md:pt-20 pb-16 md:pb-24 flex flex-col gap-10">
+        <section className="relative page-container pt-12 md:pt-20 pb-16 md:pb-24 flex flex-col gap-10">
 
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -99,7 +99,7 @@ const AboutUs = () => {
         {/* Statistics */}
         <section className="w-full bg-surface-container-lowest py-12 md:py-16">
 
-          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
+          <div className="page-container">
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
 
@@ -140,7 +140,7 @@ const AboutUs = () => {
         </section>
 
         {/* Curated Manifesto */}
-        <section className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md py-16 md:py-24 flex flex-col gap-12">
+        <section className="page-container py-16 md:py-24 flex flex-col gap-12">
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
 
@@ -205,7 +205,7 @@ const AboutUs = () => {
         {/* Team Section */}
         <section className="w-full bg-surface-container-lowest/70 py-16 md:py-24">
 
-          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md flex flex-col gap-12">
+          <div className="page-container flex flex-col gap-12">
 
             <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
 
@@ -295,7 +295,7 @@ const AboutUs = () => {
         </section>
 
         {/* Community Section */}
-        <section className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md py-16 md:py-20">
+        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-16 md:py-20">
 
           <div className="bg-surface-container-low rounded-2xl p-8 md:p-12 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-10">
 
@@ -404,7 +404,7 @@ const AboutUs = () => {
         {/* Contact Section */}
         <section className="w-full pb-16 md:pb-24">
 
-          <div className="max-w-[1200px] mx-auto px-margin-sm md:px-margin-md">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
 
             <div className="p-8 md:p-12 rounded-2xl bg-surface-container-lowest flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-sm">
 

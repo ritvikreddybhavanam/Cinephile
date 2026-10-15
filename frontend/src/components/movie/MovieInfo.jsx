@@ -37,7 +37,7 @@ function MovieInfo({ movie, runtime, budget, revenue, certification }) {
     ];
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="section-header mb-6">
                 <div>
                     <p className="label-caps mb-1">Specifications</p>
@@ -57,7 +57,7 @@ function MovieInfo({ movie, runtime, budget, revenue, certification }) {
             </div>
 
             {/* Core Specs Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+            <div className="stat-grid-fluid mb-6">
                 {primaryStats.map(({ label, value, icon, extra }) => (
                     <div
                         key={label}

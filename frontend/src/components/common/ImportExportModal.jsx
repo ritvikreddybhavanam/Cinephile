@@ -175,7 +175,7 @@ function ImportExportModal({ isOpen, onClose, onImportComplete }) {
                                 <label className="block text-xs uppercase tracking-wider font-bold text-text-3 mb-2">
                                     Source Platform
                                 </label>
-                                <div className="grid grid-cols-3 gap-2.5">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                     {[
                                         { id: "letterboxd", name: "Letterboxd", icon: "movie_edit" },
                                         { id: "imdb", name: "IMDb", icon: "star_rate" },

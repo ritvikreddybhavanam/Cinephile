@@ -73,7 +73,7 @@ function WatchProviders({ watchProviders }) {
         buyProviders.length > 0;
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-accent mb-1">Streaming Availability</p>
@@ -98,7 +98,7 @@ function WatchProviders({ watchProviders }) {
             </div>
 
             {regionData ? (
-                <div className="bg-surface border border-border rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+                <div className="bg-surface border border-border rounded-2xl p-4 sm:p-6 md:p-8 shadow-xs space-y-6">
                     {/* STREAMING */}
                     {streamingProviders.length > 0 && (
                         <div>
@@ -150,7 +150,7 @@ function WatchProviders({ watchProviders }) {
                         </p>
                     )}
 
-                    <div className="pt-2 border-t border-border/60 flex items-center justify-between text-[11px] text-text-3">
+                    <div className="pt-2 border-t border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-text-3">
                         <span>Streaming data provided by <strong>JustWatch</strong> via TMDB.</span>
                         <a
                             href={justWatchLink}

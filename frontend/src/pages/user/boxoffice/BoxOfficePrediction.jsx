@@ -229,7 +229,7 @@ function BoxOfficePrediction() {
 
                 <div className="absolute top-20 right-10 w-[450px] h-[300px] bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none" />
 
-                <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-6 sm:pt-8 pb-8 sm:pb-10 relative z-10">
+                <div className="page-container pt-6 sm:pt-8 pb-8 sm:pb-10 relative z-10">
 
                     <div className="max-w-3xl">
 
@@ -243,7 +243,7 @@ function BoxOfficePrediction() {
 
                         </div>
 
-                        <h1 className="font-headline-lg text-2xl sm:text-4xl md:text-5xl text-text-main tracking-tight font-extrabold break-words">
+                        <h1 className="font-serif text-fluid-title text-text-main tracking-tight font-extrabold break-words">
                             Box Office Prediction
                         </h1>
 
@@ -257,7 +257,7 @@ function BoxOfficePrediction() {
 
             </section>
 
-            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-6 sm:py-8 w-full">
+            <div className="page-container py-6 sm:py-8 w-full">
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 

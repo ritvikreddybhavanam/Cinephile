@@ -137,7 +137,7 @@ public class FilmDiaryController {
     ) {
         try {
             User user = resolveUser(authentication, authHeader);
-            int targetYear = year != null && year > 1900 ? year : LocalDate.now().getYear();
+            int targetYear = (year != null) ? year : LocalDate.now().getYear();
             FilmDiaryStatsResponse stats = filmDiaryService.getStatsForYear(user, targetYear);
             return ResponseEntity.ok(stats);
         } catch (Exception e) {

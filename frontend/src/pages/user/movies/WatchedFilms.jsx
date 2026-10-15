@@ -157,7 +157,7 @@ function WatchedFilms() {
         <div className="bg-bg text-text min-h-screen flex flex-col font-sans antialiased">
             <Navbar />
 
-            <main className="flex-1 w-full max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <main className="flex-1 page-container py-8 sm:py-10">
 
                 {/* Top Banner & Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-border pb-6">
@@ -172,7 +172,7 @@ function WatchedFilms() {
                                 Personal Cinema Archive
                             </span>
                         </div>
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-text">
+                        <h1 className="text-fluid-title font-serif font-bold tracking-tight text-text">
                             Watched Films
                         </h1>
                         <p className="text-xs sm:text-sm text-text-3 mt-1.5 max-w-xl">
@@ -442,11 +442,11 @@ function WatchedFilms() {
                     <>
                         {/* Film Grid with Smaller Compact Cards & Hover Effects */}
                         <div
-                            className={`grid gap-2 sm:gap-2.5 md:gap-3 pb-8 ${
+                            className={
                                 denseView
-                                    ? "grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-14"
-                                    : "grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9"
-                            }`}
+                                    ? "movie-grid-compact pb-8"
+                                    : "movie-grid-fluid pb-8"
+                            }
                         >
                             {displayedMovies.map((movie) => {
                                 const movieId = movie.movieId || movie.id;

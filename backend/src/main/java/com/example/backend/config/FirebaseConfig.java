@@ -22,9 +22,8 @@ public class FirebaseConfig {
                 .getResourceAsStream("firebase-service-account.json")) {
 
             if (serviceAccount == null) {
-                throw new RuntimeException(
-                        "Firebase service account JSON file not found"
-                );
+                System.out.println("⚠️ [WARN] firebase-service-account.json not found in resources. Firebase push notifications will be disabled.");
+                return;
             }
 
             FirebaseOptions options =

@@ -73,12 +73,12 @@ export default function ActivityFeed() {
         <div className="min-h-screen bg-bg text-text antialiased font-sans flex flex-col">
             <Navbar />
 
-            <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-8 sm:py-12">
+            <main className="page-container flex-1 py-8 sm:py-12">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
                         <span className="label-caps mb-1">Cinephile Social Network</span>
-                        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-text">
+                        <h1 className="font-serif text-fluid-title font-bold text-text">
                             Activity Feed
                         </h1>
                         <p className="text-xs sm:text-sm text-text-3 mt-1">

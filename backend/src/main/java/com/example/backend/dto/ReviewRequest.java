@@ -12,7 +12,9 @@ public class ReviewRequest {
     private String viewingFormat;
     private Boolean rewatch;
     private Boolean spoilers;
+    private String spoilerTypes;
     private String visibility;
+    private String reviewIntent;
 
     private String movieTitle;
     private String poster;
@@ -87,12 +89,28 @@ public class ReviewRequest {
         this.spoilers = spoilers;
     }
 
+    public String getSpoilerTypes() {
+        return spoilerTypes;
+    }
+
+    public void setSpoilerTypes(String spoilerTypes) {
+        this.spoilerTypes = spoilerTypes;
+    }
+
     public String getVisibility() {
         return visibility;
     }
 
     public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+    public String getReviewIntent() {
+        return reviewIntent;
+    }
+
+    public void setReviewIntent(String reviewIntent) {
+        this.reviewIntent = reviewIntent;
     }
 
     public String getMovieTitle() {

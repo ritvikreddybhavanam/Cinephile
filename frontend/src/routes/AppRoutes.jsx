@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
 // Public
@@ -21,6 +21,7 @@ import Trending from "../pages/user/movies/Trending.jsx";
 import NewReleases from "../pages/user/movies/NewReleases.jsx";
 import Genres from "../pages/user/movies/Genres.jsx";
 import WatchedFilms from "../pages/user/movies/WatchedFilms.jsx";
+import WhatToWatch from "../pages/user/movies/WhatToWatch.jsx";
 
 // Box Office
 import BoxOfficePrediction from "../pages/user/boxoffice/BoxOfficePrediction.jsx";
@@ -56,6 +57,8 @@ import ActivityFeed from "../pages/user/social/ActivityFeed.jsx";
 import NotificationsPage from "../pages/user/notifications/NotificationsPage.jsx";
 import Profile from "../pages/user/profile/Profile.jsx";
 import DataMigration from "../pages/user/settings/DataMigration.jsx";
+import AnalyticsWrapped from "../pages/user/analytics/AnalyticsWrapped.jsx";
+import CineMatch from "../pages/user/cinematch/CineMatch.jsx";
 
 function AppRoutes() {
     return (
@@ -165,6 +168,15 @@ function AppRoutes() {
                 }
             />
 
+            <Route
+                path="/what-to-watch"
+                element={
+                    <PrivateRoute>
+                        <WhatToWatch />
+                    </PrivateRoute>
+                }
+            />
+
 
             {/* ==================== BOX OFFICE ==================== */}
 
@@ -238,6 +250,51 @@ function AppRoutes() {
                 element={
                     <PrivateRoute>
                         <Diary />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/analytics"
+                element={
+                    <PrivateRoute>
+                        <AnalyticsWrapped />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/wrapped"
+                element={
+                    <PrivateRoute>
+                        <AnalyticsWrapped />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/stats"
+                element={
+                    <PrivateRoute>
+                        <AnalyticsWrapped />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/cinematch"
+                element={
+                    <PrivateRoute>
+                        <CineMatch />
+                    </PrivateRoute>
+                }
+            />
+
+            <Route
+                path="/match"
+                element={
+                    <PrivateRoute>
+                        <CineMatch />
                     </PrivateRoute>
                 }
             />
@@ -342,9 +399,17 @@ function AppRoutes() {
                 path="/about"
                 element={<AboutUs />}
             />
+            <Route
+                path="/about-us"
+                element={<AboutUs />}
+            />
 
             <Route
                 path="/community"
+                element={<CommunityGuidelines />}
+            />
+            <Route
+                path="/community-guidelines"
                 element={<CommunityGuidelines />}
             />
 
@@ -352,9 +417,17 @@ function AppRoutes() {
                 path="/privacy"
                 element={<Privacy />}
             />
+            <Route
+                path="/privacy-policy"
+                element={<Privacy />}
+            />
 
             <Route
                 path="/terms"
+                element={<TermsOfService />}
+            />
+            <Route
+                path="/terms-of-service"
                 element={<TermsOfService />}
             />
 
@@ -368,6 +441,13 @@ function AppRoutes() {
 
             <Route
                 path="/movies-by-languages"
+                element={
+                    <PrivateRoute>
+                        <MoviesLanguage />
+                    </PrivateRoute>
+                } />
+            <Route
+                path="/movies-language"
                 element={
                     <PrivateRoute>
                         <MoviesLanguage />
@@ -390,6 +470,12 @@ function AppRoutes() {
                         <LanguageDetails />
                     </PrivateRoute>
                 }
+            />
+
+            {/* Catch-all route to prevent blank screens or broken URLs */}
+            <Route
+                path="*"
+                element={<Navigate to="/dashboard" replace />}
             />
 
         </Routes>

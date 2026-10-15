@@ -280,37 +280,37 @@ html.light,
     --color-surface-2:                  #F1F5F9;
 
     /* Crisp Light Borders */
-    --color-border:                     #E2E8F0;
+    --color-border:                     #CBD5E1;
 
-    /* Text hierarchy */
+    /* High-contrast text hierarchy for maximum legibility */
     --color-text:                       #0F172A;
-    --color-text-2:                     #475569;
-    --color-text-3:                     #94A3B8;
+    --color-text-2:                     #334155;
+    --color-text-3:                     #596780;
 
     /* Modern Accent — Deep Indigo */
-    --color-accent:                     #4F46E5;
-    --color-accent-hover:               #4338CA;
-    --color-accent-soft:                rgba(79, 70, 229, 0.12);
+    --color-accent:                     #4338CA;
+    --color-accent-hover:               #3730A3;
+    --color-accent-soft:                rgba(67, 56, 202, 0.10);
 
     /* Semantic */
-    --color-wine:                       #E11D48;
-    --color-success:                    #059669;
-    --color-error:                      #E11D48;
+    --color-wine:                       #BE123C;
+    --color-success:                    #047857;
+    --color-error:                      #DC2626;
 
     /* Button specific */
     --color-btn-primary-text:           #FFFFFF;
 
     /* Ambient soft shadows */
-    --shadow-card:                      0 4px 20px rgba(79, 70, 229, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-    --shadow-card-hover:                0 10px 30px rgba(79, 70, 229, 0.12), 0 0 0 1px rgba(79, 70, 229, 0.3);
-    --shadow-elevated:                  0 16px 40px rgba(79, 70, 229, 0.12);
+    --shadow-card:                      0 4px 20px rgba(67, 56, 202, 0.06), 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-card-hover:                0 10px 30px rgba(67, 56, 202, 0.12), 0 0 0 1px rgba(67, 56, 202, 0.35);
+    --shadow-elevated:                  0 16px 40px rgba(67, 56, 202, 0.12);
 
     /* Legacy aliases */
     --color-background:                 #F8FAFC;
     --color-surface-dim:                #F1F5F9;
     --color-on-background:              #0F172A;
     --color-on-surface:                 #0F172A;
-    --color-on-surface-variant:         #475569;
+    --color-on-surface-variant:         #334155;
     --color-surface-container:          #F1F5F9;
     --color-surface-container-low:      #FFFFFF;
     --color-surface-container-high:     #E2E8F0;
@@ -318,46 +318,46 @@ html.light,
     --color-surface-container-lowest:   #FFFFFF;
     --color-surface-variant:            #F1F5F9;
     --color-surface-bright:             #FFFFFF;
-    --color-surface-tint:               #4F46E5;
-    --color-surface-deep:               #EDE8DE;
+    --color-surface-tint:               #4338CA;
+    --color-surface-deep:               #E2E8F0;
     --color-surface-muted:              #F8FAFC;
-    --color-outline:                    #E2E8F0;
-    --color-outline-variant:            #CBD5E1;
+    --color-outline:                    #CBD5E1;
+    --color-outline-variant:            #94A3B8;
     --color-border-subtle:              #E2E8F0;
-    --color-text-muted:                 #94A3B8;
-    --color-text-dim:                   #475569;
+    --color-text-muted:                 #596780;
+    --color-text-dim:                   #334155;
     --color-text-main:                  #0F172A;
-    --color-rating-gold:                #4F46E5;
-    --color-rating-star:                #4F46E5;
-    --color-inverse-surface:            #111827;
-    --color-inverse-on-surface:         #F9FAFB;
+    --color-rating-gold:                #4338CA;
+    --color-rating-star:                #D97706;
+    --color-inverse-surface:            #0F172A;
+    --color-inverse-on-surface:         #F8FAFC;
     --color-inverse-primary:            #FFFFFF;
-    --color-primary:                    #4F46E5;
+    --color-primary:                    #4338CA;
     --color-on-primary:                 #FFFFFF;
-    --color-primary-container:          rgba(79, 70, 229, 0.12);
-    --color-on-primary-container:       #4F46E5;
-    --color-primary-fixed:              #4F46E5;
-    --color-primary-fixed-dim:          #4338CA;
+    --color-primary-container:          rgba(67, 56, 202, 0.12);
+    --color-on-primary-container:       #4338CA;
+    --color-primary-fixed:              #4338CA;
+    --color-primary-fixed-dim:          #3730A3;
     --color-on-primary-fixed:           #FFFFFF;
     --color-on-primary-fixed-variant:   #FFFFFF;
-    --color-secondary:                  #475569;
+    --color-secondary:                  #334155;
     --color-on-secondary:               #FFFFFF;
     --color-secondary-container:        #F1F5F9;
     --color-on-secondary-container:     #0F172A;
-    --color-secondary-fixed:            #475569;
-    --color-secondary-fixed-dim:        #94A3B8;
+    --color-secondary-fixed:            #334155;
+    --color-secondary-fixed-dim:        #596780;
     --color-on-secondary-fixed:         #0F172A;
     --color-on-secondary-fixed-variant: #0F172A;
-    --color-tertiary:                   #059669;
+    --color-tertiary:                   #047857;
     --color-on-tertiary:                #FFFFFF;
-    --color-tertiary-container:         rgba(5, 150, 105, 0.12);
-    --color-on-tertiary-container:      #059669;
-    --color-tertiary-fixed:             #059669;
-    --color-tertiary-fixed-dim:         #047857;
+    --color-tertiary-container:         rgba(4, 120, 87, 0.12);
+    --color-on-tertiary-container:      #047857;
+    --color-tertiary-fixed:             #047857;
+    --color-tertiary-fixed-dim:         #065F46;
     --color-on-tertiary-fixed:          #FFFFFF;
     --color-on-tertiary-fixed-variant:  #FFFFFF;
-    --color-error-container:            rgba(225, 29, 72, 0.12);
-    --color-on-error-container:         #E11D48;
+    --color-error-container:            rgba(185, 28, 28, 0.12);
+    --color-on-error-container:         #B91C1C;
 }
 
 /* ============================================================
@@ -768,19 +768,19 @@ img, video, iframe, canvas, svg {
 
 .badge-accent {
     background: var(--color-accent-soft);
-    border: 1px solid rgba(201, 168, 106, 0.3);
+    border: 1px solid var(--color-accent);
     color: var(--color-accent);
 }
 
 .badge-wine {
-    background: rgba(124, 58, 75, 0.15);
-    border: 1px solid rgba(124, 58, 75, 0.35);
+    background: rgba(190, 18, 60, 0.12);
+    border: 1px solid var(--color-wine);
     color: var(--color-wine);
 }
 
 .badge-success {
-    background: rgba(127, 168, 140, 0.15);
-    border: 1px solid rgba(127, 168, 140, 0.3);
+    background: rgba(4, 120, 87, 0.12);
+    border: 1px solid var(--color-success);
     color: var(--color-success);
 }
 
@@ -846,10 +846,10 @@ html.light .hero-gradient,
 .light .hero-gradient {
     background: linear-gradient(
         to top,
-        #F8FAFC 5%,
-        rgba(248, 250, 252, 0.88) 40%,
-        rgba(248, 250, 252, 0.45) 70%,
-        transparent 100%
+        #F8FAFC 0%,
+        rgba(248, 250, 252, 0.6) 18%,
+        rgba(248, 250, 252, 0.15) 35%,
+        transparent 65%
     );
 }
 
@@ -867,10 +867,10 @@ html.light .hero-gradient-side,
 .light .hero-gradient-side {
     background: linear-gradient(
         to right,
-        #F8FAFC 0%,
-        rgba(248, 250, 252, 0.92) 35%,
-        rgba(248, 250, 252, 0.4) 65%,
-        transparent 100%
+        rgba(248, 250, 252, 0.94) 0%,
+        rgba(248, 250, 252, 0.82) 28%,
+        rgba(248, 250, 252, 0.25) 50%,
+        transparent 75%
     );
 }
 
@@ -945,24 +945,114 @@ html.light,
 
 
 /* ============================================================
-   PAGE LAYOUT UTILITY
+   FLUID RESPONSIVE DESIGN SYSTEM & CONTAINERS
    ============================================================ */
 
-.page-container {
+.page-container,
+.fluid-container {
     width: 100%;
-    max-width: var(--spacing-max-width, 1200px);
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: clamp(1rem, 3.5vw, 2.5rem);
+    padding-right: clamp(1rem, 3.5vw, 2.5rem);
+    box-sizing: border-box;
 }
 
-@media (min-width: 640px) {
-    .page-container { padding-left: 24px; padding-right: 24px; }
+.page-container-narrow {
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3.5vw, 2rem);
+    padding-right: clamp(1rem, 3.5vw, 2rem);
+    box-sizing: border-box;
 }
 
-@media (min-width: 1024px) {
-    .page-container { padding-left: 48px; padding-right: 48px; }
+/* ============================================================
+   FLUID CSS GRIDS (auto-fill / auto-fit with minmax)
+   ============================================================ */
+
+/* Primary fluid movie grid — automatically adapts across any viewport */
+.movie-grid-fluid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(130px, 18vw, 190px), 1fr));
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    width: 100%;
+}
+
+/* Dense / compact poster grid (e.g. WatchedFilms, recommendations) */
+.movie-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(95px, 12vw, 135px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 0.75rem);
+    width: 100%;
+}
+
+/* Fluid Cast & Crew Grid */
+.cast-grid-fluid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(115px, 15vw, 160px), 1fr));
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    width: 100%;
+}
+
+/* Fluid Stat & Metric Grid */
+.stat-grid-fluid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(135px, 20vw, 240px), 1fr));
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    width: 100%;
+}
+
+/* Fluid Card / List / Review Grid */
+.card-grid-fluid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(260px, 30vw, 360px), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    width: 100%;
+}
+
+/* ============================================================
+   FLUID TYPOGRAPHY TOKENS (clamp-based)
+   ============================================================ */
+
+.text-fluid-hero {
+    font-size: clamp(1.75rem, 4.5vw + 0.5rem, 3.25rem);
+    line-height: 1.15;
+}
+
+.text-fluid-title {
+    font-size: clamp(1.35rem, 3vw + 0.25rem, 2.25rem);
+    line-height: 1.2;
+}
+
+.text-fluid-heading {
+    font-size: clamp(1.1rem, 2vw + 0.2rem, 1.6rem);
+    line-height: 1.25;
+}
+
+.text-fluid-subheading {
+    font-size: clamp(0.95rem, 1.2vw + 0.1rem, 1.2rem);
+    line-height: 1.4;
+}
+
+.text-fluid-body {
+    font-size: clamp(0.875rem, 0.5vw + 0.75rem, 1rem);
+    line-height: 1.6;
+}
+
+/* ============================================================
+   FLUID SPACING HELPERS
+   ============================================================ */
+
+.section-spacing {
+    margin-bottom: clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.section-padding-y {
+    padding-top: clamp(1.25rem, 3vw, 2.5rem);
+    padding-bottom: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 

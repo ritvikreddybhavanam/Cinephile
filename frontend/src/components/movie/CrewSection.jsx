@@ -42,7 +42,7 @@ function CrewSection({ crew = [], directors, producers, writers }) {
     const visibleCrew = showAllCrew ? crewList : crewList.slice(0, 8);
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="section-header mb-6">
                 <div>
                     <p className="label-caps mb-1">Production</p>
@@ -61,7 +61,7 @@ function CrewSection({ crew = [], directors, producers, writers }) {
             </div>
 
             {crewList.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                <div className="cast-grid-fluid">
                     {visibleCrew.map((person, index) => {
                         const image = getPosterUrl(person.profile_path);
 

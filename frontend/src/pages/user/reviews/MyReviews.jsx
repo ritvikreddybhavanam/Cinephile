@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import Navbar from "../../../components/layout/Navbar.jsx";
 import Footer from "../../../components/layout/Footer.jsx";
 import ReviewCard from "../../../components/review/ReviewCard.jsx";
@@ -25,45 +24,33 @@ function MyReviews() {
 
             const data = await getMyReviews();
 
-            const formattedReviews = data.map((review) => ({
+            const formattedReviews = (Array.isArray(data) ? data : []).map((review) => ({
+                ...review,
                 id: review.id,
                 movieId: review.movieId,
                 title: review.title,
-                year: review.watchedDate
-                    ? new Date(review.watchedDate).getFullYear()
-                    : "",
-                stars: "★".repeat(
-                    Math.floor(review.rating)
-                ),
-                rating: review.rating.toFixed(1),
+                movieTitle: review.movieTitle || review.title,
+                year: review.year || (review.watchedDate ? new Date(review.watchedDate).getFullYear() : ""),
+                stars: "★".repeat(Math.min(5, Math.floor(review.rating || 0))),
+                rating: Number(review.rating || 0).toFixed(1),
                 reviewedDate: review.createdAt
-                    ? new Date(review.createdAt).toLocaleDateString(
-                        "en-US",
-                        {
-                            month: "short",
-                            day: "2-digit",
-                            year: "numeric"
-                        }
-                    )
+                    ? new Date(review.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric"
+                    })
                     : "",
-                review: review.content
+                review: review.content,
+                likesCount: review.likesCount || 0,
+                isLiked: review.isLiked || false,
+                commentsCount: review.commentsCount || 0
             }));
 
             setReviews(formattedReviews);
-
-        } catch (error) {
-
-            console.error(
-                "Failed to load reviews:",
-                error
-            );
-
-            setError(
-                "Unable to load your reviews."
-            );
-
+        } catch (err) {
+            console.error("Failed to load reviews:", err);
+            setError("Unable to load your reviews.");
         } finally {
-
             setLoading(false);
         }
     };
@@ -73,7 +60,6 @@ function MyReviews() {
     };
 
     const handleDelete = async (reviewId) => {
-
         const confirmed = window.confirm(
             "Are you sure you want to delete this review?"
         );
@@ -83,26 +69,16 @@ function MyReviews() {
         }
 
         try {
-
             await deleteReview(reviewId);
 
             setReviews((currentReviews) =>
                 currentReviews.filter(
-                    (review) =>
-                        review.id !== reviewId
+                    (review) => review.id !== reviewId
                 )
             );
-
-        } catch (error) {
-
-            console.error(
-                "Failed to delete review:",
-                error
-            );
-
-            setError(
-                "Unable to delete review."
-            );
+        } catch (err) {
+            console.error("Failed to delete review:", err);
+            setError("Unable to delete review.");
         }
     };
 
@@ -110,12 +86,11 @@ function MyReviews() {
         <div className="min-h-screen bg-bg text-text font-sans antialiased">
             <Navbar />
 
-            <main className="mx-auto w-full max-w-[1200px] flex-1 px-4 sm:px-6 py-8 sm:py-12">
-
+            <main className="page-container flex-1 py-8 sm:py-12">
                 <div className="section-header mb-8">
                     <div>
                         <p className="label-caps mb-1">Archive</p>
-                        <h1 className="section-title text-3xl sm:text-4xl">
+                        <h1 className="font-serif text-fluid-title font-bold text-text">
                             My Reviews
                         </h1>
                     </div>
@@ -134,7 +109,7 @@ function MyReviews() {
                 {loading ? (
                     <div className="space-y-4">
                         {Array.from({ length: 3 }).map((_, i) => (
-                            <div key={i} className="h-32 w-full skeleton rounded-lg" />
+                            <div key={i} className="h-32 w-full skeleton rounded-xl" />
                         ))}
                     </div>
                 ) : reviews.length > 0 ? (
@@ -143,13 +118,14 @@ function MyReviews() {
                             <ReviewCard
                                 key={review.id}
                                 review={review}
+                                showMovieHeader={true}
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
                             />
                         ))}
                     </div>
                 ) : (
-                    <div className="rounded-lg border border-border bg-surface px-6 py-16 text-center">
+                    <div className="rounded-xl border border-border bg-surface px-6 py-16 text-center">
                         <span className="material-symbols-outlined text-5xl text-text-3 opacity-40 mb-3">
                             rate_review
                         </span>
@@ -163,7 +139,6 @@ function MyReviews() {
                         </p>
                     </div>
                 )}
-
             </main>
 
             <Footer />

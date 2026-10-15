@@ -257,13 +257,13 @@ function People() {
             <Navbar />
 
             <main className="w-full">
-                <section className="max-w-[1200px] mx-auto px-4 md:px-8 w-full pt-8 md:pt-12 pb-16">
+                <section className="page-container w-full pt-8 md:pt-12 pb-16">
 
                     {/* Header */}
                     <div className="section-header mb-8">
                         <div>
                             <p className="label-caps mb-1">Artists & Visionaries</p>
-                            <h1 className="section-title text-3xl sm:text-4xl">
+                            <h1 className="font-serif text-fluid-title font-bold text-text">
                                 Film Personalities
                             </h1>
                             <p className="text-sm text-text-3 mt-1 max-w-xl">
@@ -299,7 +299,7 @@ function People() {
 
                     {/* Loading */}
                     {loading && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div className="cast-grid-fluid gap-4">
                             {Array.from({ length: 8 }).map((_, index) => (
                                 <div
                                     key={index}
@@ -311,7 +311,7 @@ function People() {
 
                     {/* People Grid */}
                     {!loading && filteredPeople.length > 0 && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div className="cast-grid-fluid gap-4">
                             {filteredPeople.map((person) => {
                                 const imageUrl = getImageUrl(
                                     person.profile_path

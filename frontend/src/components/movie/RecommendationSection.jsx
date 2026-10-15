@@ -16,7 +16,7 @@ function RecommendationSection({ recommendations = [], similar = [] }) {
     }
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <section className="page-container pb-12 md:pb-16">
             <div className="section-header mb-6">
                 <div>
                     <p className="label-caps mb-1">Curation</p>
@@ -26,11 +26,11 @@ function RecommendationSection({ recommendations = [], similar = [] }) {
                 </div>
 
                 {hasBoth && (
-                    <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-lg">
+                    <div className="flex flex-wrap items-center gap-1.5 p-1 bg-surface border border-border rounded-lg">
                         <button
                             type="button"
                             onClick={() => setTab("recommendations")}
-                            className={`rounded-md px-3 py-1 text-xs font-medium transition-all ${
+                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all ${
                                 tab === "recommendations"
                                     ? "bg-accent text-bg font-semibold shadow-sm"
                                     : "text-text-3 hover:text-text"
@@ -41,7 +41,7 @@ function RecommendationSection({ recommendations = [], similar = [] }) {
                         <button
                             type="button"
                             onClick={() => setTab("similar")}
-                            className={`rounded-md px-3 py-1 text-xs font-medium transition-all ${
+                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all ${
                                 tab === "similar"
                                     ? "bg-accent text-bg font-semibold shadow-sm"
                                     : "text-text-3 hover:text-text"
@@ -53,7 +53,7 @@ function RecommendationSection({ recommendations = [], similar = [] }) {
                 )}
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="movie-grid-fluid">
                 {displayedMovies.slice(0, 10).map((movie) => (
                     <Link
                         key={movie.id}

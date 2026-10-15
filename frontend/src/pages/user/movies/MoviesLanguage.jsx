@@ -218,12 +218,12 @@ function MoviesLanguage() {
         <div className="min-h-screen flex flex-col bg-bg text-text antialiased font-sans">
             <Navbar />
 
-            <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-10">
+            <main className="flex-1 page-container py-8 sm:py-10">
                 {/* Section Header */}
                 <div className="section-header mb-6">
                     <div>
                         <p className="label-caps mb-1">World Cinema</p>
-                        <h1 className="section-title text-3xl sm:text-4xl">
+                        <h1 className="section-title text-fluid-title">
                             Cinema by Language
                         </h1>
                         <p className="text-text-3 text-xs sm:text-sm mt-1">
@@ -282,13 +282,13 @@ function MoviesLanguage() {
 
                 {/* Language Tiles Grid */}
                 {loading ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                    <div className="movie-grid-fluid">
                         {Array.from({ length: 12 }).map((_, i) => (
                             <div key={i} className="aspect-[3/4] w-full skeleton rounded-xl" />
                         ))}
                     </div>
                 ) : filteredLanguages.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                    <div className="movie-grid-fluid">
                         {filteredLanguages.map((language) => {
                             const movie = movies[language.iso_639_1];
                             const poster = movie?.poster_path;

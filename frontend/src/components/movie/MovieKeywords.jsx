@@ -6,7 +6,7 @@ function MovieKeywords({ keywords = [] }) {
     if (list.length === 0) return null;
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="section-header mb-4">
                 <div>
                     <p className="label-caps mb-1">Taxonomy</p>

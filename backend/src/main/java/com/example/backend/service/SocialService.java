@@ -75,6 +75,7 @@ public class SocialService {
         return true;
     }
 
+    @Transactional(readOnly = true)
     public boolean isFollowing(Long targetUserId, User currentUser) {
         if (currentUser == null || currentUser.getId().equals(targetUserId)) {
             return false;
@@ -84,6 +85,7 @@ public class SocialService {
         return userFollowRepository.existsByFollowerAndFollowing(currentUser, targetUser);
     }
 
+    @Transactional(readOnly = true)
     public List<SocialUserDTO> getFollowers(Long userId, User currentUser) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -92,6 +94,7 @@ public class SocialService {
         return followers.stream().map(u -> toSocialUserDTO(u, currentUser)).toList();
     }
 
+    @Transactional(readOnly = true)
     public List<SocialUserDTO> getFollowing(Long userId, User currentUser) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -100,6 +103,7 @@ public class SocialService {
         return following.stream().map(u -> toSocialUserDTO(u, currentUser)).toList();
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Long> getFollowCounts(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -116,6 +120,7 @@ public class SocialService {
     /**
      * Personalized Friend Activity Feed (Logs, Reviews, Lists by people you follow + your own recent activity)
      */
+    @Transactional(readOnly = true)
     public List<ActivityFeedItemDTO> getPersonalizedFeed(User currentUser) {
         List<User> networkUsers = new ArrayList<>(userFollowRepository.findFollowingUsersByFollower(currentUser));
         networkUsers.add(currentUser); // Include current user's activities as well
@@ -265,6 +270,7 @@ public class SocialService {
     /**
      * Get suggested users to follow
      */
+    @Transactional(readOnly = true)
     public List<SocialUserDTO> getSuggestedUsers(User currentUser, int limit) {
         List<User> allUsers = userRepository.findAll();
         List<User> following = userFollowRepository.findFollowingUsersByFollower(currentUser);

@@ -295,7 +295,7 @@ export default function NewReleases() {
         <div className="flex min-h-screen flex-col bg-bg font-sans text-text antialiased">
             <Navbar />
 
-            <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
+            <main className="flex-1 page-container py-8 sm:py-12">
                 {/* Header */}
                 <div className="section-header mb-8">
                     <div>
@@ -306,7 +306,7 @@ export default function NewReleases() {
                             </span>
                         </div>
 
-                        <h1 className="section-title text-3xl sm:text-4xl md:text-5xl">
+                        <h1 className="section-title text-fluid-title">
                             New Releases
                         </h1>
 
@@ -521,7 +521,7 @@ export default function NewReleases() {
 
                 {/* Movie Grid */}
                 {loading ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+                    <div className="movie-grid-fluid">
                         {Array.from({ length: 15 }).map((_, i) => (
                             <div
                                 key={i}
@@ -567,7 +567,7 @@ export default function NewReleases() {
                             </span>
                         </div>
 
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+                        <div className="movie-grid-fluid">
                             {movies.map((movie) => {
                                 const poster = getPosterUrl(movie.poster_path);
                                 const releaseDate = formatReleaseDate(movie.release_date);

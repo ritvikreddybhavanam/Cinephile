@@ -30,7 +30,7 @@ function MovieVideosSection({ videos = [], trailer, movieTitle, sectionRef }) {
         <section
             ref={sectionRef}
             id="trailer"
-            className="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-14 scroll-mt-24"
+            className="page-container py-10 md:py-14 scroll-mt-24"
         >
             <div className="section-header mb-6">
                 <div>

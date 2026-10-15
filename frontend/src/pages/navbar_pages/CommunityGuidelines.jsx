@@ -26,7 +26,7 @@ const CommunityGuidelines = () => {
                     {/* Ambient Glow */}
                     <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-gradient-to-b from-primary/10 via-primary-container/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
-                    <div className="max-w-5xl mx-auto px-margin-sm md:px-margin-md py-12 md:py-20 flex flex-col gap-16">
+                    <div className="page-container py-12 md:py-20 flex flex-col gap-16">
 
                         {/* Header */}
                         <section className="flex flex-col gap-6 text-left max-w-3xl">

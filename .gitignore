@@ -43,3 +43,13 @@ __pycache__/
 *.sw?
 .DS_Store
 Thumbs.db
+
+# Playwright Test Artifacts
+playwright-report/
+test-results/
+docs/qa/reports/html/
+docs/qa/reports/screenshots/
+# Environment & Secrets
+.env
+.env.*
+!.env.example

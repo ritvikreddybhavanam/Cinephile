@@ -313,13 +313,17 @@ public class ImportExportService {
 
             // Detect source format
             boolean isImdb = colIndex.containsKey("const") || colIndex.containsKey("your rating") || colIndex.containsKey("imdb rating");
+            boolean isLetterboxdDiary = lowerFileName.contains("diary") || colIndex.containsKey("watched date") || (colIndex.containsKey("name") && colIndex.containsKey("rewatch"));
+            boolean isLetterboxdRatings = lowerFileName.contains("ratings") || (colIndex.containsKey("letterboxd uri") && colIndex.containsKey("rating"));
+            
+            // Letterboxd watchlist.csv only has: [Date, Name, Year, Letterboxd URI] or [Name, Year, Letterboxd URI] or [Name, Letterboxd URI]
+            // Letterboxd watched.csv has: [Date, Name, Year, Letterboxd URI] (Date is the date marked as watched)
+            // When user uploads by filename:
+            boolean isLetterboxdWatched = lowerFileName.contains("watched");
             boolean isWatchlist = "watchlist".equalsIgnoreCase(forcedType)
                     || lowerFileName.contains("watchlist")
-                    || (colIndex.containsKey("letterboxd uri") && !colIndex.containsKey("rating") && !colIndex.containsKey("watched date") && !colIndex.containsKey("rewatch"))
-                    || (colIndex.containsKey("date") && colIndex.containsKey("name") && colIndex.containsKey("letterboxd uri") && !colIndex.containsKey("rating") && !colIndex.containsKey("rewatch"));
-            
-            boolean isLetterboxdDiary = !isWatchlist && (lowerFileName.contains("diary") || colIndex.containsKey("watched date") || (colIndex.containsKey("name") && colIndex.containsKey("rewatch")));
-            boolean isLetterboxdRatings = !isWatchlist && !isLetterboxdDiary && (lowerFileName.contains("ratings") || (colIndex.containsKey("letterboxd uri") && colIndex.containsKey("rating")));
+                    || (!isImdb && !isLetterboxdDiary && !isLetterboxdRatings && !isLetterboxdWatched && (colIndex.containsKey("letterboxd uri") || colIndex.containsKey("name")) && !colIndex.containsKey("date") && !colIndex.containsKey("rating") && !colIndex.containsKey("watched date"));
+
 
             String line;
             while ((line = reader.readLine()) != null) {

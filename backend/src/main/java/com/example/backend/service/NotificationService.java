@@ -29,11 +29,13 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
+    @Transactional(readOnly = true)
     public List<NotificationDTO> getUserNotifications(User user) {
         List<Notification> list = notificationRepository.findByRecipientOrderByCreatedAtDesc(user);
         return list.stream().map(this::toDTO).toList();
     }
 
+    @Transactional(readOnly = true)
     public long getUnreadCount(User user) {
         return notificationRepository.countByRecipientAndIsReadFalse(user);
     }

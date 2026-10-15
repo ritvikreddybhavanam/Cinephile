@@ -15,7 +15,7 @@ public class ReviewComment {
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -25,9 +25,10 @@ public class ReviewComment {
     @Column(name = "parent_id")
     private Long parentId;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public ReviewComment() {
+        this.createdAt = LocalDateTime.now();
     }
 
     public ReviewComment(Review review, User user, String content) {
@@ -39,11 +40,14 @@ public class ReviewComment {
         this.user = user;
         this.content = content;
         this.parentId = parentId;
+        this.createdAt = LocalDateTime.now();
     }
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
     }
 
     public Long getId() {
@@ -84,5 +88,9 @@ public class ReviewComment {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

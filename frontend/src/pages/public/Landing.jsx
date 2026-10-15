@@ -106,6 +106,16 @@ const Landing = () => {
     const [communityReviews, setCommunityReviews] = useState([]);
     const [popularLists, setPopularLists] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+
+    // Auto-advance hero backdrop slideshow every 5.5s
+    useEffect(() => {
+        if (!trendingToday || trendingToday.length <= 1) return;
+        const interval = setInterval(() => {
+            setHeroSlideIndex((prev) => (prev + 1) % trendingToday.length);
+        }, 5500);
+        return () => clearInterval(interval);
+    }, [trendingToday]);
 
     const formatRuntime = (mins) => {
         if (!mins) return "2h 15m";
@@ -162,7 +172,7 @@ const Landing = () => {
                     if (trendingList.length === 0) {
                         trendingList = FALLBACK_MOVIES;
                     }
-                    setTrendingToday(trendingList.slice(0, 5).map((m) => formatMovie(m, gMap)));
+                    setTrendingToday(trendingList.slice(0, 8).map((m) => formatMovie(m, gMap)));
 
                     if (trendingList.length > 0) {
                         const topMovie = trendingList[0];
@@ -199,7 +209,7 @@ const Landing = () => {
                     }
                 } catch (e) {
                     console.error("Failed to load trending movies, using fallback:", e?.message || e);
-                    setTrendingToday(FALLBACK_MOVIES.slice(0, 5).map((m) => formatMovie(m, gMap)));
+                    setTrendingToday(FALLBACK_MOVIES.slice(0, 8).map((m) => formatMovie(m, gMap)));
                     setSpotlightMovie(formatMovie(FALLBACK_MOVIES[0], gMap));
                 }
 
@@ -373,7 +383,7 @@ const Landing = () => {
 
     /* ── Skeleton Row ── */
     const renderSkeletonRow = (count = 5) => (
-        <div className={`grid grid-cols-2 sm:grid-cols-3 ${count === 4 ? "md:grid-cols-4" : "md:grid-cols-4 lg:grid-cols-5"} gap-3 sm:gap-4 md:gap-5`}>
+        <div className="movie-grid-fluid gap-3 sm:gap-4 md:gap-5">
             {Array.from({ length: count }).map((_, i) => (
                 <div key={i} className="flex flex-col gap-2">
                     <div className="aspect-[2/3] w-full skeleton rounded-lg" />
@@ -390,52 +400,150 @@ const Landing = () => {
 
             <main className="space-y-16 sm:space-y-24 lg:space-y-28">
 
-                {/* ── 1. HERO ── */}
-                <section className="relative flex min-h-[520px] w-full items-end pb-12 sm:min-h-[600px] sm:pb-16 lg:min-h-[680px] film-grain">
+                {/* ── 1. HERO SLIDESHOW ── */}
+                <section className="relative flex min-h-[540px] w-full items-end pb-12 sm:min-h-[620px] sm:pb-16 lg:min-h-[700px] film-grain overflow-hidden">
+                    {/* Background Backdrop Slideshow */}
                     <div className="absolute inset-0 z-0">
-                        <img
-                            src={spotlightMovie?.backdrop || movieImage}
-                            alt="Featured film backdrop"
-                            className="h-full w-full object-cover opacity-55 transition-opacity duration-700"
-                        />
+                        {(trendingToday.length > 0 ? trendingToday : (spotlightMovie ? [spotlightMovie] : FALLBACK_MOVIES.map((m) => formatMovie(m)))).map((movie, idx) => (
+                            <div
+                                key={movie.id || idx}
+                                className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                                    idx === heroSlideIndex
+                                        ? "opacity-85 dark:opacity-60 scale-100"
+                                        : "opacity-0 scale-105 pointer-events-none"
+                                }}`}
+                            >
+                                <img
+                                    src={movie.backdrop || movie.poster || movieImage}
+                                    alt={`${movie.title} backdrop`}
+                                    className="h-full w-full object-cover object-center"
+                                />
+                            </div>
+                        ))}
+
+                        {/* Cinematic Gradient Overlays for Readability */}
                         <div className="absolute inset-0 hero-gradient" />
                         <div className="absolute inset-0 hero-gradient-side" />
                     </div>
 
-                    <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
-                        <div className="max-w-2xl">
-                            <p className="label-caps mb-4">Your Cinema Journal</p>
+                    <div className="relative z-10 w-full page-container">
+                        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                            <div className="max-w-2xl">
+                                <p className="label-caps mb-4">Your Cinema Journal</p>
 
-                            <h1 className="mb-4 font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight text-text tracking-tight break-words">
-                                Discover, Log &<br />
-                                <span className="text-accent">Curate Cinema.</span>
-                            </h1>
+                                <h1 className="mb-4 font-serif text-fluid-hero font-semibold leading-tight text-text tracking-tight break-words">
+                                    Discover, Log &<br />
+                                    <span className="text-accent">Curate Cinema.</span>
+                                </h1>
 
-                            <p className="mb-8 text-sm sm:text-base lg:text-lg text-text-2 leading-relaxed max-w-xl">
-                                A platform for serious film lovers. Discover films, write reviews,
-                                curate personal lists, and explore the art of cinema.
-                            </p>
+                                <p className="mb-8 text-sm sm:text-base lg:text-lg text-text-2 leading-relaxed max-w-xl">
+                                    A platform for serious film lovers. Discover films, write reviews,
+                                    curate personal lists, and explore the art of cinema.
+                                </p>
 
-                            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                                <Link to="/movies" className="btn-primary text-sm py-3 px-8">
-                                    Discover Films
-                                </Link>
-                                {token ? (
-                                    <Link to="/dashboard" className="btn-secondary text-sm py-3 px-8">
-                                        My Dashboard
+                                <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+                                    <Link to="/movies" className="btn-primary text-sm py-3 px-8">
+                                        Discover Films
                                     </Link>
-                                ) : (
-                                    <Link to="/register" className="btn-secondary text-sm py-3 px-8">
-                                        Create Account
-                                    </Link>
-                                )}
+                                    {token ? (
+                                        <Link to="/dashboard" className="btn-secondary text-sm py-3 px-8">
+                                            My Dashboard
+                                        </Link>
+                                    ) : (
+                                        <Link to="/register" className="btn-secondary text-sm py-3 px-8">
+                                            Create Account
+                                        </Link>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* Slideshow Active Film Widget & Controls */}
+                            {trendingToday.length > 1 && (
+                                <div className="self-start lg:self-end bg-surface/90 backdrop-blur-md border border-border/80 p-3 sm:p-4 rounded-2xl shadow-2xl flex flex-col gap-2.5 w-full sm:w-auto sm:min-w-[280px] max-w-sm">
+                                    <div className="flex items-center justify-between gap-2">
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" />
+                                            <span className="text-[10px] font-mono uppercase tracking-wider text-accent font-bold">
+                                                Trending In Cinema
+                                            </span>
+                                        </div>
+                                        <span className="text-[11px] font-mono text-text-3">
+                                            {heroSlideIndex + 1} / {trendingToday.length}
+                                        </span>
+                                    </div>
+
+                                    {/* Active Movie Card with HD Poster Thumbnail */}
+                                    <Link
+                                        to={trendingToday[heroSlideIndex]?.id ? `/movies/${trendingToday[heroSlideIndex].id}` : "/trending"}
+                                        className="group flex items-center gap-3 no-underline py-1"
+                                    >
+                                        <div className="w-12 h-16 shrink-0 aspect-[2/3] rounded-lg overflow-hidden border border-border shadow-md bg-surface-2">
+                                            <img
+                                                src={trendingToday[heroSlideIndex]?.poster || trendingToday[heroSlideIndex]?.backdrop || movieImage}
+                                                alt={trendingToday[heroSlideIndex]?.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <div className="flex items-center justify-between gap-1.5">
+                                                <h4 className="text-sm font-semibold text-text group-hover:text-accent transition-colors truncate">
+                                                    {trendingToday[heroSlideIndex]?.title}
+                                                </h4>
+                                                <span className="text-xs font-mono font-bold text-amber-400 shrink-0">
+                                                    ★ {trendingToday[heroSlideIndex]?.rating}
+                                                </span>
+                                            </div>
+                                            <p className="text-[11px] text-text-3 truncate mt-0.5">
+                                                {trendingToday[heroSlideIndex]?.genre} · {trendingToday[heroSlideIndex]?.year}
+                                            </p>
+                                        </div>
+                                    </Link>
+
+                                    {/* Controls & Indicator Dots */}
+                                    <div className="flex items-center justify-between gap-2 pt-1 border-t border-border/50">
+                                        <div className="flex items-center gap-1">
+                                            {trendingToday.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    type="button"
+                                                    onClick={() => setHeroSlideIndex(idx)}
+                                                    aria-label={`Slide ${idx + 1}`}
+                                                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                                                        idx === heroSlideIndex
+                                                            ? "w-5 bg-accent"
+                                                            : "w-1.5 bg-border hover:bg-text-3"
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+
+                                        <div className="flex items-center gap-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => setHeroSlideIndex((prev) => (prev - 1 + trendingToday.length) % trendingToday.length)}
+                                                className="h-6 w-6 rounded-lg flex items-center justify-center text-xs text-text-3 hover:text-text hover:bg-surface-2 transition-all"
+                                                title="Previous film"
+                                            >
+                                                ‹
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setHeroSlideIndex((prev) => (prev + 1) % trendingToday.length)}
+                                                className="h-6 w-6 rounded-lg flex items-center justify-center text-xs text-text-3 hover:text-text hover:bg-surface-2 transition-all"
+                                                title="Next film"
+                                            >
+                                                ›
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
 
                 {/* ── 2. TRENDING TODAY ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">Right Now</p>
@@ -448,7 +556,7 @@ const Landing = () => {
                     {loading && !trendingToday.length
                         ? renderSkeletonRow(5)
                         : (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid gap-3 sm:gap-4 md:gap-5">
                                 {trendingToday.map(renderMovieCard)}
                             </div>
                         )
@@ -456,7 +564,7 @@ const Landing = () => {
                 </section>
 
                 {/* ── 3. POPULAR THIS WEEK ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">This Week</p>
@@ -469,7 +577,7 @@ const Landing = () => {
                     {loading && !popularThisWeek.length
                         ? renderSkeletonRow(5)
                         : (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid gap-3 sm:gap-4 md:gap-5">
                                 {popularThisWeek.map(renderMovieCard)}
                             </div>
                         )
@@ -477,7 +585,7 @@ const Landing = () => {
                 </section>
 
                 {/* ── 4. MOOD SELECTOR ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="rounded-xl border border-border bg-surface p-6 sm:p-8 md:p-10">
                         <div className="mb-8 text-center">
                             <p className="label-caps mb-2">Browse by Genre</p>
@@ -513,7 +621,7 @@ const Landing = () => {
                         {moodLoading
                             ? renderSkeletonRow(5)
                             : (
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                                <div className="movie-grid-fluid gap-3 sm:gap-4 md:gap-5">
                                     {moodMovies.map(renderMovieCard)}
                                 </div>
                             )
@@ -530,7 +638,7 @@ const Landing = () => {
 
                 {/* ── 5. SPOTLIGHT ── */}
                 {spotlightMovie && (
-                    <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                    <section className="page-container">
                         <div className="mb-6 text-center">
                             <p className="label-caps mb-2">Featured Recommendation</p>
                             <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
@@ -586,7 +694,7 @@ const Landing = () => {
                 )}
 
                 {/* ── 6. NEW RELEASES ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">Fresh From Production</p>
@@ -599,7 +707,7 @@ const Landing = () => {
                     {loading && !newReleases.length
                         ? renderSkeletonRow(4)
                         : (
-                            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid gap-3 sm:gap-4 md:gap-5">
                                 {newReleases.map(renderMovieCard)}
                             </div>
                         )
@@ -607,7 +715,7 @@ const Landing = () => {
                 </section>
 
                 {/* ── 7. COMMUNITY REVIEWS ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="mb-8 text-center">
                         <p className="label-caps mb-2">Perspectives & Critique</p>
                         <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
@@ -618,7 +726,7 @@ const Landing = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                    <div className="card-grid-fluid gap-4 sm:gap-5">
                         {displayReviews.map((review) => (
                             <div
                                 key={review.id}
@@ -672,7 +780,7 @@ const Landing = () => {
                 </section>
 
                 {/* ── 8. CURATED LISTS ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="mb-8 text-center">
                         <p className="label-caps mb-2">Handcrafted Collections</p>
                         <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
@@ -683,7 +791,7 @@ const Landing = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="card-grid-fluid gap-4 sm:gap-6">
                         {popularLists.map((list) => (
                             <div
                                 key={list.id}
@@ -731,7 +839,7 @@ const Landing = () => {
                 </section>
 
                 {/* ── 9. JOIN CTA ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 pb-8">
+                <section className="page-container pb-8">
                     <div className="relative overflow-hidden rounded-xl border border-accent/20 bg-surface p-8 sm:p-12 md:p-16 text-center">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,168,106,0.07)_0%,transparent_70%)]" />
 

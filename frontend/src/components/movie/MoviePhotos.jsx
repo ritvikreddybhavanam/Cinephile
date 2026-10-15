@@ -77,7 +77,7 @@ function MoviePhotos({ images, movie, movieTitle }) {
     }, [selectedImage, currentList.length]);
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-10 md:pb-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="section-header mb-6">
                 <div>
                     <p className="label-caps mb-1">Visual Archive</p>

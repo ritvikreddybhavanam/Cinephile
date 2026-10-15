@@ -427,7 +427,7 @@ export default function LikedMovies() {
 
                 {/* HEADER */}
 
-                <section className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                <section className="page-container mb-8">
                     <div className="border-b border-border pb-6 sm:pb-8">
 
                         <div className="mb-3 inline-flex items-center gap-2">
@@ -446,7 +446,7 @@ export default function LikedMovies() {
 
                         <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
                             <div>
-                                <h1 className="mb-2 sm:mb-3 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text break-words">
+                                <h1 className="mb-2 sm:mb-3 font-serif text-fluid-title font-semibold tracking-tight text-text break-words">
                                     Favourite Films
                                 </h1>
 
@@ -462,7 +462,7 @@ export default function LikedMovies() {
 
                         {/* STATS */}
 
-                        <div className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                        <div className="mt-6 sm:mt-8 stat-grid-fluid">
 
                             <LikedStatsCard
                                 label="Total Liked"
@@ -512,7 +512,7 @@ export default function LikedMovies() {
 
                 {/* FILTERS */}
 
-                <section className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                <section className="page-container mb-8">
                     <div
                         className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#181c20]/80 p-3 sm:p-5 backdrop-blur-md">
 
@@ -771,7 +771,7 @@ export default function LikedMovies() {
 
                 {/* MOVIES */}
 
-                <section className="mx-auto mb-16 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                <section className="page-container mb-16">
 
                     {loading ? (
                         <div className="rounded-2xl border border-white/[0.08] bg-[#181c20] px-6 py-20 text-center">
@@ -795,7 +795,7 @@ export default function LikedMovies() {
                         <div
                             className={
                                 view === "grid"
-                                    ? "grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+                                    ? "movie-grid-fluid"
                                     : "flex flex-col gap-4"
                             }
                         >
@@ -840,7 +840,7 @@ export default function LikedMovies() {
 
                 {!loading &&
                     movies.length > 0 && (
-                        <section className="mx-auto mb-12 max-w-[1200px] px-4 sm:px-8">
+                        <section className="page-container mb-12">
 
                             <div
                                 className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-[#181c20]/60 px-6 py-4 sm:flex-row">

@@ -1,0 +1,227 @@
+================================================================================
+CINEPHILE AUTOMATED E2E & ACCESSIBILITY TEST REPORT
+================================================================================
+Execution Time: 2026-10-11T10:42:53.354Z (11/10/2026, 4:12:53 pm)
+Duration:       537.4s
+Environment:    Node.js v24.15.0 | Playwright Test
+Base URL:       http://localhost:5173
+Backend Core:   http://localhost:8080 (Spring Boot)
+ML Service:     http://localhost:8000 (FastAPI)
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+Total Tests Run:  18
+Passed:           6
+Failed:           12
+Skipped:          0
+Flaky:            0
+Pass Rate:        33.3%
+Status:           FAILURES DETECTED
+
+--------------------------------------------------------------------------------
+2. DETAILED TEST OUTCOMES
+--------------------------------------------------------------------------------
+Total Failures: 12
+
+[FAILURE #1] MDETAIL-005: Like and Unlike toggle workflow updates interactive state
+  Project:    chromium-desktop
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:47
+  Duration:   51428ms
+  Error:
+    [31mTest timeout of 30000ms exceeded.[39m
+
+[FAILURE #2] MDETAIL-006: Watchlist and Watched toggle workflows function reliably
+  Project:    chromium-desktop
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:66
+  Duration:   50977ms
+  Error:
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('button:has-text("Watchlist")').first()[22m
+    [2m    - locator resolved to <button type="button" class="text-sm py-2.5 px-5 rounded-full border font-semibold transition-all duration-200 border-border text-text-2 hover:border-accent hover:text-accent ">+ Watchlist</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    
+
+[FAILURE #3] MDETAIL-007: Review lifecycle — navigate to write review and verify review sections
+  Project:    chromium-desktop
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:83
+  Duration:   40060ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Community Reviews').or(locator('text=Reviews'))
+    Expected: visible
+    Error: strict mode violation: locator('text=Community Reviews').or(locator('text=Reviews')) resolved to 3 elements:
+        1) <button type="button" class="btn-secondary text-sm py-2.5 px-5">Reviews</button> aka getByRole('button', { name: 'Reviews', exact: true })
+        2) <h2 class="section-title">Reviews & Perspectives</h2> aka getByRole('heading', { name: 'Reviews & Perspectives' })
+        3) <button type="button" class="btn-secondary text-xs py-2.5 px-6 cursor-pointer">Load More Reviews ↓</button> aka getByRole('button', { name: 'Load More Reviews ↓' })
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Community Reviews').or(locator('text=Reviews')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Community Reviews').or(locator('text=Reviews'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-007__Review_lifecycle___navigate_to_write_review_and-1791715585129.png
+
+[FAILURE #4] MDETAIL-008: Graceful fallback for non-existent or data-sparse movie
+  Project:    chromium-desktop
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:95
+  Duration:   12697ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Film Not Found').or(locator('text=Unable to locate'))
+    Expected: visible
+    Timeout: 7000ms
+    Error: element(s) not found
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Film Not Found').or(locator('text=Unable to locate')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Film Not Found').or(locator('text=Unable to locate'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-008__Graceful_fallback_for_non-existent_or_data-spar-1791715601100.png
+
+[FAILURE #5] MDETAIL-005: Like and Unlike toggle workflow updates interactive state
+  Project:    chromium-mobile
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:47
+  Duration:   35306ms
+  Error:
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('button:has-text("Like"), button:has-text("Liked")').first()[22m
+    [2m    - locator resolved to <button type="button" class="text-sm py-2.5 px-5 rounded-full border font-semibold transition-all duration-200 border-border text-text-2 hover:border-accent hover:text-accent ">♡ Like</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-005__Like_and_Unlike_toggle_workflow_updates_interac-1791715674909.png
+
+[FAILURE #6] MDETAIL-006: Watchlist and Watched toggle workflows function reliably
+  Project:    chromium-mobile
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:66
+  Duration:   31806ms
+  Error:
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('button:has-text("Watchlist")').first()[22m
+    [2m    - locator resolved to <button type="button" class="text-sm py-2.5 px-5 rounded-full border font-semibold transition-all duration-200 border-border text-text-2 hover:border-accent hover:text-accent ">+ Watchlist</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-006__Watchlist_and_Watched_toggle_workflows_function-1791715712475.png
+
+[FAILURE #7] MDETAIL-007: Review lifecycle — navigate to write review and verify review sections
+  Project:    chromium-mobile
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:83
+  Duration:   18784ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Community Reviews').or(locator('text=Reviews'))
+    Expected: visible
+    Error: strict mode violation: locator('text=Community Reviews').or(locator('text=Reviews')) resolved to 3 elements:
+        1) <button type="button" class="btn-secondary text-sm py-2.5 px-5">Reviews</button> aka getByRole('button', { name: 'Reviews', exact: true })
+        2) <h2 class="section-title">Reviews & Perspectives</h2> aka getByRole('heading', { name: 'Reviews & Perspectives' })
+        3) <button type="button" class="btn-secondary text-xs py-2.5 px-6 cursor-pointer">Load More Reviews ↓</button> aka getByRole('button', { name: 'Load More Reviews ↓' })
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Community Reviews').or(locator('text=Reviews')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Community Reviews').or(locator('text=Reviews'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-007__Review_lifecycle___navigate_to_write_review_and-1791715735792.png
+
+[FAILURE #8] MDETAIL-008: Graceful fallback for non-existent or data-sparse movie
+  Project:    chromium-mobile
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:95
+  Duration:   14158ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Film Not Found').or(locator('text=Unable to locate'))
+    Expected: visible
+    Timeout: 7000ms
+    Error: element(s) not found
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Film Not Found').or(locator('text=Unable to locate')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Film Not Found').or(locator('text=Unable to locate'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-008__Graceful_fallback_for_non-existent_or_data-spar-1791715752674.png
+
+[FAILURE #9] MDETAIL-005: Like and Unlike toggle workflow updates interactive state
+  Project:    chromium-tablet
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:47
+  Duration:   39079ms
+  Error:
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('button:has-text("Like"), button:has-text("Liked")').first()[22m
+    [2m    - locator resolved to <button type="button" class="text-sm py-2.5 px-5 rounded-full border font-semibold transition-all duration-200 border-border text-text-2 hover:border-accent hover:text-accent ">♡ Like</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-005__Like_and_Unlike_toggle_workflow_updates_interac-1791715830229.png
+
+[FAILURE #10] MDETAIL-006: Watchlist and Watched toggle workflows function reliably
+  Project:    chromium-tablet
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:66
+  Duration:   29949ms
+  Error:
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('button:has-text("Watchlist")').first()[22m
+    [2m    - locator resolved to <button type="button" class="text-sm py-2.5 px-5 rounded-full border font-semibold transition-all duration-200 border-border text-text-2 hover:border-accent hover:text-accent ">+ Watchlist</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-006__Watchlist_and_Watched_toggle_workflows_function-1791715867947.png
+
+[FAILURE #11] MDETAIL-007: Review lifecycle — navigate to write review and verify review sections
+  Project:    chromium-tablet
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:83
+  Duration:   18615ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Community Reviews').or(locator('text=Reviews'))
+    Expected: visible
+    Error: strict mode violation: locator('text=Community Reviews').or(locator('text=Reviews')) resolved to 3 elements:
+        1) <button type="button" class="btn-secondary text-sm py-2.5 px-5">Reviews</button> aka getByRole('button', { name: 'Reviews', exact: true })
+        2) <h2 class="section-title">Reviews & Perspectives</h2> aka getByRole('heading', { name: 'Reviews & Perspectives' })
+        3) <button type="button" class="btn-secondary text-xs py-2.5 px-6 cursor-pointer">Load More Reviews ↓</button> aka getByRole('button', { name: 'Load More Reviews ↓' })
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Community Reviews').or(locator('text=Reviews')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Community Reviews').or(locator('text=Reviews'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-007__Review_lifecycle___navigate_to_write_review_and-1791715891296.png
+
+[FAILURE #12] MDETAIL-008: Graceful fallback for non-existent or data-sparse movie
+  Project:    chromium-tablet
+  File:       C:\Users\DELL\OneDrive\Desktop\Cinephile\tests\e2e\movie-details-deep.spec.js:95
+  Duration:   14511ms
+  Error:
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    
+    Locator: locator('text=Film Not Found').or(locator('text=Unable to locate'))
+    Expected: visible
+    Timeout: 7000ms
+    Error: element(s) not found
+    
+    Call log:
+    [2m  - Expect "toBeVisible" locator('text=Film Not Found').or(locator('text=Unable to locate')) with timeout 7000ms[22m
+    [2m  - waiting for locator('text=Film Not Found').or(locator('text=Unable to locate'))[22m
+    
+  Screenshot: docs\qa\reports\screenshots\MDETAIL-008__Graceful_fallback_for_non-existent_or_data-spar-1791715909158.png
+
+--------------------------------------------------------------------------------
+3. ARTIFACTS & REPORT PATHS
+--------------------------------------------------------------------------------
+Plain-Text Report: docs/qa/reports/latest-test-report.txt
+Interactive HTML:  docs/qa/reports/html/index.html
+Screenshots Dir:   docs/qa/reports/screenshots/
+Failure Traces:    test-results/
+
+To view the interactive HTML report, run:
+  npm run test:e2e:report
+================================================================================

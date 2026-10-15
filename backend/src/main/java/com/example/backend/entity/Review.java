@@ -58,8 +58,14 @@ public class Review {
     @Column(nullable = false)
     private Boolean spoilers = false;
 
+    @Column(length = 255)
+    private String spoilerTypes; // comma-separated: MINOR_PLOT,MAJOR_PLOT,CHARACTER_DEATH,ENDING,MAJOR_TWIST,POST_CREDITS
+
     @Column(nullable = false, length = 20)
     private String visibility = "public";
+
+    @Column(length = 30)
+    private String reviewIntent = "general";
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -189,12 +195,28 @@ public class Review {
         this.spoilers = spoilers;
     }
 
+    public String getSpoilerTypes() {
+        return spoilerTypes;
+    }
+
+    public void setSpoilerTypes(String spoilerTypes) {
+        this.spoilerTypes = spoilerTypes;
+    }
+
     public String getVisibility() {
         return visibility;
     }
 
     public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+    public String getReviewIntent() {
+        return reviewIntent;
+    }
+
+    public void setReviewIntent(String reviewIntent) {
+        this.reviewIntent = reviewIntent;
     }
 
     public LocalDateTime getCreatedAt() {

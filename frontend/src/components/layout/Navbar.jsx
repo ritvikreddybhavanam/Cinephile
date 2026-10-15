@@ -5,6 +5,44 @@ import { useTheme } from "../../context/ThemeContext";
 import ThemeToggle from "../common/ThemeToggle";
 import { searchMovies, getPosterUrl } from "../../services/movieService.js";
 import { searchPeople } from "../../services/personService.js";
+import {
+    getNotifications,
+    getUnreadNotificationCount,
+    markNotificationAsRead,
+    markAllNotificationsAsRead
+} from "../../services/notificationService.js";
+
+function formatRelativeTime(dateStr) {
+    if (!dateStr) return "";
+    try {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffInSeconds = Math.floor((now - date) / 1000);
+
+        if (diffInSeconds < 60) return "Just now";
+        if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+        if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+        if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+        return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    } catch {
+        return dateStr;
+    }
+}
+
+function getNotificationIcon(type) {
+    switch (type) {
+        case "FOLLOW":
+            return { icon: "person_add", color: "text-blue-400 bg-blue-500/15" };
+        case "REVIEW_LIKE":
+            return { icon: "favorite", color: "text-rose-400 bg-rose-500/15" };
+        case "REVIEW_COMMENT":
+            return { icon: "chat_bubble", color: "text-amber-400 bg-amber-500/15" };
+        case "COMMENT_REPLY":
+            return { icon: "reply", color: "text-emerald-400 bg-emerald-500/15" };
+        default:
+            return { icon: "notifications", color: "text-accent bg-accent/15" };
+    }
+}
 
 function Navbar() {
     const { token, user, logout } = useContext(AuthContext);
@@ -21,8 +59,14 @@ function Navbar() {
     // Dropdown States
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+
+    // Notifications state
+    const [unreadCount, setUnreadCount] = useState(0);
+    const [quickNotifications, setQuickNotifications] = useState([]);
+    const [loadingNotifications, setLoadingNotifications] = useState(false);
 
     // Refs
     const searchRef = useRef(null);
@@ -31,6 +75,7 @@ function Navbar() {
     const moreTimerRef = useRef(null);
     const profileMenuRef = useRef(null);
     const profileTimerRef = useRef(null);
+    const notificationsRef = useRef(null);
 
     // More Hover Handlers
     const handleMouseEnterMore = () => {
@@ -75,6 +120,9 @@ function Navbar() {
             if (!profileMenuRef.current?.contains(event.target)) {
                 setShowProfileMenu(false);
             }
+            if (!notificationsRef.current?.contains(event.target)) {
+                setShowNotificationsMenu(false);
+            }
         };
 
         const handleGlobalKeyDown = (e) => {
@@ -92,18 +140,93 @@ function Navbar() {
         };
     }, []);
 
-    // Reset state on navigation
+    // Reset dropdown states on navigation
     useEffect(() => {
         setMenuOpen(false);
         setShowSuggestions(false);
         setShowMoreMenu(false);
         setShowProfileMenu(false);
+        setShowNotificationsMenu(false);
     }, [location.pathname]);
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "";
         return () => { document.body.style.overflow = ""; };
     }, [menuOpen]);
+
+    // Fetch Unread Notification Count
+    const fetchUnreadCount = async () => {
+        if (!token) {
+            setUnreadCount(0);
+            return;
+        }
+        try {
+            const count = await getUnreadNotificationCount();
+            setUnreadCount(count || 0);
+        } catch {
+            // Ignore failure silently
+        }
+    };
+
+    useEffect(() => {
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 30000);
+        return () => clearInterval(interval);
+    }, [token, location.pathname]);
+
+    // Fetch quick notifications preview on open
+    const handleToggleNotifications = async () => {
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        const nextState = !showNotificationsMenu;
+        setShowNotificationsMenu(nextState);
+
+        if (nextState) {
+            try {
+                setLoadingNotifications(true);
+                const list = await getNotifications();
+                setQuickNotifications(Array.isArray(list) ? list.slice(0, 6) : []);
+            } catch (err) {
+                console.error("Failed to load notifications:", err);
+            } finally {
+                setLoadingNotifications(false);
+            }
+        }
+    };
+
+    const handleNotificationClick = async (item) => {
+        setShowNotificationsMenu(false);
+        if (!item.isRead) {
+            try {
+                await markNotificationAsRead(item.id);
+                setUnreadCount((c) => Math.max(0, c - 1));
+            } catch (err) {
+                console.error("Failed to mark read:", err);
+            }
+        }
+
+        if (item.type === "FOLLOW" && item.actorId) {
+            navigate(`/profile/${item.actorId}`);
+        } else if (item.targetMovieId) {
+            navigate(`/movies/${item.targetMovieId}`);
+        } else {
+            navigate("/notifications");
+        }
+    };
+
+    const handleMarkAllRead = async (e) => {
+        if (e) e.stopPropagation();
+        try {
+            await markAllNotificationsAsRead();
+            setUnreadCount(0);
+            setQuickNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+        } catch (err) {
+            console.error("Failed to mark all as read:", err);
+        }
+    };
 
     // Live search query debouncing
     useEffect(() => {
@@ -156,6 +279,7 @@ function Navbar() {
         setMenuOpen(false);
         setShowProfileMenu(false);
         setShowMoreMenu(false);
+        setShowNotificationsMenu(false);
         logout();
         navigate("/");
     };
@@ -168,6 +292,7 @@ function Navbar() {
             category: "Movies & Discovery",
             icon: "theaters",
             links: [
+                { to: "/what-to-watch", label: "What Should I Watch?", desc: "Context-aware movie matchmaker & AI pick", icon: "psychology", badge: "AI" },
                 { to: "/movies", label: "Films Catalog", desc: "Top rated, popular & custom filters", icon: "stars" },
                 { to: "/trending", label: "Trending", desc: "Most talked about films this week", icon: "local_fire_department" },
                 { to: "/new-releases", label: "New Releases", desc: "In theaters & recent debuts", icon: "movie" },
@@ -180,6 +305,7 @@ function Navbar() {
             category: "Community & Social",
             icon: "diversity_3",
             links: [
+                { to: "/cinematch", label: "CineMatch (Movie Night)", desc: "Swipe with friends & instant match for movie night", icon: "favorite", badge: "Live" },
                 { to: "/social", label: "Community Feed", desc: "See what friends are watching & reviewing", icon: "dynamic_feed" },
                 { to: "/lists", label: "Curated Lists", desc: "Create, share & bookmark custom film lists", icon: "format_list_bulleted", badge: "New" },
                 { to: "/myreviews", label: "Member Reviews", desc: "Detailed ratings, reviews & critiques", icon: "rate_review" },
@@ -191,6 +317,7 @@ function Navbar() {
             category: "Personal Cinema",
             icon: "auto_stories",
             links: [
+                { to: "/wrapped", label: "Cinephile Wrapped", desc: "Infographics, viewing stats & shareable story cards", icon: "auto_awesome", badge: "Wrapped" },
                 { to: "/diary", label: "Film Diary & Logs", desc: "Your chronological viewing diary & stats", icon: "book", badge: "Diary" },
                 { to: "/mywatchedfilms", label: "Watched History", desc: "Archive of every movie you have seen", icon: "visibility" },
                 { to: "/favorites", label: "Your Favourites", desc: "All the films you loved the most", icon: "favorite" },
@@ -218,7 +345,7 @@ function Navbar() {
         >
             <div className="mx-auto flex h-14 md:h-16 w-full max-w-[1340px] items-center justify-between gap-3 px-3 sm:px-6 lg:px-8">
 
-                {/* 1. Left Section: Logo + 2. "More" Dropdown Menu */}
+                {/* 1. Left Section: Logo + "More" Dropdown Menu */}
                 <div className="flex items-center gap-2 sm:gap-4 shrink-0">
                     {/* Cinephile Logo */}
                     <Link
@@ -231,7 +358,7 @@ function Navbar() {
                                 movie
                             </span>
                         </span>
-                        <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-text group-hover:text-accent transition-colors">
+                        <span className="hidden min-[380px]:inline font-serif text-lg sm:text-2xl font-bold tracking-tight text-text group-hover:text-accent transition-colors">
                             Cinephile
                         </span>
                     </Link>
@@ -309,18 +436,16 @@ function Navbar() {
                     </div>
                 </div>
 
-                {/* 2. Huge Global Search matching Theme */}
+                {/* 2. Global Search Bar */}
                 <div ref={searchRef} className="relative flex-1 max-w-[540px] lg:max-w-[620px] mx-1 sm:mx-3">
                     <form
                         onSubmit={handleSearchSubmit}
                         className="relative flex items-center w-full rounded-full border border-border bg-surface px-3.5 py-1.5 md:py-2 text-text transition-all duration-200 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20 focus-within:bg-surface-2 shadow-inner"
                     >
-                        {/* Magnifying Icon */}
                         <span className="material-symbols-outlined text-[19px] sm:text-[21px] text-accent shrink-0 mr-2">
                             search
                         </span>
 
-                        {/* Search Input */}
                         <input
                             ref={searchInputRef}
                             type="text"
@@ -334,7 +459,6 @@ function Navbar() {
                             aria-label="Search Cinephile"
                         />
 
-                        {/* Loading / Clear icon */}
                         {isSearching ? (
                             <span className="material-symbols-outlined text-[17px] text-accent animate-spin shrink-0 mx-1">
                                 progress_activity
@@ -352,13 +476,12 @@ function Navbar() {
                             </button>
                         ) : null}
 
-                        {/* Shortcut badge */}
                         <span className="hidden md:inline-flex items-center rounded border border-border/80 bg-surface-2/80 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-text-3 shrink-0 ml-1">
                             ⌘K
                         </span>
                     </form>
 
-                    {/* Huge Search Live Suggestions Dropdown */}
+                    {/* Search Live Suggestions */}
                     {showSuggestions && searchQuery.trim() && (
                         <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-border bg-surface/98 backdrop-blur-xl shadow-2xl z-[1200] max-h-[72vh] overflow-y-auto divide-y divide-border/50 animate-fadeIn">
                             {totalResultsCount === 0 && !isSearching ? (
@@ -367,7 +490,6 @@ function Navbar() {
                                 </div>
                             ) : (
                                 <>
-                                    {/* Films results */}
                                     {suggestions.movies.length > 0 && (
                                         <div className="py-2">
                                             <div className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
@@ -413,7 +535,6 @@ function Navbar() {
                                         </div>
                                     )}
 
-                                    {/* People results */}
                                     {suggestions.people.length > 0 && (
                                         <div className="py-2">
                                             <div className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
@@ -463,11 +584,28 @@ function Navbar() {
                     )}
                 </div>
 
-                {/* 3. Favorites & Watchlist + 4. Profile + 5. Theme Change */}
-                <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 shrink-0">
+                {/* 3. Action Group: Favourites/Watchlist + Notification Bell + Profile + Theme */}
+                <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 shrink-0">
 
-                    {/* 3. Favorites / Watchlist */}
+                    {/* Favorites & Watchlist links */}
                     <div className="hidden md:flex items-center gap-1">
+                        <NavLink
+                            to="/what-to-watch"
+                            className={({ isActive }) =>
+                                `flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-semibold transition-all no-underline ${
+                                    isActive
+                                        ? "bg-accent text-white shadow-sm shadow-accent/20"
+                                        : "bg-accent/10 border border-accent/30 text-accent hover:bg-accent/20"
+                                }`
+                            }
+                            title="What Should I Watch Tonight? (Decision AI)"
+                        >
+                            <span className="material-symbols-outlined text-[17px]">
+                                psychology
+                            </span>
+                            <span className="hidden xl:inline">What to Watch</span>
+                        </NavLink>
+
                         <NavLink
                             to="/favorites"
                             className={({ isActive }) =>
@@ -506,7 +644,140 @@ function Navbar() {
                     {/* Subtle separator */}
                     <div className="hidden md:block h-4 w-[1px] bg-border mx-0.5" />
 
-                    {/* 4. Profile Section */}
+                    {/* Notification Bell with interactive popover */}
+                    {token && (
+                        <div ref={notificationsRef} className="relative">
+                            <button
+                                type="button"
+                                onClick={handleToggleNotifications}
+                                aria-label="Notifications"
+                                aria-expanded={showNotificationsMenu}
+                                className={`relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer ${
+                                    showNotificationsMenu || location.pathname === "/notifications"
+                                        ? "bg-accent/15 text-accent border-accent/40 shadow-sm"
+                                        : "bg-surface border-border text-text-2 hover:border-accent/40 hover:text-accent hover:bg-surface-2"
+                                }`}
+                                title="Notifications"
+                            >
+                                <span className="material-symbols-outlined text-[19px] sm:text-[20px]">
+                                    notifications
+                                </span>
+
+                                {/* Unread Counter Badge */}
+                                {unreadCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-bold text-white shadow-md animate-pulse">
+                                        {unreadCount > 9 ? "9+" : unreadCount}
+                                    </span>
+                                )}
+                            </button>
+
+                            {/* Notifications Popover Dropdown */}
+                            {showNotificationsMenu && (
+                                <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-2xl border border-border bg-surface/98 backdrop-blur-xl shadow-2xl z-[1200] overflow-hidden animate-fadeIn">
+                                    {/* Header */}
+                                    <div className="flex items-center justify-between px-4 py-3 border-b border-border/70 bg-surface-2/50">
+                                        <div className="flex items-center gap-2">
+                                            <span className="material-symbols-outlined text-[18px] text-accent">
+                                                notifications
+                                            </span>
+                                            <span className="text-xs font-bold text-text uppercase tracking-wider">
+                                                Notifications
+                                            </span>
+                                            {unreadCount > 0 && (
+                                                <span className="px-1.5 py-0.2 rounded-full bg-accent/15 text-accent text-[10px] font-bold border border-accent/30 font-mono">
+                                                    {unreadCount} new
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {unreadCount > 0 && (
+                                            <button
+                                                type="button"
+                                                onClick={handleMarkAllRead}
+                                                className="text-[11px] font-semibold text-accent hover:underline cursor-pointer"
+                                            >
+                                                Mark all read
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {/* Notifications List */}
+                                    <div className="max-h-[340px] overflow-y-auto divide-y divide-border/40">
+                                        {loadingNotifications ? (
+                                            <div className="p-6 text-center text-xs text-text-3 space-y-2">
+                                                <div className="h-8 w-full bg-surface-2 rounded-lg animate-pulse" />
+                                                <div className="h-8 w-full bg-surface-2 rounded-lg animate-pulse" />
+                                            </div>
+                                        ) : quickNotifications.length === 0 ? (
+                                            <div className="p-8 text-center text-xs text-text-3">
+                                                <span className="material-symbols-outlined text-3xl opacity-40 mb-1 block">
+                                                    notifications_none
+                                                </span>
+                                                You&apos;re all caught up! No notifications.
+                                            </div>
+                                        ) : (
+                                            quickNotifications.map((item) => {
+                                                const { icon, color } = getNotificationIcon(item.type);
+                                                return (
+                                                    <div
+                                                        key={item.id}
+                                                        onClick={() => handleNotificationClick(item)}
+                                                        className={`flex items-start gap-3 p-3 hover:bg-surface-2 cursor-pointer transition-colors ${
+                                                            !item.isRead ? "bg-accent/5" : ""
+                                                        }`}
+                                                    >
+                                                        {/* Icon / Actor Avatar */}
+                                                        <div className="relative shrink-0 mt-0.5">
+                                                            <div className={`h-8 w-8 rounded-full flex items-center justify-center border border-border text-xs font-bold overflow-hidden bg-surface-2`}>
+                                                                {item.actorAvatar ? (
+                                                                    <img src={item.actorAvatar} alt={item.actorName} className="h-full w-full object-cover" />
+                                                                ) : (
+                                                                    <span>{item.actorName?.charAt(0)?.toUpperCase() || "C"}</span>
+                                                                )}
+                                                            </div>
+                                                            <span className={`absolute -bottom-1 -right-1 h-4 w-4 rounded-full flex items-center justify-center text-[10px] border border-surface shadow-xs ${color}`}>
+                                                                <span className="material-symbols-outlined text-[10px]">
+                                                                    {icon}
+                                                                </span>
+                                                            </span>
+                                                        </div>
+
+                                                        {/* Text content */}
+                                                        <div className="min-w-0 flex-1">
+                                                            <p className="text-xs text-text leading-snug break-words">
+                                                                {item.message}
+                                                            </p>
+                                                            <span className="text-[10px] text-text-3 font-mono mt-1 block">
+                                                                {formatRelativeTime(item.createdAt)}
+                                                            </span>
+                                                        </div>
+
+                                                        {/* Unread indicator */}
+                                                        {!item.isRead && (
+                                                            <span className="h-2 w-2 rounded-full bg-accent mt-1.5 shrink-0" />
+                                                        )}
+                                                    </div>
+                                                );
+                                            })
+                                        )}
+                                    </div>
+
+                                    {/* Footer Link */}
+                                    <div className="p-2.5 border-t border-border/70 bg-surface-2/40 text-center">
+                                        <Link
+                                            to="/notifications"
+                                            onClick={() => setShowNotificationsMenu(false)}
+                                            className="text-xs font-semibold text-accent hover:underline no-underline block py-1"
+                                        >
+                                            View all activity feed →
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Profile Section */}
                     {token ? (
                         <div
                             ref={profileMenuRef}
@@ -556,6 +827,14 @@ function Navbar() {
 
                                     <div className="py-1">
                                         <Link
+                                            to="/wrapped"
+                                            onClick={() => setShowProfileMenu(false)}
+                                            className="flex items-center gap-3 px-4 py-2 text-xs font-semibold text-accent hover:bg-surface-2 transition-colors no-underline"
+                                        >
+                                            <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+                                            <span>Cinephile Wrapped</span>
+                                        </Link>
+                                        <Link
                                             to="/profile"
                                             onClick={() => setShowProfileMenu(false)}
                                             className="flex items-center gap-3 px-4 py-2 text-xs text-text-2 hover:bg-surface-2 hover:text-accent transition-colors no-underline"
@@ -586,6 +865,21 @@ function Navbar() {
                                         >
                                             <span className="material-symbols-outlined text-[18px]">visibility</span>
                                             <span>Watched Films</span>
+                                        </Link>
+                                        <Link
+                                            to="/notifications"
+                                            onClick={() => setShowProfileMenu(false)}
+                                            className="flex items-center gap-3 px-4 py-2 text-xs text-text-2 hover:bg-surface-2 hover:text-accent transition-colors no-underline"
+                                        >
+                                            <span className="material-symbols-outlined text-[18px]">notifications</span>
+                                            <div className="flex items-center justify-between flex-1">
+                                                <span>Notifications</span>
+                                                {unreadCount > 0 && (
+                                                    <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[9px] font-bold">
+                                                        {unreadCount}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </Link>
                                         <Link
                                             to="/data-migration"
@@ -627,7 +921,7 @@ function Navbar() {
                         </Link>
                     )}
 
-                    {/* 5. Theme Change Toggle */}
+                    {/* Theme Toggle Button */}
                     <ThemeToggle />
 
                     {/* Mobile Hamburger Drawer Button */}
@@ -635,11 +929,14 @@ function Navbar() {
                         type="button"
                         aria-label={menuOpen ? "Close menu" : "Open menu"}
                         onClick={() => setMenuOpen((o) => !o)}
-                        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-text sm:hidden cursor-pointer"
+                        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-text sm:hidden cursor-pointer relative"
                     >
                         <span className="material-symbols-outlined text-[20px]">
                             {menuOpen ? "close" : "menu"}
                         </span>
+                        {unreadCount > 0 && !menuOpen && (
+                            <span className="absolute 1 top-1.5 right-1.5 h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
+                        )}
                     </button>
                 </div>
             </div>
@@ -647,21 +944,40 @@ function Navbar() {
             {/* Mobile Drawer */}
             {menuOpen && (
                 <div className="max-h-[calc(100vh-3.5rem)] overflow-y-auto border-t border-border bg-bg/98 backdrop-blur-xl px-4 py-4 sm:hidden space-y-4">
+                    {/* Quick Notifications Mobile Row if logged in */}
+                    {token && (
+                        <Link
+                            to="/notifications"
+                            onClick={() => setMenuOpen(false)}
+                            className="flex items-center justify-between p-3 rounded-xl bg-accent/10 border border-accent/30 text-accent font-semibold text-xs no-underline"
+                        >
+                            <div className="flex items-center gap-2.5">
+                                <span className="material-symbols-outlined text-[20px]">notifications</span>
+                                <span>Notifications Feed</span>
+                            </div>
+                            {unreadCount > 0 && (
+                                <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-bold">
+                                    {unreadCount} unread
+                                </span>
+                            )}
+                        </Link>
+                    )}
+
                     {/* Feature Categories for Mobile */}
                     {moreFeatureCategories.map((sec) => (
                         <div key={sec.category} className="space-y-1">
                             <p className="text-[11px] font-bold uppercase tracking-wider text-accent px-2">
                                 {sec.category}
                             </p>
-                            <div className="grid grid-cols-2 gap-1.5">
+                            <div className="grid grid-cols-1 xs:grid-cols-2 gap-1.5">
                                 {sec.links.map((link) => (
                                     <Link
                                         key={link.to}
                                         to={link.to}
                                         onClick={() => setMenuOpen(false)}
-                                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-medium text-text-2 bg-surface border border-border/60 hover:text-accent no-underline"
+                                        className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 min-h-[44px] text-xs font-medium text-text-2 bg-surface border border-border/60 hover:text-accent hover:border-accent/30 active:scale-[0.98] transition-all no-underline"
                                     >
-                                        <span className="material-symbols-outlined text-[16px] text-accent">
+                                        <span className="material-symbols-outlined text-[18px] text-accent shrink-0">
                                             {link.icon}
                                         </span>
                                         <span className="truncate">{link.label}</span>

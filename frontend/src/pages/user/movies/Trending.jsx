@@ -373,7 +373,7 @@ export default function Trending() {
             <Navbar />
 
             <main className="flex-grow pb-16 pt-8 sm:pb-20 sm:pt-10">
-                <section className="mx-auto mb-8 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                <section className="page-container mb-8">
                     <div className="section-header pb-6 lg:items-end">
                         <div>
                             <div className="mb-3 inline-flex items-center gap-2">
@@ -383,7 +383,7 @@ export default function Trending() {
                                 </span>
                             </div>
 
-                            <h1 className="mb-2 font-serif text-3xl font-semibold tracking-tight text-text sm:text-4xl md:text-5xl">
+                            <h1 className="mb-2 font-serif text-fluid-title font-semibold tracking-tight text-text">
                                 Trending Cinema
                             </h1>
 
@@ -626,7 +626,7 @@ export default function Trending() {
                 )}
 
                 {!loading && !error && featuredMovie && (
-                    <section className="mx-auto mb-16 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                    <section className="page-container mb-16">
                         <div className="mb-5 flex items-center justify-between">
                             <div>
                                 <h2 className="font-headline text-xl sm:text-2xl font-bold text-white">
@@ -656,7 +656,7 @@ export default function Trending() {
                         </div>
 
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-                            <div className="group relative flex min-h-[500px] sm:min-h-[580px] flex-col justify-end overflow-hidden rounded-2xl border border-border shadow-2xl lg:col-span-8 lg:min-h-[640px]">
+                            <div className="group relative flex min-h-[460px] sm:min-h-[540px] flex-col justify-end overflow-hidden rounded-2xl border border-border shadow-2xl lg:col-span-8">
                                 <div
                                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.03]"
                                     style={{
@@ -671,7 +671,7 @@ export default function Trending() {
 
                                 <div className="absolute left-6 top-6 z-10 flex items-center gap-2">
                                     <span
-                                        className="font-serif text-6xl font-bold leading-none text-transparent sm:text-7xl"
+                                        className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold leading-none text-transparent"
                                         style={{
                                             WebkitTextStroke:
                                                 "2px rgba(201,168,106,0.4)",
@@ -712,7 +712,7 @@ export default function Trending() {
                                                 `/movies/${featuredMovie.id}`
                                             )
                                         }
-                                        className="mb-4 font-serif text-3xl font-bold leading-tight text-text hover:text-accent transition-colors cursor-pointer sm:text-4xl md:text-5xl"
+                                        className="mb-4 font-serif text-fluid-title font-bold leading-tight text-text hover:text-accent transition-colors cursor-pointer"
                                     >
                                         {featuredMovie.title}
                                     </h3>
@@ -810,7 +810,7 @@ export default function Trending() {
 
                 {/* Remaining Trending Films Grid (#4 and onwards) */}
                 {!loading && !error && remainingMovies.length > 0 && (
-                    <section className="mx-auto mb-16 max-w-[1200px] px-4 sm:px-6 md:px-8">
+                    <section className="page-container mb-16">
                         <div className="mb-6 flex items-center justify-between">
                             <div>
                                 <h3 className="font-headline text-lg sm:text-xl font-bold text-white">
@@ -832,7 +832,7 @@ export default function Trending() {
                             </span>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                        <div className="card-grid-fluid">
                             {remainingMovies.map((movie) => (
                                 <TrendingMovieCard
                                     key={movie.id}
@@ -844,7 +844,7 @@ export default function Trending() {
                 )}
 
                 {!loading && !error && !featuredMovie && (
-                    <section className="mx-auto max-w-[1200px] px-4 py-32 text-center sm:px-8">
+                    <section className="page-container py-32 text-center">
                         <p className="text-text-3">
                             {selectedLanguage && selectedGenre
                                 ? `No trending ${selectedLanguage.name} ${selectedGenre.name} movies found.`
@@ -858,7 +858,7 @@ export default function Trending() {
                 )}
 
                 {!loading && !error && movies.length > 0 && hasMore && (
-                    <section className="mx-auto max-w-[1200px] px-4 text-center sm:px-8">
+                    <section className="page-container text-center pb-8">
                         <button
                             onClick={handleLoadMore}
                             disabled={loadingMore}
@@ -886,7 +886,7 @@ export default function Trending() {
                 )}
 
                 {!loading && !error && movies.length > 0 && !hasMore && (
-                    <section className="mx-auto max-w-[1200px] px-4 text-center sm:px-8">
+                    <section className="page-container text-center pb-8">
                         <p className="font-mono text-xs text-text-3">
                             No more trending movies available.
                         </p>

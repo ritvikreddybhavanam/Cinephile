@@ -26,14 +26,17 @@ public class MovieListService {
         this.movieListItemRepository = movieListItemRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<MovieList> getMyLists(User user) {
         return movieListRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
+    @Transactional(readOnly = true)
     public List<MovieList> getPublicLists() {
         return movieListRepository.findByIsPublicTrueOrderByCreatedAtDesc();
     }
 
+    @Transactional(readOnly = true)
     public MovieList getListById(Long id) {
         return movieListRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("List not found"));

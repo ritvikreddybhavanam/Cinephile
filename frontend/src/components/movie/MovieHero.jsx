@@ -18,7 +18,8 @@ function MovieHero({
     onReview,
     onLikeToggle,
     onWatchlistToggle,
-    onWatchedToggle
+    onWatchedToggle,
+    onAddToList
 }) {
     if (!movie) return null;
 
@@ -27,8 +28,7 @@ function MovieHero({
         : "N/A";
 
     return (
-        <section className="relative min-h-0 overflow-hidden md:min-h-[600px]">
-
+        <section className="relative min-h-0 overflow-hidden">
             {/* Backdrop */}
             {backdropUrl && (
                 <img
@@ -44,11 +44,11 @@ function MovieHero({
             <div className="absolute inset-0 hero-gradient" />
 
             {/* Content */}
-            <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 md:gap-12 items-start min-h-0 md:min-h-[500px]">
+            <div className="relative page-container py-8 sm:py-12 md:py-16">
+                <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr] gap-8 md:gap-12 items-start">
 
                     {/* Poster */}
-                    <div className="w-full max-w-[200px] sm:max-w-[240px] mx-auto md:mx-0">
+                    <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-none mx-auto md:mx-0 shrink-0">
                         {posterUrl ? (
                             <img
                                 src={posterUrl}
@@ -67,7 +67,7 @@ function MovieHero({
                     </div>
 
                     {/* Info */}
-                    <div className="pt-0 md:pt-6">
+                    <div className="pt-0 md:pt-4 min-w-0">
 
                         {/* Genre chips */}
                         {movie.genres?.length > 0 && (
@@ -81,13 +81,13 @@ function MovieHero({
                         )}
 
                         {/* Title */}
-                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-semibold leading-tight mb-3 text-text break-words">
+                        <h1 className="text-fluid-hero font-serif font-semibold text-text mb-3 break-words">
                             {movie.title}
                         </h1>
 
                         {/* Tagline */}
                         {movie.tagline && (
-                            <p className="text-text-3 italic mb-4 text-sm sm:text-base leading-relaxed">
+                            <p className="text-text-3 italic mb-4 text-sm sm:text-base leading-relaxed break-words">
                                 {movie.tagline}
                             </p>
                         )}
@@ -178,6 +178,16 @@ function MovieHero({
                             >
                                 {watchedLoading ? "…" : isWatched ? "✓ Logged" : "+ Log Film"}
                             </button>
+
+                            {onAddToList && (
+                                <button
+                                    type="button"
+                                    onClick={onAddToList}
+                                    className="text-sm py-2.5 px-5 rounded-full border border-border text-text-2 hover:border-accent hover:text-accent font-semibold transition-all duration-200 cursor-pointer"
+                                >
+                                    + List
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

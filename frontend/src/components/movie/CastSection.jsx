@@ -8,7 +8,7 @@ function CastSection({ cast = [] }) {
     const visibleCast = showAllCast ? castList : castList.slice(0, 8);
 
     return (
-        <section className="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 md:py-14">
+        <section className="page-container pb-10 md:pb-14">
             <div className="section-header mb-6">
                 <div>
                     <p className="label-caps mb-1">Ensemble</p>
@@ -27,7 +27,7 @@ function CastSection({ cast = [] }) {
             </div>
 
             {castList.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                <div className="cast-grid-fluid">
                     {visibleCast.map((person) => {
                         const image = getPosterUrl(person.profile_path);
 

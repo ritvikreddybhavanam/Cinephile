@@ -478,7 +478,7 @@ const LanguageDetails = () => {
                         <div className="absolute inset-0 hero-gradient-side" />
                     </div>
 
-                    <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                    <div className="relative z-10 page-container">
                         {/* Breadcrumbs */}
                         <div className="mb-4 flex items-center gap-2 text-xs text-text-3 font-medium">
                             <Link to="/movies" className="hover:text-accent transition-colors">Movies</Link>
@@ -497,7 +497,7 @@ const LanguageDetails = () => {
                                 </span>
                             </div>
 
-                            <h1 className="mb-4 font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight text-text tracking-tight break-words">
+                            <h1 className="mb-4 font-serif text-fluid-hero font-semibold text-text break-words">
                                 Discover, Log &<br />
                                 <span className="text-accent">Curate {languageInfo.name} Cinema.</span>
                             </h1>
@@ -526,7 +526,7 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 2. TRENDING TODAY ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">Right Now</p>
@@ -542,7 +542,7 @@ const LanguageDetails = () => {
                     {loading && !trendingToday.length
                         ? renderSkeletonRow(5)
                         : trendingToday.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid">
                                 {trendingToday.map(renderMovieCard)}
                             </div>
                         ) : (
@@ -554,7 +554,7 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 3. THIS WEEK POPULAR FILMS ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">This Week</p>
@@ -570,7 +570,7 @@ const LanguageDetails = () => {
                     {loading && !popularThisWeek.length
                         ? renderSkeletonRow(5)
                         : popularThisWeek.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid">
                                 {popularThisWeek.map(renderMovieCard)}
                             </div>
                         ) : (
@@ -582,11 +582,11 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 4. BROWSE BY GENRE (WHAT ARE YOU IN THE MOOD FOR?) ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="rounded-xl border border-border bg-surface p-6 sm:p-8 md:p-10">
                         <div className="mb-8 text-center">
                             <p className="label-caps mb-2">Browse by Genre</p>
-                            <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
+                            <h2 className="font-serif text-fluid-title font-semibold text-text tracking-tight">
                                 What Are You in the Mood For?
                             </h2>
                             <p className="mt-2 text-sm text-text-3">
@@ -618,7 +618,7 @@ const LanguageDetails = () => {
                         {moodLoading
                             ? renderSkeletonRow(5)
                             : moodMovies.length > 0 ? (
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                                <div className="movie-grid-fluid">
                                     {moodMovies.map(renderMovieCard)}
                                 </div>
                             ) : (
@@ -642,10 +642,10 @@ const LanguageDetails = () => {
 
                 {/* ── 5. FEATURED RECOMMENDATION / FILM SPOTLIGHT ── */}
                 {spotlightMovie && (
-                    <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                    <section className="page-container">
                         <div className="mb-6 text-center">
                             <p className="label-caps mb-2">Featured Recommendation</p>
-                            <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
+                            <h2 className="font-serif text-fluid-title font-semibold text-text tracking-tight">
                                 Film Spotlight
                             </h2>
                         </div>
@@ -698,7 +698,7 @@ const LanguageDetails = () => {
                 )}
 
                 {/* ── 6. FRESH FROM PRODUCTION / NEW RELEASES ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="section-header">
                         <div>
                             <p className="label-caps mb-1">Fresh From Production</p>
@@ -714,7 +714,7 @@ const LanguageDetails = () => {
                     {loading && !newReleases.length
                         ? renderSkeletonRow(4)
                         : newReleases.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+                            <div className="movie-grid-fluid">
                                 {newReleases.map(renderMovieCard)}
                             </div>
                         ) : (
@@ -726,10 +726,10 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 7. PERSPECTIVES & CRITIQUE / COMMUNITY REVIEWS ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="mb-8 text-center">
                         <p className="label-caps mb-2">Perspectives & Critique</p>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
+                        <h2 className="font-serif text-fluid-title font-semibold text-text tracking-tight">
                             Community Reviews
                         </h2>
                         <p className="mt-2 text-sm text-text-3">
@@ -737,7 +737,7 @@ const LanguageDetails = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                    <div className="card-grid-fluid">
                         {displayReviews.map((review) => (
                             <div
                                 key={review.id}
@@ -791,10 +791,10 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 8. HANDCRAFTED COLLECTIONS / CURATED LISTS ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12">
+                <section className="page-container">
                     <div className="mb-8 text-center">
                         <p className="label-caps mb-2">Handcrafted Collections</p>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-text tracking-tight">
+                        <h2 className="font-serif text-fluid-title font-semibold text-text tracking-tight">
                             Curated Lists
                         </h2>
                         <p className="mt-2 text-sm text-text-3">
@@ -802,7 +802,7 @@ const LanguageDetails = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="card-grid-fluid">
                         {curatedLists.map((list) => (
                             <div
                                 key={list.id}
@@ -850,13 +850,13 @@ const LanguageDetails = () => {
                 </section>
 
                 {/* ── 9. EXPLORE MORE LANGUAGES CTA ── */}
-                <section className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 pb-8">
+                <section className="page-container pb-8">
                     <div className="relative overflow-hidden rounded-xl border border-accent/20 bg-surface p-8 sm:p-12 md:p-16 text-center">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,168,106,0.07)_0%,transparent_70%)]" />
 
                         <div className="relative z-10 mx-auto max-w-lg">
                             <p className="label-caps mb-4">World Film Archive</p>
-                            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-text tracking-tight mb-6">
+                            <h2 className="font-serif text-fluid-title font-semibold text-text tracking-tight mb-6">
                                 Explore Beyond {languageInfo.name} Cinema
                             </h2>
 

@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../../components/review/ReviewSection.jsx";
 
 import MovieHero from "../../../components/movie/MovieHero.jsx";
+import AddToListModal from "../../../components/movie/AddToListModal.jsx";
+import MovieDecisionLayer from "../../../components/movie/MovieDecisionLayer.jsx";
 import MovieVideosSection from "../../../components/movie/MovieVideosSection.jsx";
 import MoviePhotos from "../../../components/movie/MoviePhotos.jsx";
 import MovieCollection from "../../../components/movie/MovieCollection.jsx";
@@ -27,6 +29,7 @@ import CrewSection from "../../../components/movie/CrewSection.jsx";
 import MovieInfo from "../../../components/movie/MovieInfo.jsx";
 import MovieKeywords from "../../../components/movie/MovieKeywords.jsx";
 import RecommendationSection from "../../../components/movie/RecommendationSection.jsx";
+import ContentGuideSection from "../../../components/movie/ContentGuideSection.jsx";
 
 import {
     getMovieDetails,
@@ -134,6 +137,9 @@ function MovieDetails() {
         useState(false);
 
     const [watchedLoading, setWatchedLoading] =
+        useState(false);
+
+    const [showAddToList, setShowAddToList] =
         useState(false);
 
 
@@ -1287,8 +1293,8 @@ function MovieDetails() {
         <div className="min-h-screen bg-bg text-text antialiased">
             <Navbar />
 
-            <div className="bg-surface/80 border-b border-border px-4 py-3 backdrop-blur-md">
-                <div className="max-w-[1200px] mx-auto">
+            <div className="bg-surface/80 border-b border-border py-3 backdrop-blur-md">
+                <div className="page-container">
                     <form
                         onSubmit={handleSearch}
                         className="relative flex flex-col gap-2 sm:block"
@@ -1371,6 +1377,22 @@ function MovieDetails() {
                     onWatchedToggle={
                         handleWatchedToggle
                     }
+                    onAddToList={() => setShowAddToList(true)}
+                />
+
+                {/* Add to Curated List Modal */}
+                <AddToListModal
+                    isOpen={showAddToList}
+                    onClose={() => setShowAddToList(false)}
+                    movie={movie}
+                />
+
+                {/* Movie Decision Layer (Taste AI, Aspect Radar, Context) */}
+                <MovieDecisionLayer
+                    movie={movie}
+                    credits={effectiveCredits}
+                    keywords={effectiveKeywords}
+                    reviews={filmBuffReviews}
                 />
 
                 {/* Trailers & Media Archive */}
@@ -1426,6 +1448,12 @@ function MovieDetails() {
                 {/* Story Themes & Taxonomy Keywords */}
                 <MovieKeywords
                     keywords={effectiveKeywords}
+                />
+
+                {/* Content & Sensory Guide (Advisory reports & User preferences) */}
+                <ContentGuideSection
+                    movieId={movieId}
+                    movieTitle={movie.title}
                 />
 
                 {/* Community Reviews & TMDB Reviews */}
