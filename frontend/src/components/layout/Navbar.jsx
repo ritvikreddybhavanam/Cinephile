@@ -292,6 +292,7 @@ function Navbar() {
             category: "Movies & Discovery",
             icon: "theaters",
             links: [
+                { to: "/streaming", label: "Streaming Guide", desc: "Discover films across Netflix, Prime, Disney+ & more", icon: "live_tv", badge: "OTT" },
                 { to: "/what-to-watch", label: "What Should I Watch?", desc: "Context-aware movie matchmaker & AI pick", icon: "psychology", badge: "AI" },
                 { to: "/movies", label: "Films Catalog", desc: "Top rated, popular & custom filters", icon: "stars" },
                 { to: "/trending", label: "Trending", desc: "Most talked about films this week", icon: "local_fire_department" },
@@ -433,6 +434,82 @@ function Navbar() {
                                 ))}
                             </div>
                         )}
+                    </div>
+
+                    {/* Primary Direct Navigation Links (Desktop) */}
+                    <div className="hidden xl:flex items-center gap-1 pl-1">
+                        <NavLink
+                            to="/movies"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            Movies
+                        </NavLink>
+                        <NavLink
+                            to="/new-releases"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            In Theaters
+                        </NavLink>
+                        <NavLink
+                            to="/streaming"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            Streaming
+                        </NavLink>
+                        <NavLink
+                            to="/genres"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            Genres
+                        </NavLink>
+                        <NavLink
+                            to="/lists"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            Lists
+                        </NavLink>
+                        <NavLink
+                            to="/social"
+                            className={({ isActive }) =>
+                                `px-2.5 py-1 rounded-full text-xs font-semibold transition-colors no-underline ${
+                                    isActive
+                                        ? "text-accent bg-accent/15"
+                                        : "text-text-2 hover:text-accent hover:bg-surface-2"
+                                }`
+                            }
+                        >
+                            Community
+                        </NavLink>
                     </div>
                 </div>
 

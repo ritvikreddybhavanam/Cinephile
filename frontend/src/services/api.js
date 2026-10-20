@@ -1,10 +1,22 @@
 import axios from "axios";
 
-const rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
-const cleanApiUrl = rawApiUrl.trim().replace(/\/+$/, "");
-export const API_BASE_URL = cleanApiUrl.endsWith("/api")
-    ? cleanApiUrl
-    : `${cleanApiUrl}/api`;
+const getApiBaseUrl = () => {
+    if (typeof window !== "undefined" && window.location && window.location.hostname) {
+        const hostname = window.location.hostname;
+        if (hostname === "localhost" || hostname === "127.0.0.1") {
+            return "http://localhost:8080/api";
+        }
+        // If accessed via numeric IPv4 (e.g. phone on Wi-Fi), target the same host on backend port 8080
+        if (/^(\d{1,3}\.){3}\d{1,3}$/.test(hostname)) {
+            return `http://${hostname}:8080/api`;
+        }
+    }
+    const rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    const cleanApiUrl = rawApiUrl.trim().replace(/\/+$/, "");
+    return cleanApiUrl.endsWith("/api") ? cleanApiUrl : `${cleanApiUrl}/api`;
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
     baseURL: API_BASE_URL,

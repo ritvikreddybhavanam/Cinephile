@@ -22,6 +22,7 @@ import NewReleases from "../pages/user/movies/NewReleases.jsx";
 import Genres from "../pages/user/movies/Genres.jsx";
 import WatchedFilms from "../pages/user/movies/WatchedFilms.jsx";
 import WhatToWatch from "../pages/user/movies/WhatToWatch.jsx";
+import StreamingGuide from "../pages/user/movies/StreamingGuide.jsx";
 
 // Box Office
 import BoxOfficePrediction from "../pages/user/boxoffice/BoxOfficePrediction.jsx";
@@ -67,6 +68,9 @@ function AppRoutes() {
             {/* ==================== PUBLIC ==================== */}
 
             <Route path="/" element={<Landing />} />
+
+            <Route path="/streaming" element={<StreamingGuide />} />
+            <Route path="/streaming-guide" element={<StreamingGuide />} />
 
             <Route path="/login" element={<Login />} />
 

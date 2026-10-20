@@ -151,6 +151,15 @@ export const getMovieWatchProviders = async (movieId) => {
     return response.data;
 };
 
+export const getAvailableWatchProviders = async (watchRegion = "IN") => {
+    const response = await api.get("/tmdb/watch/providers", {
+        params: {
+            watchRegion
+        }
+    });
+    return response.data;
+};
+
 export const getMovieImages = async (movieId) => {
     const response = await api.get(`/tmdb/movies/${movieId}/images`);
     return response.data;
@@ -216,7 +225,7 @@ export const getTopMovieLanguage = async (language) => {
             language: language
         }
     });
-    
+
 
     return response.data;
 };
@@ -248,4 +257,4 @@ export {
     getReviewComments,
     addReviewComment,
     deleteReviewComment
-} from "./reviewService.js";
+} from "./reviewService.js";

@@ -146,6 +146,15 @@ public class TmdbController {
         );
     }
 
+    @GetMapping("/watch/providers")
+    public ResponseEntity<String> getWatchProviders(
+            @RequestParam(required = false, defaultValue = "IN") String watchRegion
+    ) {
+        return ResponseEntity.ok(
+                tmdbService.getWatchProviders(watchRegion)
+        );
+    }
+
     @GetMapping("/movies/{movieId}/images")
     public ResponseEntity<String> getMovieImages(
             @PathVariable Long movieId

@@ -31,6 +31,7 @@ public class TmdbService {
     private static final String FALLBACK_EMPTY_OBJ = "{}";
     private static final String FALLBACK_VIDEOS = "{\"id\":0,\"results\":[]}";
     private static final String FALLBACK_CREDITS = "{\"id\":0,\"cast\":[],\"crew\":[]}";
+    private static final String FALLBACK_PROVIDERS = "{\"results\":[{\"provider_id\":8,\"provider_name\":\"Netflix\",\"logo_path\":\"/rK1KljqmbvO9HQa1PBFLILWah72.png\",\"display_priority\":0},{\"provider_id\":119,\"provider_name\":\"Amazon Prime Video\",\"logo_path\":\"/gMZdpavHmxFNnLpMHwVxfqeux2g.png\",\"display_priority\":1},{\"provider_id\":2336,\"provider_name\":\"JioHotstar\",\"logo_path\":\"/ledoS6EgdjTNq8F1e6wubUQer18.png\",\"display_priority\":2},{\"provider_id\":350,\"provider_name\":\"Apple TV+\",\"logo_path\":\"/9icYBfYFcwgCbky5VdGUIKJ4C5i.png\",\"display_priority\":3},{\"provider_id\":232,\"provider_name\":\"ZEE5\",\"logo_path\":\"/5NyLm42TmCqCMOZFv249srCqK7z.jpg\",\"display_priority\":4},{\"provider_id\":237,\"provider_name\":\"Sony LIV\",\"logo_path\":\"/edg2H1PZzQe7kZ8l0f6Z0Bw51rV.jpg\",\"display_priority\":5},{\"provider_id\":122,\"provider_name\":\"Disney+ Hotstar\",\"logo_path\":\"/7rwSXluNWZAlJn243k102z6XW0d.jpg\",\"display_priority\":6},{\"provider_id\":220,\"provider_name\":\"JioCinema\",\"logo_path\":\"/1VbE6U2bZ9vK7h2M3b1q2A4yB8.jpg\",\"display_priority\":7},{\"provider_id\":337,\"provider_name\":\"Disney+\",\"logo_path\":\"/7rwSXluNWZAlJn243k102z6XW0d.jpg\",\"display_priority\":8},{\"provider_id\":1899,\"provider_name\":\"Max\",\"logo_path\":\"/6uhKBfmtzFqOcLoulGbZoxbpRaQ.jpg\",\"display_priority\":9},{\"provider_id\":531,\"provider_name\":\"Paramount+\",\"logo_path\":\"/xbhGlaFLBC24e4vgM1sX2ZtqObe.jpg\",\"display_priority\":10},{\"provider_id\":15,\"provider_name\":\"Hulu\",\"logo_path\":\"/zxrVdFjIjLqkfnwyghn2XuafNDD.jpg\",\"display_priority\":11},{\"provider_id\":386,\"provider_name\":\"Peacock\",\"logo_path\":\"/g1e16tTqS1xdP4Y7x3U8N30v74l.jpg\",\"display_priority\":12}]}";
 
     private static class CacheEntry {
         final String data;
@@ -43,25 +44,31 @@ public class TmdbService {
     }
 
     public TmdbService(
-            @Value("${tmdb.base-url}") String baseUrl,
-            @Value("${tmdb.api.token}") String token
+            @Value("${tmdb.base-url:https://api.themoviedb.org/3}") String baseUrl,
+            @Value("${tmdb.api.token:}") String token
     ) {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(Duration.ofSeconds(6));
         requestFactory.setReadTimeout(Duration.ofSeconds(10));
 
-        this.restClient = RestClient.builder()
+        RestClient.Builder builder = RestClient.builder()
                 .baseUrl(baseUrl)
                 .requestFactory(requestFactory)
                 .defaultHeader(
-                        HttpHeaders.AUTHORIZATION,
-                        "Bearer " + token
-                )
-                .defaultHeader(
                         HttpHeaders.ACCEPT,
                         MediaType.APPLICATION_JSON_VALUE
-                )
-                .build();
+                );
+
+        if (token != null && !token.trim().isEmpty()) {
+            builder.defaultHeader(
+                    HttpHeaders.AUTHORIZATION,
+                    "Bearer " + token.trim()
+            );
+        } else {
+            System.out.println("⚠️ [WARN] TMDB_API_TOKEN is not configured. Falling back to offline/mock data for TMDB endpoints.");
+        }
+
+        this.restClient = builder.build();
     }
 
     private String getFromTmdb(String cacheKey, long ttlSeconds, Supplier<String> supplier, String fallbackJson) {
@@ -337,6 +344,21 @@ public class TmdbService {
                         .retrieve()
                         .body(String.class),
                 FALLBACK_EMPTY_OBJ
+        );
+    }
+
+    public String getWatchProviders(String watchRegion) {
+        String region = (watchRegion != null && !watchRegion.isBlank()) ? watchRegion.toUpperCase() : "IN";
+        return getFromTmdb("providers_list_" + region, 86400, () ->
+                restClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                                .path("/watch/providers/movie")
+                                .queryParam("language", "en-US")
+                                .queryParam("watch_region", region)
+                                .build())
+                        .retrieve()
+                        .body(String.class),
+                FALLBACK_PROVIDERS
         );
     }
 
